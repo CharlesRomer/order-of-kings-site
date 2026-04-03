@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Order of Kings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="noise"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- INTRO -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-inner">
+      <div class="intro-logo-wrap">
+        <img src="logo.png" alt="Order of Kings" class="intro-logo-img" />
+      </div>
+      <div class="intro-line"></div>
+      <div class="intro-wordmark">THE ORDER OF KINGS</div>
+    </div>
+  </div>
+
+  <!-- STICKY VIDEO POPUP -->
+  <div class="svp" id="svp">
+    <button class="svp-card" id="svpCard" aria-label="Watch this video before applying">
+      <div class="svp-thumb">
+        <div class="svp-thumb-bg"></div>
+        <div class="svp-play">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+      </div>
+      <div class="svp-text">
+        <span class="svp-title">Watch this video</span>
+        <span class="svp-sub">before applying</span>
+      </div>
+      <button class="svp-dismiss" id="svpDismiss" aria-label="Dismiss">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </button>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo-link">
+      <img src="logo.png" alt="Order of Kings" class="nav-logo-img" />
+    </a>
+    <a href="https://qfnp9ak5e8v.typeform.com/to/HFwJlLZg?utm_source=xxxxx&utm_medium=xxxxx&utm_campaign=xxxxx&utm_content=xxxxx" target="_blank" class="btn-pill btn-outline-nav">Apply Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-glow"></div>
+    </div>
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-pip"></span>
+          For Kingdom Entrepreneurs Earning $200K–$5M+
+        </div>
+        <h1 class="hero-headline">
+          <span class="reveal-line">You Built</span>
+          <span class="reveal-line r2">the Cage</span>
+          <span class="reveal-line r3"><em>Yourself.</em></span>
+        </h1>
+        <p class="hero-sub">The hustle, the hundred-hour weeks, the being-everything-to-everyone — it built the empire. And it's slowly dismantling the man inside it.<br/><br/>Your business is growing. Your soul is shrinking. And somewhere between the next deal and the next deadline, you stopped hearing God's voice entirely.</p>
+        <div class="hero-actions">
+          <a href="https://qfnp9ak5e8v.typeform.com/to/HFwJlLZg?utm_source=xxxxx&utm_medium=xxxxx&utm_campaign=xxxxx&utm_content=xxxxx" target="_blank" class="btn-pill btn-primary">Apply to The Order <span>→</span></a>
+        </div>
+      </div>
+      <div class="hero-vsl">
+        <div class="vsl-card">
+          <div class="vsl-badge">Watch This First</div>
+          <div class="vsl-video-wrap">
+            <div id="vturb-cmnj90a9e000004jk6ecjqqpw"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-bar"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SECTION 01: CONFESSION -->
+  <section class="section-block confession" id="confession">
+    <div class="inner">
+      <div class="sec-num">01</div>
+      <p class="opener">There was a version of you that prayed with fire.</p>
+      <div class="prose-block">
+        <p>Before the payroll. Before the 47 unread messages. Before your wife stopped asking "how was your day?" because she already knew the answer.</p>
+        <p>There was a morning — you may not even remember which one — when you woke up and realized the calling felt more like a sentence. The business you built to serve your family became the very thing stealing you from them.</p>
+        <p>You didn't drift from God. You just got so busy building for Him that you forgot to be with Him.</p>
+      </div>
+      <div class="trade-table">
+        <div class="trade-row">
+          <span class="t-from">More revenue</span>
+          <span class="t-arrow">→</span>
+          <span class="t-to">Less presence</span>
+        </div>
+        <div class="trade-row">
+          <span class="t-from">Bigger team</span>
+          <span class="t-arrow">→</span>
+          <span class="t-to">Heavier burden</span>
+        </div>
+        <div class="trade-row">
+          <span class="t-from">Greater influence</span>
+          <span class="t-arrow">→</span>
+          <span class="t-to">Deeper isolation</span>
+        </div>
+        <div class="trade-row">
+          <span class="t-from">The assignment grew</span>
+          <span class="t-arrow">→</span>
+          <span class="t-to">The man disappeared inside it</span>
+        </div>
+      </div>
+      <blockquote class="scripture">
+        "I have seen all the works that are done under the sun; and indeed, all is vanity and grasping for the wind."
+        <cite>— Ecclesiastes 1:14</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 02: DIAGNOSIS -->
+  <section class="section-block diagnosis" id="diagnosis">
+    <div class="inner">
+      <div class="sec-num">02</div>
+      <div class="diag-lead">
+        <p class="diag-strong">You're not lazy.<br/>You're not faithless.<br/>You're not even failing.</p>
+        <p class="diag-soft">You're succeeding at a game God never asked you to play.</p>
+      </div>
+      <div class="ceiling-card">
+        <div class="ceiling-tag">THE CEILING</div>
+        <p>Here is what no conference, no podcast, and no 5 AM routine will fix: The very thing that built your success — solving every problem, carrying every burden, being the irreplaceable man — is the exact thing that is destroying you now.</p>
+        <p class="ceiling-sub">You didn't build a business. You built a machine that requires your blood to run. And as long as you are the machine, there is a ceiling on everything.</p>
+      </div>
+      <ul class="cost-list">
+        <li class="cost-item"><span class="cost-pip"></span><div><strong>Your health</strong> — the chest tightness you've been ignoring for months</div></li>
+        <li class="cost-item"><span class="cost-pip"></span><div><strong>Your marriage</strong> — she's still there, but the intimacy left a long time ago</div></li>
+        <li class="cost-item"><span class="cost-pip"></span><div><strong>Your children</strong> — who have learned that Dad's body being in the room doesn't mean Dad is home</div></li>
+        <li class="cost-item"><span class="cost-pip"></span><div><strong>Your joy</strong> — traded for adrenaline and discipline, and you barely noticed</div></li>
+        <li class="cost-item"><span class="cost-pip"></span><div><strong>Your walk with God</strong> — reduced to a rushed prayer in the car and a Sunday you can't wait to end</div></li>
+      </ul>
+      <blockquote class="scripture">
+        "What does it profit a man to gain the whole world and forfeit his soul?"
+        <cite>— Jesus (Mark 8:36)</cite>
+      </blockquote>
+      <p class="scripture-aside">Read that again. He wasn't asking a hypothetical question. He was describing your Tuesday.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 03: THE SHIFT -->
+  <section class="section-block shift" id="shift">
+    <div class="inner">
+      <div class="sec-num">03</div>
+      <div class="shift-pullquote">"God will not pour billion-dollar anointing into a ten-dollar structure."</div>
+      <h2 class="sec-headline">The Architecture <em>of Favor</em></h2>
+      <p class="sec-intro">Favor is not random. Favor is architectural. It requires a vessel ordered enough to carry it. And right now, your life has no room for what God actually wants to give you — because every square inch is consumed by what you're trying to hold together yourself.</p>
+      <p class="sec-intro-sub">Order precedes multiplication. Structure precedes the supernatural.</p>
+
+      <div class="mk-grid">
+        <div class="mk-col mk-left">
+          <div class="mk-tag manager-tag">Manager</div>
+          <ul>
+            <li>White-knuckles every decision</li>
+            <li>Operates in exhaustion and adrenaline</li>
+            <li>Drowning in the urgent</li>
+            <li>The business owns him</li>
+          </ul>
+        </div>
+        <div class="mk-divider-col">
+          <div class="mk-divider-line"></div>
+          <div class="mk-divider-icon">→</div>
+          <div class="mk-divider-line"></div>
+        </div>
+        <div class="mk-col mk-right">
+          <div class="mk-tag king-tag">King</div>
+          <ul>
+            <li>Governs with prophetic clarity</li>
+            <li>Operates in anointing and rest</li>
+            <li>Anchored in the eternal</li>
+            <li>He presides over his domain</li>
+          </ul>
+        </div>
+      </div>
+
+      <blockquote class="scripture scripture-centered">
+        "The kingdom of God is not a matter of talk but of power."
+        <cite>— 1 Corinthians 4:20</cite>
+      </blockquote>
+
+      <div class="outcomes">
+        <div class="outcome-item">
+          <div class="out-num">I</div>
+          <div class="out-body">
+            <strong>The Anointing Unlocks</strong>
+            <p>Your business was never meant to be a money machine. It is an assignment. When you realign with that assignment, the anointing begins to operate through your decisions, your deals, and your team — and things that took years start happening in months.</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="out-num">II</div>
+          <div class="out-body">
+            <strong>Your Joy Is Restored</strong>
+            <p>You stop drowning in twenty tasks that drain you and begin operating in the one assignment that was always meant to carry your name. The burden lifts. The fire returns. You remember why you started.</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="out-num">III</div>
+          <div class="out-body">
+            <strong>Your Family Gets Their Father Back</strong>
+            <p>Not the exhausted version. Not the distracted version. The man your wife married. The father your children deserve. A man who walks through the door and is actually home.</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="out-num">IV</div>
+          <div class="out-body">
+            <strong>Your Wealth Multiplies — Without the Grind</strong>
+            <p>When you stop building in Babylonian toil and start stewarding in Kingdom order, provision doesn't just increase — it hunts you down. Deals appear. Doors open. The right people find you. Not because you got lucky. Because you finally got out of God's way.</p>
+            <blockquote class="outcome-scripture">"The blessing of the LORD makes one rich, and He adds no sorrow with it." — Proverbs 10:22</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOSHEN -->
+  <section class="goshen" id="goshen">
+    <div class="goshen-word">GOSHEN</div>
+    <div class="inner goshen-content">
+      <p class="goshen-lead">When your life is ordered, favor has somewhere to land.</p>
+      <p class="goshen-body">You have been operating in Babylon — building with sweat, striving in your own strength, white-knuckling every outcome. And God has been waiting.</p>
+      <p class="goshen-body">Waiting for you to build the structure that can actually hold what He's been trying to pour out.</p>
+      <p class="goshen-body">When that structure is in place, everything changes. Grace stops being a Sunday feeling and becomes a Monday-through-Friday force. The right investors appear. Contracts close that you didn't chase. Partnerships form that you didn't engineer.</p>
+      <p class="goshen-body goshen-highlight">Your wife looks at you differently. Your children start talking to you again.</p>
+      <blockquote class="goshen-scripture">
+        "You shall remember the LORD your God, for it is He who gives you power to get wealth."
+        <cite>— Deuteronomy 8:18</cite>
+      </blockquote>
+      <div class="goshen-rule"></div>
+      <p class="goshen-close">This is not motivation. This is the operating system of the Kingdom.<br/>You stop chasing provision. And you start trusting that faithfulness commands it.</p>
+    </div>
+  </section>
+
+  <!-- OFFER -->
+  <section class="section-block offer" id="offer">
+    <div class="inner">
+      <div class="offer-eyebrow">Introducing</div>
+      <h2 class="offer-headline">The Order <em>of Kings</em></h2>
+      <p class="offer-sub">A 6-Month Structural Overhaul for the Man Who Has Built Everything — Except the Life He Actually Wanted.</p>
+      <p class="offer-body">Let's be direct. This is not a course. This is not a conference. This is not another mastermind where successful men sit in a circle and trade tactics.</p>
+      <p class="offer-body">This is a six-month, high-accountability structural rebuild with Dan Romer — a man who has planted churches across two continents, built and advised multiple companies, raised seven children, and maintained a marriage that is still on fire after decades.</p>
+      <p class="offer-body offer-scripture-inline">"Unless the LORD builds the house, they labor in vain who build it." — Psalm 127:1</p>
+      <p class="offer-body">It is time to stop laboring in vain.</p>
+
+      <div class="delivs">
+        <div class="deliv">
+          <span class="deliv-n">01</span>
+          <div class="deliv-text">
+            <strong>The King's License</strong>
+            <p>The complete blueprint — time, life, spiritual rhythm, and business architecture — that shifts you from operator to owner, from grinder to governor. The exact operating system required to lead a Kingdom enterprise without sacrificing your family, your health, or your walk with God.</p>
+          </div>
+        </div>
+        <div class="deliv">
+          <span class="deliv-n">02</span>
+          <div class="deliv-text">
+            <strong>The Weekly King's Council</strong>
+            <p>24 live strategic sessions with a brotherhood of men who understand the weight you carry — because they carry it too. Real problems. Real prayer. Real accountability. No theory. No fluff. No one hiding behind a highlight reel.</p>
+          </div>
+        </div>
+        <div class="deliv">
+          <span class="deliv-n">03</span>
+          <div class="deliv-text">
+            <strong>Monthly 1-on-1 with Dan Romer</strong>
+            <p>Six private, 60-minute sessions where Dan looks directly into the structural and spiritual fractures of your life and business. These are not coaching calls. These are surgical interventions. He will say what your employees won't. What your pastor can't. And what your wife has been trying to tell you for years.</p>
+          </div>
+        </div>
+        <div class="deliv">
+          <span class="deliv-n">04</span>
+          <div class="deliv-text">
+            <strong>The In-Person Mastermind</strong>
+            <p>One exclusive, high-level physical gathering. Access Dan, his personal network of Kingdom investors, and his sons — who run their own highly successful operations. Some doors only open when you're in the room.</p>
+          </div>
+        </div>
+        <div class="deliv">
+          <span class="deliv-n">05</span>
+          <div class="deliv-text">
+            <strong>The Private King's Channel</strong>
+            <p>Direct, daily access to the brotherhood. The real-time accountability, encouragement, and iron-sharpening-iron that ensures your transformation doesn't die the moment the call ends.</p>
+            <blockquote class="outcome-scripture">"As iron sharpens iron, so one man sharpens another." — Proverbs 27:17</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STANDARD -->
+  <section class="section-block standard" id="standard">
+    <div class="inner">
+      <div class="sec-num">04</div>
+      <h2 class="sec-headline">The Standard</h2>
+      <p class="sec-intro">We do not fill seats. We guard a room.</p>
+      <p class="standard-body">The Order of Kings exists for a specific man at a specific crossroads — and we will turn away anyone who doesn't belong here.</p>
+      <div class="std-cols">
+        <div class="std-col std-no">
+          <div class="std-col-label">Not For You If</div>
+          <ul>
+            <li>You want a formula to get rich. (God is not a vending machine.)</li>
+            <li>You are uncomfortable when Scripture confronts your business decisions.</li>
+            <li>You want someone to validate the pace that is killing you.</li>
+            <li>You are not willing to let your wife see a different man walk through the door.</li>
+          </ul>
+        </div>
+        <div class="std-col std-yes">
+          <div class="std-col-label">Built For You If</div>
+          <ul>
+            <li>You have built something real — $200K to $5M+ — and it is not enough.</li>
+            <li>You know the next level is not more hustle. It is more surrender.</li>
+            <li>You are ready to replace the exhaustion of Babylon with the order of the Kingdom.</li>
+            <li>You are ready to stop being the cage and start being the king.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section class="apply-section" id="apply">
+    <div class="apply-bg-logo">
+      <img src="logo.png" alt="" aria-hidden="true" onerror="this.parentElement.style.display='none'" />
+    </div>
+    <div class="inner apply-inner">
+      <div class="apply-eyebrow">Six Months. One Decision. A Completely Different Life.</div>
+      <h2 class="apply-headline">Come Back<br/><em>to Yourself.</em></h2>
+      <p class="apply-body-text">You have spent years building something for everyone else. It is time to rebuild the man at the center of it all.</p>
+      <p class="apply-body-text apply-family">Your wife is waiting for him. Your children are waiting for him. The Kingdom assignment on your life is waiting for him.</p>
+      <p class="apply-body-text">He's not gone. He's buried — under the weight of a system you were never meant to carry alone.</p>
+      <blockquote class="apply-scripture">
+        "Come to me, all you who are weary and burdened, and I will give you rest."
+        <cite>— Jesus (Matthew 11:28)</cite>
+      </blockquote>
+      <p class="apply-invitation">This is your invitation to rest — not from the work, but from the wrong way of doing it.</p>
+      <a href="https://qfnp9ak5e8v.typeform.com/to/HFwJlLZg?utm_source=xxxxx&utm_medium=xxxxx&utm_campaign=xxxxx&utm_content=xxxxx" target="_blank" class="btn-pill btn-primary btn-lg" id="applyBtn">
+        Apply to See If You're a Fit <span class="btn-arr">→</span>
+      </a>
+      <p class="apply-note">Applications reviewed personally by Dan Romer.<br/>This is not open enrollment. Not all applicants are accepted.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo-wrap">
+      <img src="logo.png" alt="Order of Kings" class="footer-logo" />
+    </div>
+    <p class="footer-name">The Order of Kings</p>
+    <p class="footer-tag">A Goshen Initiative</p>
+  </footer>
+
+  <!-- VTurb SDK -->
+  <script src="https://vturb-six.vercel.app/player/sdk.js" async></script>
+  <script>
+    window.VTurbQueue = window.VTurbQueue || [];
+    window.VTurbQueue.push({
+      videoId: "cmnj90a9e000004jk6ecjqqpw",
+      containerId: "vturb-cmnj90a9e000004jk6ecjqqpw",
+      apiBase: "https://vturb-six.vercel.app"
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
