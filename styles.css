@@ -404,7 +404,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 64px;
+  padding-top: 52px;
 }
 .hero-bg {
   position: absolute;
