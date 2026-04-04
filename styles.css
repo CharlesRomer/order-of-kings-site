@@ -424,19 +424,24 @@ body {
 .hero-layout {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  max-width: 1200px;
+  gap: 40px;
+  max-width: 860px;
   margin: 0 auto;
   padding: 80px 48px;
   flex: 1;
+  text-align: center;
 }
 
+.hero-copy {
+  width: 100%;
+}
 .hero-eyebrow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-family: var(--font-ui);
   font-size: 11px;
@@ -485,22 +490,27 @@ body {
   font-size: clamp(15px, 1.6vw, 18px);
   color: var(--white-50);
   line-height: 1.7;
-  margin-bottom: 40px;
-  max-width: 480px;
+  margin-bottom: 0;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-actions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }
 
-/* VSL right panel */
+/* VSL stacked panel */
 .hero-vsl {
   opacity: 0;
-  transform: translateX(20px);
+  transform: translateY(20px);
   transition: opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s;
+  width: 100%;
 }
-.hero-vsl.shown { opacity: 1; transform: translateX(0); }
+.hero-vsl.shown { opacity: 1; transform: translateY(0); }
 
 .vsl-card {
   background: var(--surface);
@@ -1269,13 +1279,11 @@ body {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
     padding: 56px 24px;
   }
-  .hero-vsl { order: -1; }
   .hero-headline { font-size: clamp(48px, 11vw, 68px); }
-  .hero-actions { justify-content: flex-start; }
+  .hero-actions { justify-content: center; }
   .nav { padding: 16px 24px; }
   .mk-grid { grid-template-columns: 1fr; }
   .mk-divider-col {
