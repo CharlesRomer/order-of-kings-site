@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule Your Call — The Order of Kings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Book page layout ── */
+    .book-wrap {
+      min-height: 100vh;
+      padding-top: 52px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .book-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 40px 40px;
+      text-align: center;
+    }
+
+    .book-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-50);
+      margin-bottom: 20px;
+    }
+
+    .book-eyebrow-pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(34,197,94,0.5);
+      animation: pipPulse 2s ease-in-out infinite;
+    }
+
+    .book-headline {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    .book-headline em {
+      font-style: italic;
+      color: var(--blue-light);
+    }
+
+    .book-sub {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: var(--white-50);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 16px;
+    }
+
+    .book-sign {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--white-20);
+    }
+
+    /* ── Divider ── */
+    .book-rule {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--blue), transparent);
+      margin: 0 auto 0;
+      opacity: 0.5;
+    }
+
+    /* ── Calendar section ── */
+    .book-calendar {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+      flex: 1;
+    }
+
+    .book-calendar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px var(--border-2);
+    }
+
+    .book-calendar-card iframe {
+      display: block;
+      width: 100%;
+      min-height: 700px;
+      border: none;
+    }
+
+    /* ── Footer ── */
+    .book-footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .book-footer p {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-20);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .book-hero {
+        padding: 32px 20px 28px;
+      }
+
+      .book-calendar {
+        padding: 0 16px 60px;
+      }
+
+      .book-calendar-card {
+        border-radius: var(--radius);
+      }
+
+      .book-calendar-card iframe {
+        min-height: 800px;
+      }
+
+      .book-headline {
+        font-size: clamp(28px, 8vw, 38px);
+      }
+
+      .book-sub {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="noise"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;width:100%;padding:8px 48px;box-sizing:border-box;">
+    <a href="/" class="nav-logo-link">
+      <img src="logo.png" alt="Order of Kings" class="nav-logo-img" style="height:36px;width:auto;filter:invert(1);" />
+    </a>
+    <span style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--white-20);">The Order of Kings</span>
+  </nav>
+
+  <div class="book-wrap">
+
+    <!-- HERO -->
+    <div class="book-hero">
+      <div class="book-eyebrow">
+        <span class="book-eyebrow-pip"></span>
+        Application Received &mdash; Next Step
+      </div>
+      <h1 class="book-headline">You're <em>Pre-Qualified.</em></h1>
+      <p class="book-sub">Schedule your call below to discuss how I can help you install this framework into your business, your family, and your ministry.</p>
+      <p class="book-sign">Talk soon. &mdash; Dan</p>
+    </div>
+
+    <div class="book-rule"></div>
+
+    <!-- CALENDAR -->
+    <div class="book-calendar">
+      <div class="book-calendar-card">
+        <iframe src="https://team.goshenites.com/widget/booking/DBrA1F4hm7DR2wppoVPu" scrolling="no" id="NGMHO4TuLUvMFiovo7Vs_1775519061492"></iframe>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="book-footer">
+      <p>The Order of Kings &nbsp;&middot;&nbsp; A Goshen Initiative</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://team.goshenites.com/js/form_embed.js" type="text/javascript"></script>
+</body>
+</html>
