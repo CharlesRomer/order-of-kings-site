@@ -1283,11 +1283,18 @@ body {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .hero-layout {
-    gap: 32px;
-    padding: 56px 24px;
+    gap: 16px;
+    padding: 12px 20px 32px;
   }
-  .hero-headline { font-size: clamp(48px, 11vw, 68px); }
+  .hero-headline { font-size: clamp(17px, 4vw, 22px); }
+  .hero-sub { font-size: 13px; }
+  .hero-eyebrow { font-size: 10px; }
   .hero-actions { justify-content: center; }
+  .sec-headline { font-size: clamp(28px, 7vw, 40px); }
+  .offer-headline { font-size: clamp(28px, 7vw, 40px); }
+  .apply-headline { font-size: clamp(32px, 8vw, 48px); }
+  .opener { font-size: clamp(20px, 5vw, 28px); }
+  .goshen-lead { font-size: clamp(20px, 5vw, 28px); }
   .nav { padding: 16px 24px; }
   .mk-grid { grid-template-columns: 1fr; }
   .mk-divider-col {
@@ -1319,8 +1326,11 @@ body {
 }
 
 @media (max-width: 480px) {
-  .hero-headline { font-size: clamp(40px, 13vw, 58px); }
-  .apply-headline { font-size: clamp(52px, 14vw, 80px); }
+  .hero-headline { font-size: clamp(15px, 4vw, 18px); }
+  .hero-sub { font-size: 12px; }
+  .sec-headline { font-size: clamp(24px, 7vw, 32px); }
+  .offer-headline { font-size: clamp(24px, 7vw, 32px); }
+  .apply-headline { font-size: clamp(28px, 8vw, 38px); }
   .btn-lg { padding: 15px 28px; font-size: 13px; }
   .nav-logo-img { height: 28px; }
   .svp-card { max-width: calc(100vw - 32px); }
