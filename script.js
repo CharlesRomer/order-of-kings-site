@@ -38,18 +38,12 @@ document.addEventListener('mouseover', e => {
   }
 });
 
-// ── Intro overlay ──
-setTimeout(() => {
-  const intro = document.getElementById('introOverlay');
-  if (intro) intro.style.pointerEvents = 'none';
-}, 3400);
-
-// Hero lines reveal after intro
+// Hero lines reveal on load
 setTimeout(() => {
   document.querySelectorAll('.reveal-line').forEach(el => el.classList.add('shown'));
   const vslEl = document.querySelector('.hero-vsl');
   if (vslEl) vslEl.classList.add('shown');
-}, 3000);
+}, 100);
 
 // ── Nav scroll ──
 const nav = document.getElementById('nav');
