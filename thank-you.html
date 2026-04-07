@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Call Is Booked — The Order of Kings</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { cursor: auto !important; }
+
+    /* ── Page wrapper ── */
+    .ty-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 32px 100px;
+    }
+
+    /* ── Confirmation hero ── */
+    .ty-hero {
+      padding: 56px 0 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ty-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-pill);
+      padding: 6px 16px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ade80;
+      margin-bottom: 28px;
+    }
+
+    .ty-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34,197,94,0.6);
+      animation: pipPulse 2s ease-in-out infinite;
+    }
+
+    .ty-headline {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+
+    .ty-headline em {
+      font-style: italic;
+      color: #4ade80;
+    }
+
+    .ty-sub {
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: var(--white-50);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .ty-sub strong {
+      color: var(--white-80);
+      font-weight: 500;
+    }
+
+    /* ── Steps ── */
+    .ty-steps {
+      padding: 56px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    .ty-step {}
+
+    .ty-step-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      margin-bottom: 24px;
+    }
+
+    .ty-step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-dim);
+      border: 1px solid rgba(59,130,246,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-light);
+      flex-shrink: 0;
+    }
+
+    .ty-step-label {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+
+    /* ── Video ── */
+    .ty-video-wrap {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px var(--blue-glow);
+      aspect-ratio: 16/9;
+      width: 100%;
+    }
+
+    .ty-video-wrap > div {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* ── Calendar graphic ── */
+    .ty-cal-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ty-cal-hint {
+      font-size: 14px;
+      color: var(--white-50);
+      text-align: center;
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .ty-cal-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+
+    .ty-cal-top {
+      background: #1a73e8;
+      padding: 20px 24px 16px;
+    }
+
+    .ty-cal-top-label {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 6px;
+    }
+
+    .ty-cal-event-title {
+      font-family: var(--font-ui);
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .ty-cal-body {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ty-cal-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .ty-cal-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--white-20);
+      margin-top: 1px;
+    }
+
+    .ty-cal-row-text {
+      font-size: 13px;
+      color: var(--white-50);
+      line-height: 1.5;
+    }
+
+    .ty-cal-row-text strong {
+      display: block;
+      font-weight: 500;
+      color: var(--white-80);
+      font-size: 13px;
+    }
+
+    .ty-cal-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 4px 0;
+    }
+
+    .ty-cal-rsvp {
+      padding: 16px 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ty-cal-rsvp-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-20);
+      margin-right: 4px;
+    }
+
+    .ty-rsvp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--white-50);
+      cursor: default;
+      transition: none;
+    }
+
+    .ty-rsvp-btn.accepted {
+      background: rgba(34,197,94,0.1);
+      border-color: rgba(34,197,94,0.3);
+      color: #4ade80;
+    }
+
+    .ty-rsvp-check {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* ── FAQ ── */
+    .ty-faq {
+      padding: 72px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 72px;
+    }
+
+    .ty-faq-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 12px;
+    }
+
+    .ty-faq-headline {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 40px;
+    }
+
+    .ty-faq-headline em {
+      font-style: italic;
+      color: var(--blue-light);
+    }
+
+    .ty-faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    details.ty-faq-item {
+      border-top: 1px solid var(--border);
+    }
+
+    details.ty-faq-item:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.ty-faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white-80);
+      line-height: 1.4;
+      transition: color var(--transition);
+      user-select: none;
+    }
+
+    details.ty-faq-item summary::-webkit-details-marker { display: none; }
+
+    details.ty-faq-item summary:hover { color: var(--white); }
+
+    details.ty-faq-item[open] summary { color: var(--white); }
+
+    .ty-faq-chevron {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--white-20);
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+
+    details.ty-faq-item[open] .ty-faq-chevron {
+      transform: rotate(180deg);
+      color: var(--blue-light);
+    }
+
+    .ty-faq-answer {
+      padding: 0 0 20px;
+      font-size: 14px;
+      color: var(--white-50);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .ty-wrap { padding: 0 20px 80px; }
+      .ty-hero { padding: 36px 0 36px; }
+      .ty-steps { padding: 40px 0 0; gap: 40px; }
+      .ty-step-banner { padding: 14px 18px; gap: 12px; }
+      .ty-step-label { font-size: 13px; }
+      .ty-faq { margin-top: 56px; padding-top: 56px; }
+      details.ty-faq-item summary { font-size: 13px; padding: 18px 0; }
+      .ty-faq-answer { font-size: 13px; }
+      .ty-cal-top { padding: 16px 18px 14px; }
+      .ty-cal-body { padding: 16px 18px; }
+      .ty-cal-rsvp { padding: 12px 18px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="noise"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;width:100%;padding:8px 48px;box-sizing:border-box;">
+    <a href="/" class="nav-logo-link">
+      <img src="logo.png" alt="Order of Kings" class="nav-logo-img" style="height:36px;width:auto;filter:invert(1);" />
+    </a>
+    <span style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--white-20);">The Order of Kings</span>
+  </nav>
+
+  <div style="padding-top:52px;">
+  <div class="ty-wrap">
+
+    <!-- CONFIRMATION HERO -->
+    <div class="ty-hero">
+      <div class="ty-badge">
+        <span class="ty-badge-dot"></span>
+        Call Confirmed
+      </div>
+      <h1 class="ty-headline">Congrats! Your Call<br/>Is <em>Booked.</em></h1>
+      <p class="ty-sub">
+        We look forward to speaking with you during your scheduled time.<br/><br/>
+        <strong>Please be in a quiet spot where we can speak about your goals.</strong>
+        We will not take calls when you're on the go or can't devote your full attention.<br/><br/>
+        This call may be the turning point for the rest of your life. Please treat it that way.
+      </p>
+    </div>
+
+    <!-- STEPS -->
+    <div class="ty-steps">
+
+      <!-- STEP 1 -->
+      <div class="ty-step">
+        <div class="ty-step-banner">
+          <div class="ty-step-num">1</div>
+          <span class="ty-step-label">Watch This Video Now</span>
+        </div>
+        <div class="ty-video-wrap">
+          <div id="vturb-cmno073be000004l7u7chxxy9"></div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="ty-step">
+        <div class="ty-step-banner">
+          <div class="ty-step-num">2</div>
+          <span class="ty-step-label">Accept the Calendar Invite</span>
+        </div>
+        <div class="ty-cal-wrap">
+          <!-- Calendar UI graphic -->
+          <div class="ty-cal-card">
+            <div class="ty-cal-top">
+              <div class="ty-cal-top-label">Google Calendar Invite</div>
+              <div class="ty-cal-event-title">Strategy Call — The Order of Kings</div>
+            </div>
+            <div class="ty-cal-body">
+              <div class="ty-cal-row">
+                <svg class="ty-cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div class="ty-cal-row-text">
+                  <strong>Your Scheduled Time</strong>
+                  Check your confirmation email for the exact date &amp; time
+                </div>
+              </div>
+              <div class="ty-cal-row">
+                <svg class="ty-cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <div class="ty-cal-row-text">
+                  <strong>The Order of Kings Team</strong>
+                  A member of Dan's trained team
+                </div>
+              </div>
+              <div class="ty-cal-row">
+                <svg class="ty-cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M15 10l-4 4l-2-2"/><circle cx="12" cy="12" r="9"/>
+                </svg>
+                <div class="ty-cal-row-text">
+                  <strong>Video Call</strong>
+                  Link included in your calendar invite
+                </div>
+              </div>
+            </div>
+            <div class="ty-cal-divider"></div>
+            <div class="ty-cal-rsvp">
+              <span class="ty-cal-rsvp-label">RSVP</span>
+              <span class="ty-rsvp-btn accepted">
+                <svg class="ty-rsvp-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Accepted
+              </span>
+              <span class="ty-rsvp-btn">Maybe</span>
+              <span class="ty-rsvp-btn">Decline</span>
+            </div>
+          </div>
+          <p class="ty-cal-hint">Check your email for a Google Calendar invite and click <strong style="color:var(--white-80);">Accept</strong> to save the call to your calendar so you don't miss it.</p>
+        </div>
+      </div>
+
+    </div><!-- /steps -->
+
+    <!-- FAQ -->
+    <div class="ty-faq">
+      <div class="ty-faq-eyebrow">Before Your Call</div>
+      <h2 class="ty-faq-headline">Common <em>Questions</em></h2>
+      <div class="ty-faq-list">
+
+        <details class="ty-faq-item">
+          <summary>What is The Order of Kings?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">The Order of Kings is a 6-month brotherhood and coaching experience for Christian entrepreneurs who are ready to integrate faith, family, and business at the highest level. It's not a course. It's not a mastermind in the traditional sense. It's an apostolic framework built on the Kingdom principles of God — designed to multiply the man so the mission multiplies with him.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Who is this call for?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">This call is for high-capacity men who feel a gap between where they are and where they know God is calling them. Men who are building — businesses, families, ministries — but sense something is misaligned. If you're teachable, hungry, and ready to receive revelation, this conversation is for you.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Who will I be speaking with?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">You'll be speaking with a member of Dan's team who has been trained in the framework and vision behind The Order of Kings. Their job isn't to sell you — it's to understand where you are and whether this is the right environment for this season of your life.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>What will we talk about on the call?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">Come ready to be honest about where you are — in your business, your marriage, your walk with God. The call is a discernment conversation, not a pitch. You'll leave with clarity either way.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Should my spouse know I'm getting on this call?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">Yes. Dan's framework starts with the marriage. If your wife has questions or reservations, she's welcome on the call. Some of the most important conversations happen when both spouses are in the room.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Will this help my marriage?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">Yes — and this is one of the things that makes The Order of Kings distinct. Dan's framework treats marriage as the first domain of a man's Kingdom authority. A man who is winning at business but losing at home is not winning. The program is designed to bring health to the marriage as the business grows, not at its expense.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Is there support for raising my kids and leading my family?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">Absolutely. The Father-First Framework is built into the program. Dan has seven children and works alongside his family — his sons lead organizations, his wife oversees a business. The model he teaches is the model he lives. You'll get practical rhythms for family culture, not just inspiration.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Is there real business education and coaching?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">Yes. The Order of Kings includes systems, frameworks, and coaching to help you stop being the bottleneck in your own business — building a team and a structure that doesn't require your constant presence to function. Kingdom principles aren't abstract here. They land in your actual operations.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>Will this help me with my time?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">This is one of the most common things men bring into the program. A core piece of the framework is what Dan calls the Time Redemption Strategy — a practical approach to reclaiming and stewarding your time as a Kingdom resource, not just managing a calendar.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>How much time does this require from me?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">The program is designed for men who don't have time to waste — so the time ask is intentional and high-ROI. Exact time commitments will be covered on your call, but the goal is always leverage: less of you in the wrong places, more of you where it actually counts.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>What if I'm not sure I'm ready?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">The men who aren't sure they're ready are often exactly the men this was built for. Readiness isn't about having everything together — it's about being done tolerating the gap between your current reality and your calling.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>What should I do before the call?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">Show up. Block the time, find a quiet place, and come with honesty about where you actually are — not where you wish you were. The more real you are, the more valuable the conversation will be.</p>
+        </details>
+
+        <details class="ty-faq-item">
+          <summary>What happens after the call?<svg class="ty-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="ty-faq-answer">If it's a fit, you'll be walked through what joining looks like and what the next steps are. If it's not the right time, you'll still leave with clarity. Either way, the conversation has value.</p>
+        </details>
+
+      </div>
+    </div>
+
+  </div><!-- /ty-wrap -->
+  </div>
+
+  <!-- FOOTER -->
+  <footer style="text-align:center;padding:32px 24px;border-top:1px solid var(--border);">
+    <p style="font-family:var(--font-ui);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-20);">The Order of Kings &nbsp;&middot;&nbsp; A Goshen Initiative</p>
+  </footer>
+
+  <!-- VTurb Player -->
+  <script src="https://vturb-six.vercel.app/player/sdk.js" async></script>
+  <script>
+    window.VTurbQueue = window.VTurbQueue || [];
+    window.VTurbQueue.push({
+      videoId: "cmno073be000004l7u7chxxy9",
+      containerId: "vturb-cmno073be000004l7u7chxxy9",
+      apiBase: "https://vturb-six.vercel.app"
+    });
+  </script>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
