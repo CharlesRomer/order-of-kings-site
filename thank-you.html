@@ -364,6 +364,43 @@
       line-height: 1.8;
     }
 
+    /* ── Add to Calendar button ── */
+    .ty-atc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #1a73e8;
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.1s;
+      box-shadow: 0 4px 20px rgba(26,115,232,0.35);
+      margin-top: 28px;
+    }
+
+    .ty-atc-btn:hover {
+      background: #1557b0;
+      box-shadow: 0 6px 28px rgba(26,115,232,0.5);
+      transform: translateY(-1px);
+    }
+
+    .ty-atc-btn:active {
+      transform: translateY(0);
+    }
+
+    .ty-atc-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
     /* ── Mobile ── */
     @media (max-width: 640px) {
       .ty-wrap { padding: 0 20px 80px; }
@@ -406,6 +443,17 @@
         We will not take calls when you're on the go or can't devote your full attention.<br/><br/>
         Treat this call with the gravity it deserves — it could be one of the most important conversations of your life. Please treat it that way.
       </p>
+      <a id="atc-btn" href="#" class="ty-atc-btn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="12" y1="14" x2="12" y2="18"/>
+          <line x1="10" y1="16" x2="14" y2="16"/>
+        </svg>
+        Add to Google Calendar
+      </a>
     </div>
 
     <!-- STEPS -->
@@ -556,6 +604,50 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
+
+    // Build Google Calendar "Add to Calendar" link
+    // Reads booking date/time from URL params if the booking tool appends them
+    // e.g. ?start_time=2026-06-25T14:00:00&end_time=2026-06-25T15:00:00
+    (function buildCalendarLink() {
+      const params = new URLSearchParams(window.location.search);
+
+      // GHL / common booking tools use various param names — try them all
+      const rawStart = params.get('start_time') || params.get('startTime') ||
+                       params.get('start') || params.get('appointment_start_time');
+      const rawEnd   = params.get('end_time')   || params.get('endTime') ||
+                       params.get('end')   || params.get('appointment_end_time');
+
+      const title    = encodeURIComponent('Strategy Call — The Order of Kings');
+      const details  = encodeURIComponent('Your strategy call with the Order of Kings team.\n\nTreat this call with the gravity it deserves.');
+
+      let datesParam = '';
+
+      if (rawStart) {
+        // Parse to UTC and format as YYYYMMDDTHHmmssZ
+        const toGcalDate = (str) => {
+          const d = new Date(str);
+          if (isNaN(d)) return null;
+          return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+        };
+
+        const start = toGcalDate(rawStart);
+        let end = rawEnd ? toGcalDate(rawEnd) : null;
+
+        // Default to 1-hour duration if no end time provided
+        if (start && !end) {
+          const endDate = new Date(rawStart);
+          endDate.setHours(endDate.getHours() + 1);
+          end = toGcalDate(endDate.toISOString());
+        }
+
+        if (start && end) {
+          datesParam = `&dates=${start}/${end}`;
+        }
+      }
+
+      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}${datesParam}`;
+      document.getElementById('atc-btn').href = url;
+    })();
   </script>
 
 </body>
