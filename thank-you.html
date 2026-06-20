@@ -603,10 +603,12 @@
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // Build Google Calendar link from booking time stored by book-dq-harry.html
+    // Build Google Calendar link from booking time passed via GHL redirect URL params
     (function buildCalendarLink() {
-      const rawStart = sessionStorage.getItem('ghl_start');
-      const rawEnd   = sessionStorage.getItem('ghl_end');
+      const p = new URLSearchParams(window.location.search);
+      // Handle both camelCase and snake_case GHL variable formats
+      const rawStart = p.get('start_time') || p.get('startTime');
+      const rawEnd   = p.get('end_time')   || p.get('endTime');
 
       const title   = encodeURIComponent('Strategy Call — The Order of Kings');
       const details = encodeURIComponent('Your strategy call with the Order of Kings team.\n\nBe in a quiet spot where you can speak freely about your goals.');
@@ -632,9 +634,6 @@
         if (start && end) {
           datesParam = `&dates=${start}/${end}`;
         }
-
-        sessionStorage.removeItem('ghl_start');
-        sessionStorage.removeItem('ghl_end');
       }
 
       const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}${datesParam}`;
