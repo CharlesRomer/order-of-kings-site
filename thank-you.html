@@ -391,9 +391,7 @@
       transform: translateY(-1px);
     }
 
-    .ty-atc-btn:active {
-      transform: translateY(0);
-    }
+    .ty-atc-btn:active { transform: translateY(0); }
 
     .ty-atc-btn svg {
       width: 18px;
@@ -605,25 +603,17 @@
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // Build Google Calendar "Add to Calendar" link
-    // Reads booking date/time from URL params if the booking tool appends them
-    // e.g. ?start_time=2026-06-25T14:00:00&end_time=2026-06-25T15:00:00
+    // Build Google Calendar link from booking time stored by book-dq-harry.html
     (function buildCalendarLink() {
-      const params = new URLSearchParams(window.location.search);
+      const rawStart = sessionStorage.getItem('ghl_start');
+      const rawEnd   = sessionStorage.getItem('ghl_end');
 
-      // GHL / common booking tools use various param names — try them all
-      const rawStart = params.get('start_time') || params.get('startTime') ||
-                       params.get('start') || params.get('appointment_start_time');
-      const rawEnd   = params.get('end_time')   || params.get('endTime') ||
-                       params.get('end')   || params.get('appointment_end_time');
-
-      const title    = encodeURIComponent('Strategy Call — The Order of Kings');
-      const details  = encodeURIComponent('Your strategy call with the Order of Kings team.\n\nTreat this call with the gravity it deserves.');
+      const title   = encodeURIComponent('Strategy Call — The Order of Kings');
+      const details = encodeURIComponent('Your strategy call with the Order of Kings team.\n\nBe in a quiet spot where you can speak freely about your goals.');
 
       let datesParam = '';
 
       if (rawStart) {
-        // Parse to UTC and format as YYYYMMDDTHHmmssZ
         const toGcalDate = (str) => {
           const d = new Date(str);
           if (isNaN(d)) return null;
@@ -633,7 +623,6 @@
         const start = toGcalDate(rawStart);
         let end = rawEnd ? toGcalDate(rawEnd) : null;
 
-        // Default to 1-hour duration if no end time provided
         if (start && !end) {
           const endDate = new Date(rawStart);
           endDate.setHours(endDate.getHours() + 1);
@@ -643,6 +632,9 @@
         if (start && end) {
           datesParam = `&dates=${start}/${end}`;
         }
+
+        sessionStorage.removeItem('ghl_start');
+        sessionStorage.removeItem('ghl_end');
       }
 
       const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}${datesParam}`;

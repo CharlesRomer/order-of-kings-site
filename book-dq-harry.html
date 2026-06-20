@@ -195,6 +195,20 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
+
+    // Capture booking time from GHL iframe postMessage before redirect
+    window.addEventListener('message', function(e) {
+      try {
+        const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+        // GHL sends booking confirmation in several possible shapes
+        const start = d?.data?.startTime || d?.startTime || d?.data?.start_time || d?.start_time;
+        const end   = d?.data?.endTime   || d?.endTime   || d?.data?.end_time   || d?.end_time;
+        if (start) {
+          sessionStorage.setItem('ghl_start', start);
+          sessionStorage.setItem('ghl_end', end || '');
+        }
+      } catch(err) {}
+    });
   </script>
   <script src="https://team.goshenites.com/js/form_embed.js" type="text/javascript"></script>
 </body>
