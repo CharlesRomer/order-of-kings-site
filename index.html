@@ -9,6 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Hide page until PostHog resolves the feature flag to avoid variant flicker -->
+  <script>document.documentElement.style.opacity='0';</script>
+  <!-- PostHog analytics + experiment engine -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.people.toString()+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on addEventProperties".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('YOUR_POSTHOG_PROJECT_KEY_HERE', {api_host: 'https://us.i.posthog.com'});
+  </script>
   <script src="https://fast.wistia.com/player.js" async></script>
   <script src="https://fast.wistia.com/embed/e8icnatdro.js" async type="module"></script>
   <style>wistia-player[media-id='e8icnatdro']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/e8icnatdro/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
@@ -354,5 +361,65 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!-- A/B test: copy variants + PostHog flag check -->
+  <script src="copy-variants.js"></script>
+  <script>
+    (function () {
+      var revealed = false;
+
+      function revealPage() {
+        if (revealed) return;
+        revealed = true;
+        document.documentElement.style.transition = 'opacity 0.15s';
+        document.documentElement.style.opacity = '1';
+      }
+
+      // Append ?ph_id=<distinctId> to every Typeform and GHL outbound link
+      // so PostHog identity follows the user into Typeform and the booking page.
+      function injectDistinctId() {
+        var distinctId = posthog.get_distinct_id ? posthog.get_distinct_id() : null;
+        if (!distinctId) return;
+        var selectors = [
+          'a[href*="typeform.com"]',
+          'a[href*="goshenites.com"]',
+          'a[href*="gohighlevel.com"]'
+        ];
+        document.querySelectorAll(selectors.join(',')).forEach(function (link) {
+          try {
+            var url = new URL(link.href);
+            url.searchParams.set('ph_id', distinctId);
+            link.href = url.toString();
+          } catch (e) { /* malformed href — skip */ }
+        });
+      }
+
+      // Safety net: always reveal within 600ms even if PostHog stalls
+      var fallback = setTimeout(revealPage, 600);
+
+      // Track Apply CTA clicks as the experiment goal event
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href*="typeform"]');
+        if (link && window.posthog) {
+          posthog.capture('apply_clicked', {
+            button_id: link.id || null,
+            button_text: (link.textContent || '').trim().slice(0, 80)
+          });
+        }
+      });
+
+      // Resolve feature flag, apply variant, inject identity, then reveal
+      posthog.onFeatureFlags(function () {
+        clearTimeout(fallback);
+        var flag = posthog.getFeatureFlag('landing-copy-test');
+        // 'control' (or missing/error) renders the existing HTML unchanged
+        if (flag && flag !== 'control' && window.COPY_VARIANTS && window.COPY_VARIANTS[flag]) {
+          window.COPY_VARIANTS[flag]();
+        }
+        injectDistinctId();
+        revealPage();
+      });
+    })();
+  </script>
 </body>
 </html>
