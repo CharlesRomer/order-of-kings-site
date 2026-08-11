@@ -17,9 +17,12 @@ exports.handler = async function (event) {
   const hidden = (payload.form_response && payload.form_response.hidden) || {};
   const distinctId = hidden.ph_id;
 
+  console.log('typeform-webhook: hidden fields =', JSON.stringify(hidden));
+  console.log('typeform-webhook: distinctId =', distinctId);
+  console.log('typeform-webhook: POSTHOG_KEY set =', !!process.env.POSTHOG_KEY);
+
   if (!distinctId) {
-    // No identity to link — still return 200 so Typeform doesn't retry
-    console.warn('typeform-webhook: no ph_id in payload');
+    console.warn('typeform-webhook: no ph_id in payload — aborting');
     return { statusCode: 200, body: 'ok (no ph_id)' };
   }
 
@@ -40,26 +43,38 @@ exports.handler = async function (event) {
     properties: props
   });
 
-  await new Promise(function (resolve, reject) {
-    const req = https.request(
-      {
-        hostname: 'us.i.posthog.com',
-        path: '/capture/',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(body)
+  console.log('typeform-webhook: sending to PostHog, body =', body);
+
+  let statusCode;
+  let responseBody = '';
+  try {
+    await new Promise(function (resolve, reject) {
+      const req = https.request(
+        {
+          hostname: 'us.i.posthog.com',
+          path: '/capture/',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(body)
+          }
+        },
+        function (res) {
+          statusCode = res.statusCode;
+          res.on('data', function (chunk) { responseBody += chunk; });
+          res.on('end', resolve);
         }
-      },
-      function (res) {
-        res.resume();
-        res.on('end', resolve);
-      }
-    );
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
+      );
+      req.on('error', reject);
+      req.write(body);
+      req.end();
+    });
+  } catch (err) {
+    console.error('typeform-webhook: PostHog request failed =', err.message);
+    return { statusCode: 500, body: 'PostHog request failed' };
+  }
+
+  console.log('typeform-webhook: PostHog responded', statusCode, responseBody);
 
   return { statusCode: 200, body: 'ok' };
 };
