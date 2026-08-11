@@ -122,7 +122,7 @@
   }
 
   window.COPY_VARIANTS = {
-    'variant-A': applyVariantA
+    'variant-a': applyVariantA
   };
 
 })();
