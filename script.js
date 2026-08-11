@@ -186,12 +186,15 @@ customElements.whenDefined('wistia-player').then(() => {
   if (!player || !window.posthog) return;
 
   const fired = {};
+  let pollInterval = null;
 
   function checkMilestones() {
-    const pct = player.percentWatched; // 0–1
-    if (pct == null) return;
+    const duration = player.duration;
+    const current = player.currentTime;
+    if (!duration || current == null) return;
+    const pct = (current / duration) * 100;
     [25, 50, 75, 100].forEach(m => {
-      if (!fired[m] && pct * 100 >= m) {
+      if (!fired[m] && pct >= m) {
         fired[m] = true;
         posthog.capture('vsl_milestone', { percent: m });
       }
@@ -203,12 +206,20 @@ customElements.whenDefined('wistia-player').then(() => {
       fired.play = true;
       posthog.capture('vsl_play');
     }
+    // Start polling while playing
+    if (!pollInterval) pollInterval = setInterval(checkMilestones, 2000);
+  });
+
+  player.addEventListener('pause', () => {
+    clearInterval(pollInterval);
+    pollInterval = null;
+    checkMilestones(); // capture milestone at exact pause point
   });
 
   player.addEventListener('ended', () => {
+    clearInterval(pollInterval);
+    pollInterval = null;
     posthog.capture('vsl_ended');
-    checkMilestones(); // ensure 100% fires on end
+    checkMilestones(); // ensure 100% fires
   });
-
-  player.addEventListener('timeupdate', checkMilestones);
 });
