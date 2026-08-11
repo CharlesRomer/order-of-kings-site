@@ -178,6 +178,24 @@ window.addEventListener('scroll', () => {
   word.style.transform = `translate(-50%, calc(-50% + ${progress * 30}px))`;
 }, { passive: true });
 
+// ── Scroll depth tracking → PostHog ──
+(function () {
+  const fired = {};
+  window.addEventListener('scroll', () => {
+    if (!window.posthog) return;
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (!total) return;
+    const pct = (scrolled / total) * 100;
+    [25, 50, 75, 100].forEach(m => {
+      if (!fired[m] && pct >= m) {
+        fired[m] = true;
+        posthog.capture('scroll_depth', { percent: m });
+      }
+    });
+  }, { passive: true });
+})();
+
 // ── Wistia VSL tracking → PostHog ──
 // Waits for the <wistia-player> custom element to register (loads async),
 // then fires vsl_play, vsl_milestone (25/50/75/100%), and vsl_ended.
