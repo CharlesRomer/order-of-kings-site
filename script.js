@@ -177,3 +177,38 @@ window.addEventListener('scroll', () => {
   const progress = -rect.top / window.innerHeight;
   word.style.transform = `translate(-50%, calc(-50% + ${progress * 30}px))`;
 }, { passive: true });
+
+// ── Wistia VSL tracking → PostHog ──
+// Waits for the <wistia-player> custom element to register (loads async),
+// then fires vsl_play, vsl_milestone (25/50/75/100%), and vsl_ended.
+customElements.whenDefined('wistia-player').then(() => {
+  const player = document.querySelector('wistia-player');
+  if (!player || !window.posthog) return;
+
+  const fired = {};
+
+  function checkMilestones() {
+    const pct = player.percentWatched; // 0–1
+    if (pct == null) return;
+    [25, 50, 75, 100].forEach(m => {
+      if (!fired[m] && pct * 100 >= m) {
+        fired[m] = true;
+        posthog.capture('vsl_milestone', { percent: m });
+      }
+    });
+  }
+
+  player.addEventListener('play', () => {
+    if (!fired.play) {
+      fired.play = true;
+      posthog.capture('vsl_play');
+    }
+  });
+
+  player.addEventListener('ended', () => {
+    posthog.capture('vsl_ended');
+    checkMilestones(); // ensure 100% fires on end
+  });
+
+  player.addEventListener('timeupdate', checkMilestones);
+});
