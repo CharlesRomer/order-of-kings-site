@@ -10,6 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.people.toString()+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on addEventProperties".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_X4yMXtjgnMJuJ9uGEOTsM4iYtha4OdWSpcJSLrgDA0m', {api_host: 'https://us.i.posthog.com'});
+    posthog.capture('call_booked');
+  </script>
   <!-- Wistia -->
   <script src="https://fast.wistia.com/player.js" async></script>
   <script src="https://fast.wistia.com/embed/x27tls27gx.js" async type="module"></script>
@@ -639,6 +644,38 @@
       const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}${datesParam}`;
       document.getElementById('atc-btn').href = url;
     })();
+  </script>
+
+  <script>
+    customElements.whenDefined('wistia-player').then(function () {
+      var player = document.querySelector('wistia-player');
+      if (!player || !window.posthog) return;
+      var fired = {};
+      var pollInterval = null;
+      function checkMilestones() {
+        var duration = player.duration;
+        var current = player.currentTime;
+        if (!duration || current == null) return;
+        var pct = (current / duration) * 100;
+        [25, 50, 75, 100].forEach(function (m) {
+          if (!fired[m] && pct >= m) {
+            fired[m] = true;
+            posthog.capture('ty_vsl_milestone', { percent: m });
+          }
+        });
+      }
+      player.addEventListener('play', function () {
+        if (!fired.play) { fired.play = true; posthog.capture('ty_vsl_play'); }
+        if (!pollInterval) pollInterval = setInterval(checkMilestones, 2000);
+      });
+      player.addEventListener('pause', function () {
+        clearInterval(pollInterval); pollInterval = null; checkMilestones();
+      });
+      player.addEventListener('ended', function () {
+        clearInterval(pollInterval); pollInterval = null;
+        posthog.capture('ty_vsl_ended'); checkMilestones();
+      });
+    });
   </script>
 
 </body>
