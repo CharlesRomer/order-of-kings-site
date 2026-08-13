@@ -505,11 +505,10 @@ body {
 }
 .hero-stat {
   font-family: var(--font-ui);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--white-50);
+  letter-spacing: 0.06em;
+  color: var(--white-80);
   text-align: center;
   width: 100%;
 }
