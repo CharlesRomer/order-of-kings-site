@@ -28,7 +28,7 @@ exports.handler = async function (event) {
 
   // Pull any useful answer fields for richer PostHog properties
   const answers = (payload.form_response && payload.form_response.answers) || [];
-  const props = { source: 'typeform_webhook' };
+  const props = { source: 'typeform_webhook', $current_url: 'https://orderofkings.org/', $host: 'orderofkings.org' };
   answers.forEach(function (a) {
     const key = a.field && a.field.ref ? a.field.ref : a.field && a.field.id;
     if (!key) return;
