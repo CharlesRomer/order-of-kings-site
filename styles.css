@@ -17,6 +17,10 @@
   --blue-glow:   rgba(37,99,235,0.18);
   --blue-dim:    rgba(37,99,235,0.08);
 
+  /* Gold accent */
+  --gold:        #c6a064;
+  --gold-dim:    rgba(198,160,100,0.08);
+
   --white:       #f8f8fa;
   --white-80:    rgba(248,248,250,0.8);
   --white-50:    rgba(248,248,250,0.5);
@@ -499,6 +503,20 @@ body {
   color: var(--white);
   font-weight: 600;
 }
+.hero-stat {
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-align: center;
+  width: 100%;
+  padding: 14px 24px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background: var(--gold-dim);
+}
+
 .hero-actions {
   display: flex;
   gap: 12px;
@@ -1233,6 +1251,20 @@ body {
   font-family: var(--font-display);
 }
 }
+.apply-stat {
+  margin-top: 20px;
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-align: center;
+  padding: 14px 24px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background: var(--gold-dim);
+}
+
 .apply-note {
   margin-top: 24px;
   font-family: var(--font-ui);
