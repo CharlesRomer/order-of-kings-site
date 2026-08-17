@@ -197,18 +197,25 @@ window.addEventListener('scroll', () => {
 })();
 
 // ── Wistia A/B variant detection → PostHog ──
-// When Wistia resolves an A/B test it loads one of two real video IDs.
-// _wq.onReady fires with the actual video that played, so we can record
-// which variant this person saw and segment conversions by video version.
-window._wq = window._wq || [];
-window._wq.push({
-  id: '_all',
-  onReady: function (video) {
-    var videoId = video.hashedId();
-    if (!videoId || !window.posthog) return;
+// Read the resolved video ID from the web component after it loads.
+// If Wistia's A/B test swapped the media-id, mediaId reflects the actual video shown.
+customElements.whenDefined('wistia-player').then(function () {
+  var player = document.querySelector('wistia-player');
+  if (!player || !window.posthog) return;
+
+  function captureVariant() {
+    // mediaId or hashedId reflects the actual resolved video (not the A/B container)
+    var videoId = player.mediaId || player.hashedId || player.getAttribute('media-id');
+    if (!videoId) return;
     posthog.capture('vsl_variant_assigned', { vsl_video_id: videoId });
     posthog.people.set({ vsl_variant: videoId });
   }
+
+  // Try immediately, then again on play (by which point A/B is definitely resolved)
+  setTimeout(captureVariant, 1500);
+  player.addEventListener('play', function () {
+    captureVariant();
+  }, { once: true });
 });
 
 // ── Wistia VSL tracking → PostHog ──
