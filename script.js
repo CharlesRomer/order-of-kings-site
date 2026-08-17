@@ -196,6 +196,21 @@ window.addEventListener('scroll', () => {
   }, { passive: true });
 })();
 
+// ── Wistia A/B variant detection → PostHog ──
+// When Wistia resolves an A/B test it loads one of two real video IDs.
+// _wq.onReady fires with the actual video that played, so we can record
+// which variant this person saw and segment conversions by video version.
+window._wq = window._wq || [];
+window._wq.push({
+  id: '_all',
+  onReady: function (video) {
+    var videoId = video.hashedId();
+    if (!videoId || !window.posthog) return;
+    posthog.capture('vsl_variant_assigned', { vsl_video_id: videoId });
+    posthog.people.set({ vsl_variant: videoId });
+  }
+});
+
 // ── Wistia VSL tracking → PostHog ──
 // Waits for the <wistia-player> custom element to register (loads async),
 // then fires vsl_play, vsl_milestone (25/50/75/100%), and vsl_ended.
