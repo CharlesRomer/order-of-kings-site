@@ -207,6 +207,7 @@ customElements.whenDefined('wistia-player').then(function () {
     // mediaId or hashedId reflects the actual resolved video (not the A/B container)
     var videoId = player.mediaId || player.hashedId || player.getAttribute('media-id');
     if (!videoId) return;
+    window.OOK_VSL_VARIANT = videoId;
     posthog.capture('vsl_variant_assigned', { vsl_video_id: videoId });
     posthog.people.set({ vsl_variant: videoId });
   }

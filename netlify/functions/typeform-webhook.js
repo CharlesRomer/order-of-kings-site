@@ -39,6 +39,8 @@ exports.handler = async function (event) {
 
   const hidden = (payload.form_response && payload.form_response.hidden) || {};
   const distinctId = hidden.ph_id;
+  const copyVariant = hidden.copy_variant || null;
+  const vslVariant = hidden.vsl_variant || null;
 
   if (!distinctId) {
     console.warn('typeform-webhook: no ph_id — aborting');
@@ -52,6 +54,9 @@ exports.handler = async function (event) {
     $current_url: 'https://orderofkings.org/',
     $host: 'orderofkings.org'
   };
+
+  if (copyVariant) props.copy_variant = copyVariant;
+  if (vslVariant) props.vsl_variant = vslVariant;
 
   let applicantEmail = null;
 

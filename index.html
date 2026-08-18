@@ -376,8 +376,8 @@
         document.documentElement.style.opacity = '1';
       }
 
-      // Append ?ph_id=<distinctId> to every Typeform and GHL outbound link
-      // so PostHog identity follows the user into Typeform and the booking page.
+      // Append tracking params to every Typeform and GHL outbound link so
+      // PostHog identity and A/B variant info follow the user downstream.
       function injectDistinctId() {
         var distinctId = posthog.get_distinct_id ? posthog.get_distinct_id() : null;
         if (!distinctId) return;
@@ -390,6 +390,8 @@
           try {
             var url = new URL(link.href);
             url.searchParams.set('ph_id', distinctId);
+            if (window.OOK_COPY_VARIANT) url.searchParams.set('copy_variant', window.OOK_COPY_VARIANT);
+            if (window.OOK_VSL_VARIANT) url.searchParams.set('vsl_variant', window.OOK_VSL_VARIANT);
             link.href = url.toString();
           } catch (e) { /* malformed href — skip */ }
         });
@@ -413,6 +415,8 @@
       posthog.onFeatureFlags(function () {
         clearTimeout(fallback);
         var flag = posthog.getFeatureFlag('landing-copy-test');
+        // Store globally so injectDistinctId can append it to Typeform URLs
+        window.OOK_COPY_VARIANT = flag || 'control';
         // 'control' (or missing/error) renders the existing HTML unchanged
         if (flag && flag !== 'control' && window.COPY_VARIANTS && window.COPY_VARIANTS[flag]) {
           window.COPY_VARIANTS[flag]();
