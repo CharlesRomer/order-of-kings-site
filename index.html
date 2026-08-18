@@ -400,10 +400,12 @@
       // Safety net: always reveal within 600ms even if PostHog stalls
       var fallback = setTimeout(revealPage, 600);
 
-      // Track Apply CTA clicks as the experiment goal event
+      // Track Apply CTA clicks and re-inject params at click time so
+      // copy_variant and vsl_variant are always up-to-date (Wistia resolves late).
       document.addEventListener('click', function (e) {
         var link = e.target.closest('a[href*="typeform"]');
         if (link && window.posthog) {
+          injectDistinctId();
           posthog.capture('apply_clicked', {
             button_id: link.id || null,
             button_text: (link.textContent || '').trim().slice(0, 80)
