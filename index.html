@@ -406,10 +406,19 @@
         var link = e.target.closest('a[href*="typeform"]');
         if (link && window.posthog) {
           injectDistinctId();
-          posthog.capture('apply_clicked', {
+          var vslProps = {};
+          var player = window.OOK_VSL_PLAYER;
+          if (player && player.duration) {
+            var current = player.currentTime || 0;
+            var duration = player.duration;
+            vslProps.vsl_seconds_watched = Math.round(current);
+            vslProps.vsl_duration = Math.round(duration);
+            vslProps.vsl_percent_watched = Math.round((current / duration) * 100);
+          }
+          posthog.capture('apply_clicked', Object.assign({
             button_id: link.id || null,
             button_text: (link.textContent || '').trim().slice(0, 80)
-          });
+          }, vslProps));
         }
       });
 

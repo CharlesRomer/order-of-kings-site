@@ -225,6 +225,7 @@ customElements.whenDefined('wistia-player').then(function () {
 customElements.whenDefined('wistia-player').then(() => {
   const player = document.querySelector('wistia-player');
   if (!player || !window.posthog) return;
+  window.OOK_VSL_PLAYER = player;
 
   const fired = {};
   let pollInterval = null;
