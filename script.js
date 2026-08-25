@@ -203,17 +203,19 @@ customElements.whenDefined('wistia-player').then(function () {
   var player = document.querySelector('wistia-player');
   if (!player || !window.posthog) return;
 
+  var CONTAINER_ID = player.getAttribute('media-id'); // the A/B wrapper, not the actual video
+
   function captureVariant() {
-    // mediaId or hashedId reflects the actual resolved video (not the A/B container)
-    var videoId = player.mediaId || player.hashedId || player.getAttribute('media-id');
-    if (!videoId) return;
+    var videoId = player.mediaId || player.hashedId;
+    // Ignore empty, missing, or unresolved container ID — Wistia hasn't assigned a variant yet
+    if (!videoId || videoId === CONTAINER_ID) return;
     window.OOK_VSL_VARIANT = videoId;
     posthog.capture('vsl_variant_assigned', { vsl_video_id: videoId });
     posthog.people.set({ vsl_variant: videoId });
   }
 
-  // Try immediately, then again on play (by which point A/B is definitely resolved)
-  setTimeout(captureVariant, 1500);
+  // Wait longer for Wistia A/B to resolve, then again on play as a reliable fallback
+  setTimeout(captureVariant, 4000);
   player.addEventListener('play', function () {
     captureVariant();
   }, { once: true });
