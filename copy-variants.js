@@ -67,33 +67,28 @@
       );
     }
 
-    // 7. Offer — reorder deliverables (Dan 1-on-1 moves to #01)
-    var delivs = document.querySelector('.delivs');
+    // 7. Offer — reorder deliverables
+    var delivs = document.querySelector(‘.delivs’);
     if (delivs) {
       delivs.innerHTML =
-        '<div class="deliv"><span class="deliv-n">01</span><div class="deliv-text">' +
-          '<strong>Monthly 1-on-1 With Dan Romer</strong>' +
-          '<p>Six private, 60-minute sessions where Dan looks directly into the structural and spiritual fractures of your life and business. These are not coaching calls. These are surgical interventions. He will say what your employees won’t. What your pastor can’t. And what your wife has been trying to tell you for years.</p>' +
-          '<p>This is not a team of coaches with Dan’s name on the door. It’s Dan.</p>' +
-        '</div></div>' +
-        '<div class="deliv"><span class="deliv-n">02</span><div class="deliv-text">' +
-          '<strong>The Weekly King’s Council</strong>' +
-          '<p>24 live strategic sessions with a brotherhood of men who understand the weight you carry — because they carry it too. Real problems. Real prayer. Real accountability. No theory. No fluff. No one hiding behind a highlight reel.</p>' +
-          '<p>An hour a week. Not a curriculum you fall behind on. Not another platform demanding your time — a room that’s already waiting when you show up.</p>' +
-        '</div></div>' +
-        '<div class="deliv"><span class="deliv-n">03</span><div class="deliv-text">' +
-          '<strong>The King’s License</strong>' +
-          '<p>The complete blueprint — time, life, spiritual rhythm, and business architecture — that shifts you from operator to owner, from grinder to governor. The exact operating system required to lead a Kingdom enterprise without sacrificing your family, your health, or your walk with God.</p>' +
-        '</div></div>' +
-        '<div class="deliv"><span class="deliv-n">04</span><div class="deliv-text">' +
-          '<strong>The In-Person Mastermind</strong>' +
-          '<p>One exclusive, high-level physical gathering. Access Dan, his personal network of Kingdom investors, and his sons — who run their own highly successful operations. Some doors only open when you’re in the room.</p>' +
-        '</div></div>' +
-        '<div class="deliv"><span class="deliv-n">05</span><div class="deliv-text">' +
-          '<strong>The Private King’s Channel</strong>' +
-          '<p>Direct, daily access to the brotherhood. The real-time accountability, encouragement, and iron-sharpening-iron that ensures your transformation doesn’t die the moment the call ends.</p>' +
-          '<blockquote class="outcome-scripture">“As iron sharpens iron, so one man sharpens another.” — Proverbs 27:17</blockquote>' +
-        '</div></div>';
+        ‘<div class=”deliv”><span class=”deliv-n”>01</span><div class=”deliv-text”>’ +
+          ‘<strong>The Weekly King’s Council</strong>’ +
+          ‘<p>24 live strategic sessions with a brotherhood of men who understand the weight you carry — because they carry it too. Real problems. Real prayer. Real accountability. No theory. No fluff. No one hiding behind a highlight reel.</p>’ +
+          ‘<p>An hour a week. Not a curriculum you fall behind on. Not another platform demanding your time — a room that’s already waiting when you show up.</p>’ +
+        ‘</div></div>’ +
+        ‘<div class=”deliv”><span class=”deliv-n”>02</span><div class=”deliv-text”>’ +
+          ‘<strong>The King’s License</strong>’ +
+          ‘<p>The complete blueprint — time, life, spiritual rhythm, and business architecture — that shifts you from operator to owner, from grinder to governor. The exact operating system required to lead a Kingdom enterprise without sacrificing your family, your health, or your walk with God.</p>’ +
+        ‘</div></div>’ +
+        ‘<div class=”deliv”><span class=”deliv-n”>03</span><div class=”deliv-text”>’ +
+          ‘<strong>The In-Person Mastermind</strong>’ +
+          ‘<p>One exclusive, high-level physical gathering. Access Dan, his personal network of Kingdom investors, and his sons — who run their own highly successful operations. Some doors only open when you’re in the room.</p>’ +
+        ‘</div></div>’ +
+        ‘<div class=”deliv”><span class=”deliv-n”>04</span><div class=”deliv-text”>’ +
+          ‘<strong>The Private King’s Channel</strong>’ +
+          ‘<p>Direct, daily access to the brotherhood. The real-time accountability, encouragement, and iron-sharpening-iron that ensures your transformation doesn’t die the moment the call ends.</p>’ +
+          ‘<blockquote class=”outcome-scripture”>”As iron sharpens iron, so one man sharpens another.” — Proverbs 27:17</blockquote>’ +
+        ‘</div></div>’;
     }
 
     // 8. Insert "Who's In The Room" section before the standard section
