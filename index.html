@@ -16,6 +16,7 @@
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.people.toString()+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on addEventProperties".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
     posthog.init('phc_X4yMXtjgnMJuJ9uGEOTsM4iYtha4OdWSpcJSLrgDA0m', {api_host: 'https://us.i.posthog.com'});
   </script>
+  <link rel="stylesheet" href="//embed.typeform.com/next/css/widget.css">
   <script src="https://fast.wistia.com/player.js" async></script>
   <script src="https://fast.wistia.com/embed/zlmkgsydb8.js" async type="module"></script>
   <style>wistia-player[media-id='zlmkgsydb8']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/zlmkgsydb8/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
@@ -50,7 +51,7 @@
     <a href="#" class="nav-logo-link">
       <img src="logo.png" alt="Order of Kings" class="nav-logo-img" style="height:36px;width:auto;filter:invert(1);" />
     </a>
-    <a href="https://qfnp9ak5e8v.typeform.com/to/HFwJlLZg?utm_source=xxxxx&utm_medium=xxxxx&utm_campaign=xxxxx&utm_content=xxxxx" target="_blank" class="btn-pill btn-outline-nav" style="flex-shrink:0;">Apply Now</a>
+    <a href="#apply" class="btn-pill btn-outline-nav js-apply-cta" style="flex-shrink:0;">Apply Now</a>
   </nav>
 
   <!-- HERO -->
@@ -78,7 +79,7 @@
         </div>
       </div>
       <div class="hero-actions">
-        <a href="https://qfnp9ak5e8v.typeform.com/to/HFwJlLZg?utm_source=xxxxx&utm_medium=xxxxx&utm_campaign=xxxxx&utm_content=xxxxx" target="_blank" class="btn-pill btn-primary">Apply to The Order <span>→</span></a>
+        <a href="#apply" class="btn-pill btn-primary js-apply-cta">Apply to The Order <span>→</span></a>
       </div>
       <div class="hero-stat">$311,000,000 combined annual revenue across 30 members</div>
     </div>
@@ -338,9 +339,8 @@
         <cite>— Jesus (Matthew 11:28)</cite>
       </blockquote>
       <p class="apply-invitation">This is your invitation to rest — not from the work, but from the wrong way of doing it.</p>
-      <a href="https://qfnp9ak5e8v.typeform.com/to/HFwJlLZg?utm_source=xxxxx&utm_medium=xxxxx&utm_campaign=xxxxx&utm_content=xxxxx" target="_blank" class="btn-pill btn-primary btn-lg" id="applyBtn">
-        Apply to See If You're a Fit <span class="btn-arr">→</span>
-      </a>
+      <!-- Typeform inline embed — added 2026-10-09 -->
+      <div id="tf-embed" style="width:100%;min-height:540px;margin:32px 0;"></div>
       <p class="apply-note">Applications reviewed personally by Dan Romer.<br/>This is not open enrollment. Not all applicants are accepted.</p>
     </div>
   </section>
@@ -355,6 +355,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="//embed.typeform.com/next/embed.js"></script>
 
   <!-- A/B test: copy variants + PostHog flag check -->
   <script src="copy-variants.js"></script>
@@ -370,10 +371,12 @@
       }
 
       // Append tracking params to every Typeform and GHL outbound link so
-      // PostHog identity and A/B variant info follow the user downstream.
+      // PostHog identity, UTMs, and A/B variant info follow the user downstream.
       function injectDistinctId() {
         var distinctId = posthog.get_distinct_id ? posthog.get_distinct_id() : null;
         if (!distinctId) return;
+        var pageParams = new URLSearchParams(window.location.search);
+        var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
         var selectors = [
           'a[href*="typeform.com"]',
           'a[href*="goshenites.com"]',
@@ -383,6 +386,10 @@
           try {
             var url = new URL(link.href);
             url.searchParams.set('ph_id', distinctId);
+            utmKeys.forEach(function(key) {
+              var val = pageParams.get(key);
+              if (val) url.searchParams.set(key, val);
+            });
             if (window.OOK_COPY_VARIANT) url.searchParams.set('copy_variant', window.OOK_COPY_VARIANT);
             if (window.OOK_VSL_VARIANT) url.searchParams.set('vsl_variant', window.OOK_VSL_VARIANT);
             link.href = url.toString();
@@ -390,15 +397,54 @@
         });
       }
 
-      // Safety net: always reveal within 600ms even if PostHog stalls
-      var fallback = setTimeout(revealPage, 600);
+      // Build hidden-field map for the typeform embed from current page UTMs + PostHog identity.
+      function getEmbedHiddenFields() {
+        var hidden = {};
+        var pageParams = new URLSearchParams(window.location.search);
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function(k) {
+          var v = pageParams.get(k);
+          if (v) hidden[k] = v;
+        });
+        if (posthog.get_distinct_id) hidden.ph_id = posthog.get_distinct_id();
+        if (window.OOK_COPY_VARIANT) hidden.copy_variant = window.OOK_COPY_VARIANT;
+        if (window.OOK_VSL_VARIANT) hidden.vsl_variant = window.OOK_VSL_VARIANT;
+        return hidden;
+      }
 
-      // Track Apply CTA clicks and re-inject params at click time so
-      // copy_variant and vsl_variant are always up-to-date (Wistia resolves late).
+      // Initialize the inline Typeform embed. Retries until the tf SDK is ready.
+      function initTypeformEmbed() {
+        if (!window.tf || typeof window.tf.createWidget !== 'function') {
+          setTimeout(initTypeformEmbed, 150);
+          return;
+        }
+        var container = document.getElementById('tf-embed');
+        if (!container || container.dataset.tfInitialized) return;
+        container.dataset.tfInitialized = '1';
+        window.tf.createWidget('HFwJlLZg', {
+          container: container,
+          hidden: getEmbedHiddenFields(),
+          onSubmit: function(event) {
+            if (window.posthog) {
+              posthog.capture('application_submitted', {
+                form_id: 'HFwJlLZg',
+                response_id: event.responseId
+              });
+            }
+          }
+        });
+      }
+
+      // Safety net: always reveal and init embed within 600ms even if PostHog stalls
+      var fallback = setTimeout(function() { initTypeformEmbed(); revealPage(); }, 600);
+
+      // Track Apply CTA clicks. Also re-inject params at click time for any remaining
+      // typeform links so copy_variant and vsl_variant are always up-to-date.
       document.addEventListener('click', function (e) {
-        var link = e.target.closest('a[href*="typeform"]');
-        if (link && window.posthog) {
-          injectDistinctId();
+        var tfLink = e.target.closest('a[href*="typeform"]');
+        var ctaLink = e.target.closest('.js-apply-cta');
+        var el = tfLink || ctaLink;
+        if (el && window.posthog) {
+          if (tfLink) injectDistinctId();
           var vslProps = {};
           var player = window.OOK_VSL_PLAYER;
           if (player && player.duration) {
@@ -409,8 +455,8 @@
             vslProps.vsl_percent_watched = Math.round((current / duration) * 100);
           }
           posthog.capture('apply_clicked', Object.assign({
-            button_id: link.id || null,
-            button_text: (link.textContent || '').trim().slice(0, 80)
+            button_id: el.id || null,
+            button_text: (el.textContent || '').trim().slice(0, 80)
           }, vslProps));
         }
       });
@@ -426,6 +472,7 @@
           window.COPY_VARIANTS[flag]();
         }
         injectDistinctId();
+        initTypeformEmbed();
         revealPage();
       });
     })();
