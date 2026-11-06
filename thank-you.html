@@ -442,72 +442,38 @@
       margin-top: 72px;
     }
 
-    /* ── Person block ── */
-    .ty-testi-person {
-      margin-bottom: 72px;
+    /* ── 3-column masonry grid ── */
+    .ty-testi-grid {
+      columns: 3;
+      column-gap: 20px;
     }
 
-    .ty-testi-person-header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-
-    .ty-testi-person-name {
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--white-50);
-      white-space: nowrap;
-    }
-
-    .ty-testi-person-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .ty-testi-featured {
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      margin-bottom: 20px;
-    }
-
-    .ty-testi-featured wistia-player {
-      display: block;
-      width: 100%;
-    }
-
-    /* ── Clips grid ── */
-    .ty-testi-clips {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .ty-testi-clip {
+    .ty-testi-card {
+      break-inside: avoid;
+      margin-bottom: 24px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
     }
 
-    .ty-testi-clip-label {
-      font-family: var(--font-ui);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-20);
+    .ty-testi-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.82);
+      padding: 0 2px;
     }
 
-    .ty-testi-clip wistia-player {
+    .ty-testi-card wistia-player {
       display: block;
       width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    @media (max-width: 860px) {
+      .ty-testi-grid { columns: 2; }
     }
 
     /* ── Mobile ── */
@@ -521,7 +487,7 @@
       .ty-faq-grid { grid-template-columns: 1fr; gap: 28px; }
       .ty-faq-q { font-size: 14px; }
       .ty-faq-a { font-size: 13px; }
-      .ty-testi-clips { grid-template-columns: 1fr; }
+      .ty-testi-grid { columns: 1; }
       .ty-testimonials { margin-top: 56px; padding-top: 56px; }
     }
   </style>
@@ -641,223 +607,195 @@
         <div class="ty-faq-eyebrow">From the Brotherhood</div>
         <h2 class="ty-faq-headline">What Members <em>Are Saying</em></h2>
 
-        <!-- ── Vincent Vines ── -->
-        <div class="ty-testi-person">
-          <div class="ty-testi-person-header">
-            <div class="ty-testi-person-name">Vincent Vines</div>
-            <div class="ty-testi-person-line"></div>
-          </div>
-          <div class="ty-testi-featured">
-            <wistia-player media-id="lslxnaqka6"></wistia-player>
-          </div>
-          <div class="ty-testi-clips">
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">First impression: incredible wisdom</div>
-              <wistia-player media-id="ix325kq9xn"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Changed the way I see business</div>
-              <wistia-player media-id="f842q7ry06"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">$750 — I'm there</div>
-              <wistia-player media-id="skcbijkqwt"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Courses don't work — be in the room</div>
-              <wistia-player media-id="c6ef9hj7w5"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Can't overturn the money tables</div>
-              <wistia-player media-id="ryz32y4ggj"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Mentorship: someone who's gone through it</div>
-              <wistia-player media-id="j3wjq3ky9m"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">$750 — is this serious?</div>
-              <wistia-player media-id="157rhntrj5"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Care about their salvation</div>
-              <wistia-player media-id="1swl0yfxfi"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Accountability and the roadmap</div>
-              <wistia-player media-id="aqbaytuuix"></wistia-player>
-            </div>
-          </div>
-        </div>
+        <div class="ty-testi-grid">
 
-        <!-- ── TJ Visuday ── -->
-        <div class="ty-testi-person">
-          <div class="ty-testi-person-header">
-            <div class="ty-testi-person-name">TJ Visuday</div>
-            <div class="ty-testi-person-line"></div>
+          <!-- 1 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Six figures in my business, not even five hours after the event."</div>
+            <wistia-player media-id="o2gk66dxmg"></wistia-player>
           </div>
-          <div class="ty-testi-featured">
-            <wistia-player media-id="3n4je8kjhc"></wistia-player>
-          </div>
-          <div class="ty-testi-clips">
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">House in order</div>
-              <wistia-player media-id="on58b5th1x"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Blessing that would break you</div>
-              <wistia-player media-id="5jl1h1gto1"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Higher tables</div>
-              <wistia-player media-id="l27h1nfuqi"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Other coaches — house not in order</div>
-              <wistia-player media-id="nndvav2nwa"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Know them by their fruit</div>
-              <wistia-player media-id="mk1njh7a2y"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Live and in person</div>
-              <wistia-player media-id="uzlkxn5lk0"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Sitting at these tables</div>
-              <wistia-player media-id="9xypb4sglb"></wistia-player>
-            </div>
-          </div>
-        </div>
 
-        <!-- ── Brotherhood Member (T1) ── -->
-        <div class="ty-testi-person">
-          <div class="ty-testi-person-header">
-            <div class="ty-testi-person-name">Brotherhood Member</div>
-            <div class="ty-testi-person-line"></div>
+          <!-- 2 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"It is an absolute no-brainer. I wish I would have found Dan sooner."</div>
+            <wistia-player media-id="lg8nm9jr2g"></wistia-player>
           </div>
-          <div class="ty-testi-featured">
+
+          <!-- 3 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Within the first six weeks, I saw value instantly — it was pretty dramatic."</div>
             <wistia-player media-id="9h9jds12u0"></wistia-player>
           </div>
-          <div class="ty-testi-clips">
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Things started to align</div>
-              <wistia-player media-id="izibq5m2yc"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Relationship with kids and wife</div>
-              <wistia-player media-id="86v4ry38gf"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Surrounded by people in the same process</div>
-              <wistia-player media-id="epw88bncdz"></wistia-player>
-            </div>
-          </div>
-        </div>
 
-        <!-- ── Steve Michelski ── -->
-        <div class="ty-testi-person">
-          <div class="ty-testi-person-header">
-            <div class="ty-testi-person-name">Steve Michelski</div>
-            <div class="ty-testi-person-line"></div>
+          <!-- 4 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Being surrounded with billionaires, 8 and 9-figure entrepreneurs gave me perspective I didn't even know to pray for."</div>
+            <wistia-player media-id="skj48de494"></wistia-player>
           </div>
-          <div class="ty-testi-featured">
-            <wistia-player media-id="0z9o6rok9a"></wistia-player>
-          </div>
-          <div class="ty-testi-clips">
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Kingdom first, still profitable</div>
-              <wistia-player media-id="jwpuou5pjg"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Get to know Dan</div>
-              <wistia-player media-id="oderei1fh7"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Results to investors</div>
-              <wistia-player media-id="dhklho34dy"></wistia-player>
-            </div>
-          </div>
-        </div>
 
-        <!-- ── Rashad Owens ── -->
-        <div class="ty-testi-person">
-          <div class="ty-testi-person-header">
-            <div class="ty-testi-person-name">Rashad Owens</div>
-            <div class="ty-testi-person-line"></div>
+          <!-- 5 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Dan has completely changed the way that I see business."</div>
+            <wistia-player media-id="f842q7ry06"></wistia-player>
           </div>
-          <div class="ty-testi-featured">
-            <wistia-player media-id="h87h26dk98"></wistia-player>
-          </div>
-          <div class="ty-testi-clips">
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Perspective I didn't know to pray for</div>
-              <wistia-player media-id="skj48de494"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Six figures five hours after</div>
-              <wistia-player media-id="o2gk66dxmg"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Absolute no-brainer</div>
-              <wistia-player media-id="lg8nm9jr2g"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Relationship with God increased</div>
-              <wistia-player media-id="1dn0px4vei"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Promises coming into fruition</div>
-              <wistia-player media-id="duc91le606"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Deep in spirit, successful in business</div>
-              <wistia-player media-id="mbo9tjni9r"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Strong in Kingdom, successful in business</div>
-              <wistia-player media-id="pgnjlewl9t"></wistia-player>
-            </div>
-          </div>
-        </div>
 
-        <!-- ── Ogi ── -->
-        <div class="ty-testi-person">
-          <div class="ty-testi-person-header">
-            <div class="ty-testi-person-name">Ogi</div>
-            <div class="ty-testi-person-line"></div>
+          <!-- 6 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Dan wasn't just giving Kingdom principles — he was applying them. He has his house in order."</div>
+            <wistia-player media-id="on58b5th1x"></wistia-player>
           </div>
-          <div class="ty-testi-featured">
-            <wistia-player media-id="txytuu00gy"></wistia-player>
+
+          <!-- 7 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"I've spent hundreds of thousands on coaching. The consistent problem: their own house was not in order."</div>
+            <wistia-player media-id="nndvav2nwa"></wistia-player>
           </div>
-          <div class="ty-testi-clips">
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">First impression: clicked</div>
-              <wistia-player media-id="yirwlnui4r"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Money comes with grace</div>
-              <wistia-player media-id="y76aih7mru"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Not unreachable — I can relate</div>
-              <wistia-player media-id="6yuiurxru4"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">People with the same values</div>
-              <wistia-player media-id="92mlwlxqqd"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">Profitable and in line with God's will</div>
-              <wistia-player media-id="77wgehcy1u"></wistia-player>
-            </div>
-            <div class="ty-testi-clip">
-              <div class="ty-testi-clip-label">You're in the right crowds</div>
-              <wistia-player media-id="es03h5zyqb"></wistia-player>
-            </div>
+
+          <!-- 8 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Courses and modules don't work for me. I need to be in the room."</div>
+            <wistia-player media-id="c6ef9hj7w5"></wistia-player>
           </div>
-        </div>
+
+          <!-- 9 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"When you're sitting at higher tables, it completely changes your perspective."</div>
+            <wistia-player media-id="l27h1nfuqi"></wistia-player>
+          </div>
+
+          <!-- 10 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"$750 for this amount of proximity, wisdom, and instruction? I'm there."</div>
+            <wistia-player media-id="skcbijkqwt"></wistia-player>
+          </div>
+
+          <!-- 11 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"If you're praying but don't have the right structures, God doesn't want to give you a blessing that's going to break you."</div>
+            <wistia-player media-id="5jl1h1gto1"></wistia-player>
+          </div>
+
+          <!-- 12 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Get to know Dan, and get to know him well. You're going to be blessed."</div>
+            <wistia-player media-id="oderei1fh7"></wistia-player>
+          </div>
+
+          <!-- 13 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"I had just gone through a chaotic business transition. Once I joined Order of Kings, things started to align."</div>
+            <wistia-player media-id="izibq5m2yc"></wistia-player>
+          </div>
+
+          <!-- 14 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"This guy has incredible wisdom — breaking down the Bible and business in a way I'd never seen."</div>
+            <wistia-player media-id="ix325kq9xn"></wistia-player>
+          </div>
+
+          <!-- 15 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"I'm so grateful to have somebody who's so deep in the spirit, but also so successful in business."</div>
+            <wistia-player media-id="mbo9tjni9r"></wistia-player>
+          </div>
+
+          <!-- 16 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Be here for the moments in between — the coffee break, breakfast. That's where the big connections happen."</div>
+            <wistia-player media-id="9xypb4sglb"></wistia-player>
+          </div>
+
+          <!-- 17 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"It's improved my relationship with my kids and my wife."</div>
+            <wistia-player media-id="86v4ry38gf"></wistia-player>
+          </div>
+
+          <!-- 18 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"He's not unreachable. I can relate to everything he said."</div>
+            <wistia-player media-id="6yuiurxru4"></wistia-player>
+          </div>
+
+          <!-- 19 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"You shall know them by their fruit — and the fruit Dan has produced within his own family says everything."</div>
+            <wistia-player media-id="mk1njh7a2y"></wistia-player>
+          </div>
+
+          <!-- 20 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"A kingdom-first mindset, but still profitable and highly effective."</div>
+            <wistia-player media-id="jwpuou5pjg"></wistia-player>
+          </div>
+
+          <!-- 21 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"You can find business tactics online. But for the life principles of building a real kingdom business — being here in person is completely different."</div>
+            <wistia-player media-id="uzlkxn5lk0"></wistia-player>
+          </div>
+
+          <!-- 22 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Being in the room with someone who's already gone through everything you're trying to go through."</div>
+            <wistia-player media-id="j3wjq3ky9m"></wistia-player>
+          </div>
+
+          <!-- 23 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Promises God spoke to me eight years ago are coming into fruition."</div>
+            <wistia-player media-id="duc91le606"></wistia-player>
+          </div>
+
+          <!-- 24 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"To reach the next level, you need people already where you want to be — to give you the roadmap."</div>
+            <wistia-player media-id="aqbaytuuix"></wistia-player>
+          </div>
+
+          <!-- 25 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Life is going to grind you anyway. You might as well be surrounded by people going through the same process."</div>
+            <wistia-player media-id="epw88bncdz"></wistia-player>
+          </div>
+
+          <!-- 26 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Business people with Christian values — the combination I saw in Dan really clicked."</div>
+            <wistia-player media-id="yirwlnui4r"></wistia-player>
+          </div>
+
+          <!-- 27 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"Money is a secondary thing that comes with grace."</div>
+            <wistia-player media-id="y76aih7mru"></wistia-player>
+          </div>
+
+          <!-- 28 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"The mindset of people who are strong in the Kingdom but also successful in business — it's changed my life."</div>
+            <wistia-player media-id="pgnjlewl9t"></wistia-player>
+          </div>
+
+          <!-- 29 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"When you know there are people who can support you through the hard seasons, then you know you're in the right crowds."</div>
+            <wistia-player media-id="es03h5zyqb"></wistia-player>
+          </div>
+
+          <!-- 30 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"The first takeaway: there are other people like me who put their values before the money."</div>
+            <wistia-player media-id="92mlwlxqqd"></wistia-player>
+          </div>
+
+          <!-- 31 -->
+          <div class="ty-testi-card">
+            <div class="ty-testi-quote">"There is a way to run a business profitably and to be in line with God's will."</div>
+            <wistia-player media-id="77wgehcy1u"></wistia-player>
+          </div>
+
+        </div><!-- /ty-testi-grid -->
 
       </div>
     </div><!-- /testimonials-preview -->
