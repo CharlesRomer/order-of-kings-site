@@ -441,17 +441,17 @@
       position: relative;
       left: 50%;
       margin-left: -50vw;
-      padding: 72px clamp(24px, 4vw, 56px) 0;
+      padding: 48px clamp(32px, 6vw, 80px) 0;
       box-sizing: border-box;
       border-top: 1px solid var(--border);
-      margin-top: 72px;
+      margin-top: 56px;
     }
 
     .ty-testimonials .ty-preview-notice {
       max-width: 860px;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 48px;
+      margin-bottom: 32px;
     }
 
     .ty-testimonials > .ty-faq-eyebrow,
@@ -462,13 +462,13 @@
     }
 
     .ty-testimonials > .ty-faq-headline {
-      margin-bottom: 64px;
+      margin-bottom: 36px;
     }
 
     /* ── Group ── */
     .ty-testi-group {
-      margin-bottom: 80px;
-      padding-top: 56px;
+      margin-bottom: 44px;
+      padding-top: 36px;
       border-top: 1px solid var(--border);
     }
 
@@ -479,11 +479,11 @@
 
     .ty-testi-group-title {
       font-family: var(--font-display);
-      font-size: clamp(26px, 3vw, 42px);
+      font-size: clamp(20px, 2.2vw, 30px);
       line-height: 1.1;
       letter-spacing: -0.01em;
       color: var(--white);
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
 
     .ty-testi-group-title em {
@@ -496,17 +496,17 @@
     .ty-testi-row2 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 16px;
     }
 
     /* ── Row 2 collapse wrapper ── */
     .ty-testi-row2-wrap {
       position: relative;
-      margin-top: 24px;
+      margin-top: 16px;
     }
 
     .ty-testi-row2.is-collapsed {
-      max-height: 180px;
+      max-height: 160px;
       overflow: hidden;
     }
 
@@ -515,12 +515,12 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 160px;
+      height: 140px;
       background: linear-gradient(to bottom, transparent, #060608);
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding-bottom: 20px;
+      padding-bottom: 16px;
       pointer-events: none;
     }
 
@@ -532,13 +532,13 @@
       pointer-events: all;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       background: rgba(248,248,250,0.07);
       border: 1px solid rgba(248,248,250,0.14);
       border-radius: var(--radius-pill);
-      padding: 10px 22px;
+      padding: 8px 18px;
       font-family: var(--font-ui);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -566,28 +566,28 @@
     .ty-testi-card {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 9px;
     }
 
     .ty-testi-quote {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 16px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.88);
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.82);
     }
 
     .ty-testi-quote u {
       text-decoration: underline;
-      text-decoration-color: rgba(255,255,255,0.45);
+      text-decoration-color: rgba(255,255,255,0.4);
       text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
+      text-underline-offset: 2px;
     }
 
     .ty-testi-card wistia-player {
       display: block;
       width: 100%;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       overflow: hidden;
     }
 
@@ -609,8 +609,8 @@
       .ty-faq-a { font-size: 13px; }
       .ty-testi-row1,
       .ty-testi-row2 { grid-template-columns: 1fr; }
-      .ty-testimonials { margin-top: 56px; padding-top: 56px; }
-      .ty-testi-group { margin-bottom: 56px; padding-top: 40px; }
+      .ty-testimonials { margin-top: 40px; padding-top: 40px; }
+      .ty-testi-group { margin-bottom: 36px; padding-top: 28px; }
     }
   </style>
 </head>
