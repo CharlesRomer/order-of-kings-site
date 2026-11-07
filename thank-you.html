@@ -441,34 +441,20 @@
       position: relative;
       left: 50%;
       margin-left: -50vw;
-      padding: 48px clamp(24px, 5vw, 72px) 0;
+      padding: 48px clamp(48px, 10vw, 144px) 0;
       box-sizing: border-box;
       border-top: 1px solid var(--border);
       margin-top: 48px;
     }
 
     .ty-testimonials .ty-preview-notice {
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 28px;
-    }
-
-    .ty-testimonials > .ty-faq-eyebrow,
-    .ty-testimonials > .ty-faq-headline {
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .ty-testimonials > .ty-faq-headline {
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
 
     /* ── Group ── */
     .ty-testi-group {
-      margin-bottom: 52px;
-      padding-top: 40px;
+      margin-bottom: 64px;
+      padding-top: 48px;
       border-top: 1px solid var(--border);
     }
 
@@ -479,11 +465,11 @@
 
     .ty-testi-group-title {
       font-family: var(--font-display);
-      font-size: clamp(16px, 1.6vw, 24px);
+      font-size: clamp(28px, 4vw, 40px);
       line-height: 1.1;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
       color: var(--white);
-      margin-bottom: 20px;
+      margin-bottom: 28px;
     }
 
     .ty-testi-group-title em {
@@ -567,34 +553,34 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 16px;
+      gap: 24px;
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 18px;
+      border-radius: 12px;
+      padding: 24px 24px 24px 28px;
     }
 
     .ty-testi-quote {
       flex: 1;
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 14px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.85);
+      font-size: 18px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.88);
     }
 
     .ty-testi-quote u {
       text-decoration: underline;
       text-decoration-color: rgba(255,255,255,0.35);
       text-decoration-thickness: 1px;
-      text-underline-offset: 2px;
+      text-underline-offset: 3px;
     }
 
     .ty-testi-card wistia-player {
       display: block;
-      width: 42%;
+      width: 40%;
       flex-shrink: 0;
-      border-radius: var(--radius-sm);
+      border-radius: 8px;
       overflow: hidden;
     }
 
@@ -616,10 +602,12 @@
       .ty-faq-a { font-size: 13px; }
       .ty-testi-row1,
       .ty-testi-row2 { grid-template-columns: 1fr; }
-      .ty-testi-card { flex-direction: column; }
+      .ty-testi-card { flex-direction: column; padding: 18px; }
       .ty-testi-card wistia-player { width: 100%; }
-      .ty-testimonials { margin-top: 40px; padding-top: 40px; }
-      .ty-testi-group { margin-bottom: 36px; padding-top: 28px; }
+      .ty-testi-quote { font-size: 15px; }
+      .ty-testi-group-title { font-size: 24px; }
+      .ty-testimonials { margin-top: 40px; padding: 40px 20px 0; }
+      .ty-testi-group { margin-bottom: 44px; padding-top: 36px; }
     }
   </style>
 </head>
@@ -734,9 +722,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           <span><strong style="color:rgba(234,179,8,1);">Preview mode</strong> — This section is not visible to applicants. Share this URL with <code>?preview=1</code> appended to review it.</span>
         </div>
-
-        <div class="ty-faq-eyebrow">From the Brotherhood</div>
-        <h2 class="ty-faq-headline">What Members <em>Are Saying</em></h2>
 
         <!-- ══════════════════════════════════════
              GROUP 1 — Does This Actually Work?
