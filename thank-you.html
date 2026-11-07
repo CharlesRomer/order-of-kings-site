@@ -1119,6 +1119,72 @@
         posthog.capture('ty_vsl_ended'); checkMilestones();
       });
     });
+
+    // ── Testimonial video tracking → PostHog ──
+    customElements.whenDefined('wistia-player').then(function () {
+      if (!window.posthog) return;
+
+      // Build media-id → group name lookup from the DOM
+      var groupMap = {};
+      document.querySelectorAll('.ty-testi-group').forEach(function (group) {
+        var title = (group.querySelector('.ty-testi-group-title') || {}).textContent || '';
+        group.querySelectorAll('wistia-player').forEach(function (p) {
+          groupMap[p.getAttribute('media-id')] = title.trim();
+        });
+      });
+
+      document.querySelectorAll('.ty-testi-card wistia-player').forEach(function (p) {
+        var mediaId = p.getAttribute('media-id');
+        var played = false;
+        var milestonesFired = {};
+        var poll = null;
+
+        function checkTMilestones() {
+          var dur = p.duration, cur = p.currentTime;
+          if (!dur || cur == null) return;
+          var pct = (cur / dur) * 100;
+          [50, 100].forEach(function (m) {
+            if (!milestonesFired[m] && pct >= m) {
+              milestonesFired[m] = true;
+              posthog.capture('testimonial_milestone', {
+                media_id: mediaId,
+                group: groupMap[mediaId] || '',
+                percent: m
+              });
+            }
+          });
+        }
+
+        p.addEventListener('play', function () {
+          if (!played) {
+            played = true;
+            posthog.capture('testimonial_play', {
+              media_id: mediaId,
+              group: groupMap[mediaId] || ''
+            });
+          }
+          if (!poll) poll = setInterval(checkTMilestones, 2000);
+        });
+        p.addEventListener('pause', function () {
+          clearInterval(poll); poll = null; checkTMilestones();
+        });
+        p.addEventListener('ended', function () {
+          clearInterval(poll); poll = null; checkTMilestones();
+        });
+      });
+
+      // Track "See more" group expansions
+      document.querySelectorAll('.ty-see-more-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var group = btn.closest('.ty-testi-group');
+          var title = (group && group.querySelector('.ty-testi-group-title') || {}).textContent || '';
+          var expanding = btn.closest('.ty-testi-row2-wrap').querySelector('.ty-testi-row2').classList.contains('is-collapsed');
+          if (expanding) {
+            posthog.capture('testimonial_see_more', { group: title.trim() });
+          }
+        });
+      });
+    });
   </script>
 
 </body>
