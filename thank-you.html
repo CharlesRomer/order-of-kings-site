@@ -715,14 +715,9 @@
     </div><!-- /steps -->
 
     <!-- TESTIMONIALS (preview only — shown with ?preview=1) -->
-    <div id="testimonials-preview" hidden>
+    <div id="testimonials-preview">
 
       <div class="ty-testimonials">
-
-        <div class="ty-preview-notice">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span><strong style="color:rgba(234,179,8,1);">Preview mode</strong> — This section is not visible to applicants. Share this URL with <code>?preview=1</code> appended to review it.</span>
-        </div>
 
         <!-- ══════════════════════════════════════
              GROUP 1 — Does This Actually Work?
@@ -1073,11 +1068,6 @@
   </script>
 
   <script>
-    // Show testimonials section only when ?preview is in the URL
-    if (new URLSearchParams(location.search).has('preview')) {
-      document.getElementById('testimonials-preview').hidden = false;
-    }
-
     function toggleTestiGroup(btn) {
       var wrap = btn.closest('.ty-testi-row2-wrap');
       var row2 = wrap.querySelector('.ty-testi-row2');
