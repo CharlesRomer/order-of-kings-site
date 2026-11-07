@@ -562,10 +562,11 @@
 
     .ty-testi-quote {
       flex: 1;
-      font-family: var(--font-display);
-      font-style: italic;
+      font-family: var(--font-body);
+      font-style: normal;
+      font-weight: 400;
       font-size: 18px;
-      line-height: 1.45;
+      line-height: 1.5;
       color: rgba(255,255,255,0.88);
     }
 
@@ -602,9 +603,9 @@
       .ty-faq-a { font-size: 13px; }
       .ty-testi-row1,
       .ty-testi-row2 { grid-template-columns: 1fr; }
-      .ty-testi-card { flex-direction: column; padding: 18px; }
+      .ty-testi-card { flex-direction: column; padding: 18px; gap: 14px; }
       .ty-testi-card wistia-player { width: 100%; }
-      .ty-testi-quote { font-size: 15px; }
+      .ty-testi-quote { font-size: 16px; }
       .ty-testi-group-title { font-size: 24px; }
       .ty-testimonials { margin-top: 40px; padding: 40px 20px 0; }
       .ty-testi-group { margin-bottom: 44px; padding-top: 36px; }
@@ -739,14 +740,14 @@
               <div class="ty-testi-quote">"Within the <u>first six weeks</u>, I saw value <u>instantly</u> — it was pretty dramatic."</div>
               <wistia-player player-color="#000000" media-id="9h9jds12u0"></wistia-player>
             </div>
-            <div class="ty-testi-card">
-              <div class="ty-testi-quote">"I had just gone through a chaotic business transition. Once I joined Order of Kings, <u>things started to align</u>."</div>
-              <wistia-player player-color="#000000" media-id="izibq5m2yc"></wistia-player>
-            </div>
           </div>
 
           <div class="ty-testi-row2-wrap">
             <div class="ty-testi-row2 is-collapsed">
+              <div class="ty-testi-card">
+                <div class="ty-testi-quote">"I had just gone through a chaotic business transition. Once I joined Order of Kings, <u>things started to align</u>."</div>
+                <wistia-player player-color="#000000" media-id="izibq5m2yc"></wistia-player>
+              </div>
               <div class="ty-testi-card">
                 <div class="ty-testi-quote">"Promises God spoke to me <u>eight years ago</u> are coming into fruition."</div>
                 <wistia-player player-color="#000000" media-id="duc91le606"></wistia-player>
@@ -763,7 +764,6 @@
 
         <!-- ══════════════════════════════════════
              GROUP 2 — Why Is Dan Different?
-             avg score 6.6 — handles coach skepticism
         ═══════════════════════════════════════ -->
         <div class="ty-testi-group">
           <h3 class="ty-testi-group-title">Why Is <em>Dan</em> Different?</h3>
@@ -777,14 +777,14 @@
               <div class="ty-testi-quote">"I've spent <u>hundreds of thousands</u> on coaching. The consistent problem: their own house was not in order."</div>
               <wistia-player player-color="#000000" media-id="nndvav2nwa"></wistia-player>
             </div>
-            <div class="ty-testi-card">
-              <div class="ty-testi-quote">"He's <u>not unreachable</u>. I can relate to everything he said."</div>
-              <wistia-player player-color="#000000" media-id="6yuiurxru4"></wistia-player>
-            </div>
           </div>
 
           <div class="ty-testi-row2-wrap">
             <div class="ty-testi-row2 is-collapsed">
+              <div class="ty-testi-card">
+                <div class="ty-testi-quote">"He's <u>not unreachable</u>. I can relate to everything he said."</div>
+                <wistia-player player-color="#000000" media-id="6yuiurxru4"></wistia-player>
+              </div>
               <div class="ty-testi-card">
                 <div class="ty-testi-quote">"Get to know Dan, and get to know him <u>well</u>. You're going to be blessed."</div>
                 <wistia-player player-color="#000000" media-id="oderei1fh7"></wistia-player>
@@ -801,7 +801,6 @@
 
         <!-- ══════════════════════════════════════
              GROUP 3 — Will This Help My Family Too?
-             avg score 6.3 — exactly 3 videos, no row2
         ═══════════════════════════════════════ -->
         <div class="ty-testi-group">
           <h3 class="ty-testi-group-title">Will This Help My <em>Marriage and Family</em> Too?</h3>
@@ -815,16 +814,26 @@
               <div class="ty-testi-quote">"I'm so grateful to have somebody who's so <u>deep in the spirit</u>, but also so <u>successful in business</u>."</div>
               <wistia-player player-color="#000000" media-id="mbo9tjni9r"></wistia-player>
             </div>
-            <div class="ty-testi-card">
-              <div class="ty-testi-quote">"The mindset of people who are <u>strong in the Kingdom but also successful in business</u> — it's changed my life."</div>
-              <wistia-player player-color="#000000" media-id="pgnjlewl9t"></wistia-player>
+          </div>
+
+          <div class="ty-testi-row2-wrap">
+            <div class="ty-testi-row2 is-collapsed">
+              <div class="ty-testi-card">
+                <div class="ty-testi-quote">"The mindset of people who are <u>strong in the Kingdom but also successful in business</u> — it's changed my life."</div>
+                <wistia-player player-color="#000000" media-id="pgnjlewl9t"></wistia-player>
+              </div>
+            </div>
+            <div class="ty-row2-fade">
+              <button class="ty-see-more-btn" onclick="toggleTestiGroup(this)">
+                <span class="ty-see-more-label">See more</span>
+                <svg class="ty-see-more-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
             </div>
           </div>
         </div>
 
         <!-- ══════════════════════════════════════
              GROUP 4 — Can I Trust This Will Work?
-             avg score 6.25 — credibility/framework
         ═══════════════════════════════════════ -->
         <div class="ty-testi-group">
           <h3 class="ty-testi-group-title">Can I <em>Trust</em> This Will Work?</h3>
@@ -838,14 +847,14 @@
               <div class="ty-testi-quote">"Being surrounded with <u>billionaires, 8 and 9-figure entrepreneurs</u> gave me perspective I didn't even know to pray for."</div>
               <wistia-player player-color="#000000" media-id="skj48de494"></wistia-player>
             </div>
-            <div class="ty-testi-card">
-              <div class="ty-testi-quote">"You shall know them by their <u>fruit</u> — and the fruit Dan has produced within his own family says everything."</div>
-              <wistia-player player-color="#000000" media-id="mk1njh7a2y"></wistia-player>
-            </div>
           </div>
 
           <div class="ty-testi-row2-wrap">
             <div class="ty-testi-row2 is-collapsed">
+              <div class="ty-testi-card">
+                <div class="ty-testi-quote">"You shall know them by their <u>fruit</u> — and the fruit Dan has produced within his own family says everything."</div>
+                <wistia-player player-color="#000000" media-id="mk1njh7a2y"></wistia-player>
+              </div>
               <div class="ty-testi-card">
                 <div class="ty-testi-quote">"It is an <u>absolute no-brainer</u>. I wish I would have found Dan sooner."</div>
                 <wistia-player player-color="#000000" media-id="lg8nm9jr2g"></wistia-player>
@@ -862,7 +871,6 @@
 
         <!-- ══════════════════════════════════════
              GROUP 5 — Why Does Being in the Room Matter?
-             avg score 6.25 — the room argument
         ═══════════════════════════════════════ -->
         <div class="ty-testi-group">
           <h3 class="ty-testi-group-title">Why Does Being <em>in the Room</em> Matter?</h3>
@@ -876,14 +884,14 @@
               <div class="ty-testi-quote">"You can find business tactics online. But for the <u>life principles of building a real kingdom business</u> — being here in person is completely different."</div>
               <wistia-player player-color="#000000" media-id="uzlkxn5lk0"></wistia-player>
             </div>
-            <div class="ty-testi-card">
-              <div class="ty-testi-quote">"Life is going to grind you anyway. You might as well be <u>surrounded by people going through the same process</u>."</div>
-              <wistia-player player-color="#000000" media-id="epw88bncdz"></wistia-player>
-            </div>
           </div>
 
           <div class="ty-testi-row2-wrap">
             <div class="ty-testi-row2 is-collapsed">
+              <div class="ty-testi-card">
+                <div class="ty-testi-quote">"Life is going to grind you anyway. You might as well be <u>surrounded by people going through the same process</u>."</div>
+                <wistia-player player-color="#000000" media-id="epw88bncdz"></wistia-player>
+              </div>
               <div class="ty-testi-card">
                 <div class="ty-testi-quote">"Be here for the <u>moments in between</u> — the coffee break, breakfast. That's where the big connections happen."</div>
                 <wistia-player player-color="#000000" media-id="9xypb4sglb"></wistia-player>
@@ -900,7 +908,6 @@
 
         <!-- ══════════════════════════════════════
              GROUP 6 — Can I Be Profitable AND Put God First?
-             avg score 2.25 — values/faith
         ═══════════════════════════════════════ -->
         <div class="ty-testi-group">
           <h3 class="ty-testi-group-title">Can I Be Profitable <em>and</em> Put God First?</h3>
@@ -914,14 +921,14 @@
               <div class="ty-testi-quote">"A <u>kingdom-first mindset</u>, but still profitable and highly effective."</div>
               <wistia-player player-color="#000000" media-id="jwpuou5pjg"></wistia-player>
             </div>
-            <div class="ty-testi-card">
-              <div class="ty-testi-quote">"Money is a <u>secondary thing</u> that comes with grace."</div>
-              <wistia-player player-color="#000000" media-id="y76aih7mru"></wistia-player>
-            </div>
           </div>
 
           <div class="ty-testi-row2-wrap">
             <div class="ty-testi-row2 is-collapsed">
+              <div class="ty-testi-card">
+                <div class="ty-testi-quote">"Money is a <u>secondary thing</u> that comes with grace."</div>
+                <wistia-player player-color="#000000" media-id="y76aih7mru"></wistia-player>
+              </div>
               <div class="ty-testi-card">
                 <div class="ty-testi-quote">"There is a way to run a business <u>profitably</u> and to be in line with God's will."</div>
                 <wistia-player player-color="#000000" media-id="77wgehcy1u"></wistia-player>
