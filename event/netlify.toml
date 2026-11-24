@@ -1,0 +1,18 @@
+# Netlify config for the event subdomain (event.orderofkings.org).
+# This is a SEPARATE Netlify site whose "Base directory" is `event`.
+# The main orderofkings.org site does not read this file.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Pretty URLs: /vip and /confirmed serve vip.html and confirmed.html automatically.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
