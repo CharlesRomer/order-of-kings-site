@@ -18,7 +18,7 @@ A self-contained static funnel for the free 2-day live workshop.
 3. "No thanks" goes to `/confirmed`.
 
 PostHog (same project as orderofkings.org; every custom event carries `event_name = designed_backwards`, and pageviews can be filtered by `$host = event.orderofkings.org`): `reg_form_started`, `event_registered`, `vip_offer_viewed`,
-`vip_checkout_clicked`, `vip_declined`, `confirmation_viewed`, `vip_purchased`, `calendar_added`, `scorecard_clicked`, `share_wife_clicked`, `cta_clicked`, `faq_opened`.
+`vip_checkout_clicked`, `vip_declined`, `confirmation_viewed`, `vip_purchased`, `calendar_added`, `scorecard_clicked`, `share_wife_clicked`, `cta_clicked`, `faq_opened`, and `ghl_forward_failed` (lead is in Netlify Forms but did not reach GHL after 3 tries; re-send it).
 
 ## Deploy
 This folder is deployed as a **separate Netlify site** from the same repo, with Base directory = `event`.

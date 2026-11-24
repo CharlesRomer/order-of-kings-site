@@ -28,12 +28,20 @@ exports.handler = async function (event) {
     page: d.page || '', registered_at: d.registered_at || new Date().toISOString(), ph_id: d.ph_id || '',
   };
 
-  try {
-    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-    if (!r.ok) { console.error('register: GHL responded', r.status, await r.text()); return { statusCode: 502, body: 'upstream error' }; }
-    return { statusCode: 200, body: 'ok' };
-  } catch (e) {
-    console.error('register: forward failed', e);
-    return { statusCode: 502, body: 'upstream error' };
+  // Up to 3 attempts (0s, 0.7s, 2s back-off), each capped at 4s, so a GHL blip doesn't drop the lead.
+  const delays = [0, 700, 2000];
+  for (let i = 0; i < delays.length; i++) {
+    if (delays[i]) await new Promise(r => setTimeout(r, delays[i]));
+    try {
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: AbortSignal.timeout(4000) });
+      if (r.ok) return { statusCode: 200, body: 'ok' };
+      console.error(`register: GHL responded ${r.status} (attempt ${i + 1})`, (await r.text()).slice(0, 300));
+      if (r.status >= 400 && r.status < 500 && r.status !== 429) break; // bad request: retrying won't help
+    } catch (e) {
+      console.error(`register: forward failed (attempt ${i + 1})`, e.message);
+    }
   }
+  // Lead is still safe in Netlify Forms; the page logs ghl_forward_failed to PostHog.
+  console.error('register: GIVING UP forwarding to GHL for', payload.email);
+  return { statusCode: 502, body: 'upstream error' };
 };

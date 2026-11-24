@@ -60,6 +60,7 @@ window.EVENT_CONFIG = {
     'day2-date': fmt(day2, { weekday: 'long', month: 'long', day: 'numeric' }, 'America/Los_Angeles'),
     'day1-short': fmt(day1, { weekday: 'short', month: 'short', day: 'numeric' }, 'America/Los_Angeles'),
     'day2-short': fmt(day2, { weekday: 'short', month: 'short', day: 'numeric' }, 'America/Los_Angeles'),
+    'dates-long': `${fmt(day1, { month: 'long', day: 'numeric' }, 'America/Los_Angeles')} & ${fmt(day2, { day: 'numeric' }, 'America/Los_Angeles')}`,
     'dates-short': `Dec ${fmt(day1, { day: 'numeric' }, 'America/Los_Angeles')} & ${fmt(day2, { day: 'numeric' }, 'America/Los_Angeles')}`,
     'session-time': ptEt(day1),
     'vip-time': ptEt(addMin(day1, -C.vipMinutesBefore)),
@@ -70,65 +71,69 @@ window.EVENT_CONFIG = {
   $$('[data-fill]').forEach(el => { const v = fills[el.dataset.fill]; if (v) el.textContent = v; });
   $$('a[data-support-link]').forEach(a => { a.href = 'mailto:' + C.supportEmail; });
 
-  // ── Countdown ──
-  const cd = $('[data-countdown]');
-  if (cd) {
-    const parts = { d: $('[data-cd="d"]', cd), h: $('[data-cd="h"]', cd), m: $('[data-cd="m"]', cd), s: $('[data-cd="s"]', cd) };
-    const label = $('[data-cd-label]');
+  // ── Countdowns (any number on the page): "14d 03h 44m 12s" ──
+  const cds = $$('[data-countdown]');
+  if (cds.length) {
+    const pad = n => String(n).padStart(2, '0');
     const tick = () => {
       const now = Date.now();
-      let target = day1, txt = 'Day 1 goes live in';
-      if (now >= day1.getTime() && now < day2.getTime()) { target = day2; txt = 'Day 2 goes live in'; }
-      if (now >= addMin(day2, C.sessionMinutes).getTime()) { cd.closest('[data-countdown-wrap]')?.setAttribute('hidden', ''); return; }
-      if (label) label.textContent = txt;
-      let diff = Math.max(0, target.getTime() - now) / 1000;
-      const d = Math.floor(diff / 86400); diff -= d * 86400;
-      const h = Math.floor(diff / 3600); diff -= h * 3600;
-      const m = Math.floor(diff / 60); const s = Math.floor(diff - m * 60);
-      parts.d.textContent = String(d).padStart(2, '0');
-      parts.h.textContent = String(h).padStart(2, '0');
-      parts.m.textContent = String(m).padStart(2, '0');
-      parts.s.textContent = String(s).padStart(2, '0');
+      let target = day1, txt = 'Day 1 starts in';
+      if (now >= day1.getTime() && now < day2.getTime()) { target = day2; txt = 'Day 2 starts in'; }
+      if (now >= addMin(day2, C.sessionMinutes).getTime()) { cds.forEach(c => c.setAttribute('hidden', '')); return; }
+      let s = Math.max(0, Math.floor((target.getTime() - now) / 1000));
+      const d = Math.floor(s / 86400); s -= d * 86400;
+      const h = Math.floor(s / 3600); s -= h * 3600;
+      const m = Math.floor(s / 60); s -= m * 60;
+      const out = (d ? `${d}d ` : '') + `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+      cds.forEach(c => { $('[data-cd-label]', c).textContent = txt; $('[data-cd-text]', c).textContent = out; });
     };
     tick(); setInterval(tick, 1000);
   }
 
-  // ── Wistia videos (render only when an ID is configured) ──
-  $$('[data-wistia]').forEach(slot => {
-    const id = C[slot.dataset.wistia];
+  // ── Video slots: show Dan's photo until a Wistia ID is set in EVENT_CONFIG ──
+  $$('[data-media]').forEach(card => {
+    const id = C[card.dataset.media];
     if (!id) return;
     if (!document.querySelector('script[src="https://fast.wistia.com/player.js"]')) {
       const s = document.createElement('script'); s.src = 'https://fast.wistia.com/player.js'; s.async = true; document.head.appendChild(s);
     }
     const s2 = document.createElement('script'); s2.src = `https://fast.wistia.com/embed/${id}.js`; s2.async = true; s2.type = 'module'; document.head.appendChild(s2);
-    slot.innerHTML = `<wistia-player media-id="${id}" aspect="1.7777777777777777"></wistia-player>`;
-    slot.classList.add('has-video');
+    const wrap = $('.vsl-video-wrap', card);
+    wrap.innerHTML = `<wistia-player media-id="${id}" aspect="1.7777777777777777"></wistia-player>`;
+    wrap.classList.add('has-video');
+    card.classList.add('has-video');
+    card.removeAttribute('hidden');
+    customElements.whenDefined('wistia-player').then(() => {
+      const p = $('wistia-player', card); if (!p) return;
+      const fired = {};
+      p.addEventListener('play', () => { if (!fired.play) { fired.play = 1; track('video_play', { video: card.dataset.media }); } });
+      p.addEventListener('ended', () => track('video_ended', { video: card.dataset.media }));
+    });
   });
 
-  // ── FAQ accordions ──
-  $$('.faq-q').forEach(btn => btn.addEventListener('click', () => {
-    const item = btn.closest('.faq-item');
-    const open = item.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open);
-    if (open) track('faq_opened', { question: btn.textContent.trim() });
-  }));
+  // ── FAQ (native <details>) ──
+  $$('.faq details').forEach(d => d.addEventListener('toggle', () => { if (d.open) track('faq_opened', { question: $('summary', d).textContent.trim() }); }));
 
-  // ── Reveal on scroll ──
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
-  $$('.reveal').forEach(el => io.observe(el));
+  // ── Fade-up on scroll (same behaviour as the main site) ──
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  $$('.fade-up').forEach(el => io.observe(el));
 
-  // ── Sticky nav shadow ──
-  const nav = $('.ev-nav');
-  if (nav) window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), { passive: true });
+  // ── Nav background on scroll ──
+  const nav = $('#nav');
+  if (nav && !nav.classList.contains('scrolled')) window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+
+  // ── Mobile sticky CTA: appears once the form has scrolled off the top ──
+  const mCta = $('#mCta'), regEl = $('#register');
+  if (mCta && regEl) new IntersectionObserver(es => { const e = es[0]; mCta.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0); }).observe(regEl);
 
   // ── "Save my seat" buttons scroll to the form and focus it ──
   $$('[data-to-form]').forEach(a => a.addEventListener('click', e => {
-    const form = $('#register');
-    if (!form) return;
+    const box = $('#register');
+    if (!box) return;
     e.preventDefault();
     track('cta_clicked', { location: a.dataset.toForm });
-    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => $('input[name="first_name"]', form)?.focus({ preventScroll: true }), 600);
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => $('input[name="first_name"]', box)?.focus({ preventScroll: true }), 650);
   }));
 
   // ── Registration form ──
@@ -167,9 +172,10 @@ window.EVENT_CONFIG = {
       const ghl = fetch('/.netlify/functions/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(() => null);
 
       const [b, g] = await Promise.all([backup, ghl]);
-      if (!(b && b.ok) && !(g && g.ok)) {
+      const savedBackup = !!(b && b.ok), sentToGhl = !!(g && g.status === 200);
+      if (!savedBackup && !sentToGhl) {
         btn.disabled = false; btn.classList.remove('loading');
-        err.textContent = "Something went wrong saving your seat. Please try again, or email " + C.supportEmail + '.';
+        err.textContent = "We couldn't save your seat. Please try again, or email " + C.supportEmail + '.';
         track('reg_failed');
         return;
       }
@@ -177,7 +183,9 @@ window.EVENT_CONFIG = {
       try {
         posthog.identify(data.email, { email: data.email, first_name: data.first_name, phone: data.phone });
       } catch (e) {}
-      track('event_registered', { utm_source: data.utm_source || null, utm_campaign: data.utm_campaign || null });
+      // If GHL didn't take it (after the function's retries), the lead is still in Netlify Forms. Flag it so it can be re-sent.
+      if (!sentToGhl) track('ghl_forward_failed', { email: data.email });
+      track('event_registered', { ghl: sentToGhl, utm_source: data.utm_source || null, utm_campaign: data.utm_campaign || null });
       try { window.fbq && fbq('track', 'CompleteRegistration'); } catch (e) {}
 
       sessionStorage.setItem('eb_reg', JSON.stringify({ first_name: data.first_name, email: data.email }));
@@ -247,7 +255,7 @@ window.EVENT_CONFIG = {
     const sc = $('[data-scorecard]');
     if (sc) {
       if (C.scorecardUrl) { sc.href = C.scorecardUrl; sc.addEventListener('click', () => track('scorecard_clicked')); }
-      else { sc.replaceWith(Object.assign(document.createElement('p'), { className: 'muted small', textContent: 'Your scorecard link is on its way to your inbox.' })); }
+      else { const n = Object.assign(document.createElement('p'), { textContent: 'Your scorecard link is on its way to your inbox.' }); n.style.cssText = 'font-family:var(--font-ui);font-size:12px;letter-spacing:.04em;color:var(--white-50)'; sc.replaceWith(n); }
     }
 
     // Share with wife
