@@ -17,7 +17,7 @@ A self-contained static funnel for the free 2-day live workshop.
    Set its after-payment redirect to `https://event.orderofkings.org/confirmed?vip=1`.
 3. "No thanks" goes to `/confirmed`.
 
-PostHog events (`funnel = designed_backwards`): `reg_form_started`, `event_registered`, `vip_offer_viewed`,
+PostHog (same project as orderofkings.org; every custom event carries `event_name = designed_backwards`, and pageviews can be filtered by `$host = event.orderofkings.org`): `reg_form_started`, `event_registered`, `vip_offer_viewed`,
 `vip_checkout_clicked`, `vip_declined`, `confirmation_viewed`, `vip_purchased`, `calendar_added`, `scorecard_clicked`, `share_wife_clicked`, `cta_clicked`, `faq_opened`.
 
 ## Deploy
