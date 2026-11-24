@@ -98,7 +98,7 @@ window.EVENT_CONFIG = {
       const s = document.createElement('script'); s.src = 'https://fast.wistia.com/player.js'; s.async = true; document.head.appendChild(s);
     }
     const s2 = document.createElement('script'); s2.src = `https://fast.wistia.com/embed/${id}.js`; s2.async = true; s2.type = 'module'; document.head.appendChild(s2);
-    const wrap = $('.vsl-video-wrap', card);
+    const wrap = $('.video-frame, .vsl-video-wrap', card);
     wrap.innerHTML = `<wistia-player media-id="${id}" aspect="1.7777777777777777"></wistia-player>`;
     wrap.classList.add('has-video');
     card.classList.add('has-video');
@@ -255,7 +255,7 @@ window.EVENT_CONFIG = {
     const sc = $('[data-scorecard]');
     if (sc) {
       if (C.scorecardUrl) { sc.href = C.scorecardUrl; sc.addEventListener('click', () => track('scorecard_clicked')); }
-      else { const n = Object.assign(document.createElement('p'), { textContent: 'Your scorecard link is on its way to your inbox.' }); n.style.cssText = 'font-family:var(--font-ui);font-size:12px;letter-spacing:.04em;color:var(--white-50)'; sc.replaceWith(n); }
+      else { const n = Object.assign(document.createElement('p'), { textContent: 'Your scorecard link is on its way to your inbox.' }); n.style.cssText = 'font-size:14px;color:var(--white-60);margin-top:12px'; sc.replaceWith(n); }
     }
 
     // Share with wife

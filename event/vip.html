@@ -3,88 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Seat Is Saved · Designed Backwards</title>
-  <meta name="robots" content="noindex" />
   <link rel="icon" type="image/png" href="img/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="ook.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="event.css" />
+  <title>Your seat is saved · Designed Backwards</title>
+  <meta name="robots" content="noindex" />
   <script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.people.toString()+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on addEventProperties get_distinct_id".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init('phc_X4yMXtjgnMJuJ9uGEOTsM4iYtha4OdWSpcJSLrgDA0m', {api_host: 'https://us.i.posthog.com'});
-  </script>
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.people.toString()+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on addEventProperties get_distinct_id".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+      posthog.init('phc_X4yMXtjgnMJuJ9uGEOTsM4iYtha4OdWSpcJSLrgDA0m', {api_host: 'https://us.i.posthog.com'});
+    </script>
 </head>
 <body data-page="vip">
 
-  <div class="noise"></div>
-
-  <nav class="nav scrolled" id="nav">
-    <span class="nav-logo-link"><img src="img/logo.png" alt="Order of Kings" class="nav-logo-img" style="height:36px" /></span>
-    <span class="nav-meta">Designed Backwards · <span data-fill="dates-short">Dec 8 &amp; 9</span></span>
+  <nav class="nav">
+    <div class="container">
+      <img src="img/logo.png" alt="Order of Kings" />
+      <span class="nav-meta">Designed Backwards · <span data-fill="dates-short">Dec 8 &amp; 9</span></span>
+      <span></span>
+    </div>
   </nav>
 
-  <section class="hero ev-hero">
-    <div class="hero-bg"><div class="hero-glow"></div></div>
-    <div class="hero-layout">
-      <div class="ev-steps"><span class="done">Seat saved</span><i></i><span class="now">One more thing</span><i></i><span>Confirmation</span></div>
-      <div class="hero-copy">
-        <div class="hero-eyebrow"><span class="eyebrow-pip"></span><span>You're registered<span data-hide-if-no-name>, <span data-fill="first-name"></span></span></span></div>
-        <h1 class="hero-headline">Want an hour with Dan <em>on your own situation</em> before each session?</h1>
-        <p class="hero-sub">An hour before each day goes live, Dan is opening a smaller room. Bring <strong>your business</strong>, <strong>your marriage</strong> and <strong>your walk with God</strong>, and get real time with him on it.</p>
+  <header class="hero">
+    <div class="container">
+      <div class="steps"><span class="done">Seat saved</span><i></i><span class="now">Optional upgrade</span><i></i><span>Confirmation</span></div>
+      <div class="hero-head">
+        <span class="label">You're registered<span data-hide-if-no-name>, <span data-fill="first-name"></span></span></span>
+        <h1 class="h1">Want an hour with Dan on <span class="accent">your own situation?</span></h1>
+        <p class="lead">An hour before each session goes live, Dan is opening a smaller room. Bring your business, your marriage and your walk with God, and get real time with him on it.</p>
       </div>
 
-      <div class="vsl-card media-card" data-media="vipVslWistiaId">
-        <div class="vsl-badge"><span class="when-photo">The VIP Hour · With Dan Romer</span><span class="when-video">Watch this before you go</span></div>
-        <div class="vsl-video-wrap"><img src="img/dan-wide.jpg" alt="Dan Romer" /></div>
+      <div class="hero-grid">
+        <div>
+          <div class="video" data-media="vipVslWistiaId">
+            <div class="video-frame"><img src="img/dan-wide.jpg" alt="Dan Romer" /></div>
+            <div class="video-cap"><span><b>The VIP hour</b> · live with Dan Romer</span><span>Before Day 1 and Day 2</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="card highlight offer-box">
+            <span class="label" style="margin-bottom:0">VIP upgrade</span>
+            <div class="t-price" data-fill="vip-price">$47</div>
+            <p class="muted small">One payment. Both hours and the workbook.</p>
+            <ul class="checks">
+              <li>A live hour with Dan before Day 1, at <span data-fill="vip-time">4 PM PT / 7 PM ET</span></li>
+              <li>A live hour with Dan before Day 2, same time</li>
+              <li>Open Q&amp;A on your own situation</li>
+              <li>The Designed Backwards workbook</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-block" data-vip-buy="box">Yes, add VIP →</a>
+            <a href="confirmed" class="no-thanks" data-vip-decline>No thanks, just the main sessions</a>
+          </div>
+        </div>
       </div>
+    </div>
+  </header>
 
-      <div class="vip-offer">
-        <div class="std-col std-yes">
-          <div class="std-col-label">What you get with VIP</div>
-          <ul>
-            <li>A live hour with Dan before Day 1, starting <span data-fill="vip-time">4 PM PT / 7 PM ET</span></li>
-            <li>A live hour with Dan before Day 2, same time</li>
-            <li>Open Q&amp;A in both, with real time to hear your situation</li>
-            <li>The Designed Backwards workbook, so you write down where your own life is out of order as you go</li>
-          </ul>
+  <section class="section alt">
+    <div class="container split">
+      <div>
+        <span class="label">Why Dan is doing this</span>
+        <h2 class="h2">The framework is the same for every man. Your life isn't.</h2>
+        <div class="prose">
+          <p>On a live call with a few hundred men, Dan can teach the framework. What he can't do is stop and ask what's going on in your business, or how your marriage got to where it is, in front of everyone.</p>
+          <p>The VIP hour is for the man who wants to work through his own situation with Dan, so he walks into both days already further along.</p>
         </div>
-        <div class="vip-buy">
-          <div class="seat-price" data-fill="vip-price">$47</div>
-          <p class="seat-note">One payment. Both hours and the workbook.</p>
-          <a href="#" class="btn-pill btn-primary btn-lg" data-vip-buy="box">Yes, Add VIP <span class="btn-arr">→</span></a>
-          <a href="confirmed" class="no-thanks" data-vip-decline>No thanks, just the main sessions</a>
-        </div>
+      </div>
+      <div class="faq" style="max-width:none">
+        <details open><summary>Is it the same content as the main session?</summary><p>No. The main session is the framework, for everyone. This hour is about your situation.</p></details>
+        <details><summary>Do I need it to get value from the two days?</summary><p>No. The main sessions stand on their own. This is for the man who wants to go further.</p></details>
+        <details><summary>What if I can't make one of the hours?</summary><p>Come to whichever you can. Both run the same way, live, with Dan.</p></details>
       </div>
     </div>
   </section>
 
-  <section class="section-block confession">
-    <div class="inner">
-      <div class="sec-num">WHY DAN IS DOING THIS</div>
-      <p class="opener">The framework is the same for every man. Your life isn't.</p>
-      <div class="prose-block">
-        <p>On a live call with a few hundred men, Dan can teach the framework. He can walk you through where your faith, your family and your finances got out of order. What he can't do is stop and ask what's actually going on in <em>your</em> business, or how <em>your</em> marriage got to where it is, in front of everyone.</p>
-        <p>Most men watch the teaching and think, "How does this apply to me? My situation's a little different." In ninety minutes with hundreds of men on the line, there's no time to answer that for you.</p>
-        <p>The VIP hour is for the man who doesn't just want to understand the framework. He wants to work through his own situation with Dan, so he walks into both days already further along.</p>
-      </div>
-      <ul class="cost-list" style="margin-top:48px">
-        <li class="cost-item shown"><span class="cost-pip"></span><div><strong>Is it the same content as the main session, early?</strong> No. The main session is the framework, for everyone. This hour is about your situation.</div></li>
-        <li class="cost-item shown"><span class="cost-pip"></span><div><strong>Do I need it to get value from the two days?</strong> No. The main sessions stand on their own. This is for the man who wants to go further.</div></li>
-        <li class="cost-item shown"><span class="cost-pip"></span><div><strong>What if I can't make one of the hours?</strong> Come to whichever you can. Both run the same way, live, with Dan.</div></li>
-      </ul>
-      <div style="text-align:center">
-        <a href="#" class="btn-pill btn-primary btn-lg" data-vip-buy="bottom">Yes, Add VIP for <span data-fill="vip-price">$47</span> <span class="btn-arr">→</span></a><br />
-        <a href="confirmed" class="no-thanks" data-vip-decline>No thanks, take me to my confirmation</a>
-      </div>
+  <section class="cta-band">
+    <div class="container">
+      <h2 class="h2">Add the VIP hours for <span data-fill="vip-price">$47</span></h2>
+      <p class="lead">Two live hours with Dan and the workbook.</p>
+      <a href="#" class="btn btn-primary" data-vip-buy="bottom">Yes, add VIP →</a>
+      <a href="confirmed" class="no-thanks" data-vip-decline>No thanks, take me to my confirmation</a>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="footer-logo-wrap"><img src="img/logo.png" alt="Order of Kings" class="footer-logo" /></div>
-    <div class="footer-name">The Order of Kings</div>
-    <div class="footer-tag">Questions? <a data-support-link href="mailto:support@orderofkings.org" data-fill="support-email">support@orderofkings.org</a></div>
+    <div class="container">
+      <img src="img/logo.png" alt="Order of Kings" />
+      <p>© 2026 Order of Kings · Questions? <a data-support-link href="mailto:support@orderofkings.org" data-fill="support-email">support@orderofkings.org</a></p>
+    </div>
   </footer>
 
   <script src="event.js"></script>
