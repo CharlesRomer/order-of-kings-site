@@ -25,7 +25,7 @@ exports.handler = async function (event) {
     source: 'event.orderofkings.org',
     utm_source: d.utm_source || '', utm_medium: d.utm_medium || '', utm_campaign: d.utm_campaign || '',
     utm_content: d.utm_content || '', utm_term: d.utm_term || '', fbclid: d.fbclid || '',
-    page: d.page || '', registered_at: d.registered_at || new Date().toISOString(), ph_id: d.ph_id || '',
+    page: d.page || '', timezone: String(d.timezone || '').slice(0, 60), registered_at: d.registered_at || new Date().toISOString(), ph_id: d.ph_id || '',
   };
 
   // Up to 3 attempts (0s, 0.7s, 2s back-off), each capped at 4s, so a GHL blip doesn't drop the lead.

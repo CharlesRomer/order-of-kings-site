@@ -253,3 +253,4 @@ strong { font-weight: 600; color: var(--white); }
   .m-cta .btn { width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,.7); }
 }
 @media (max-width: 960px) { .hero-grid .form-col { order: -1; } }
+.tz-note { margin-top: 10px; font-size: 13px; color: var(--white-40); }

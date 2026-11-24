@@ -7,9 +7,9 @@ window.EVENT_CONFIG = {
   name: 'Designed Backwards',
 
   // Session start times. Always write them with the Pacific offset (-08:00 in December).
-  // TODO(Charles): confirm the real start time. 5:00 PM PT / 8:00 PM ET is a placeholder.
-  day1Start: '2026-12-08T17:00:00-08:00',
-  day2Start: '2026-12-09T17:00:00-08:00',
+  // 10:00 AM Pacific both days. Every visitor sees these converted to their own time zone.
+  day1Start: '2026-12-08T10:00:00-08:00',
+  day2Start: '2026-12-09T10:00:00-08:00',
   sessionMinutes: 90,
   vipMinutesBefore: 60, // the VIP hour starts this many minutes before each main session
 
@@ -52,19 +52,28 @@ window.EVENT_CONFIG = {
   const fmt = (d, opts, tz) => d.toLocaleString('en-US', Object.assign({ timeZone: tz }, opts));
   const timeShort = (d, tz) => fmt(d, { hour: 'numeric', minute: '2-digit' }, tz).replace(':00', '');
   const ptEt = (d) => `${timeShort(d, 'America/Los_Angeles')} PT / ${timeShort(d, 'America/New_York')} ET`;
-  const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const tzAbbr = fmt(day1, { timeZoneName: 'short' }, localTz).split(' ').pop();
+  // Visitor's own time zone (from their device). Every date and time on the page is shown in it,
+  // with the Pacific time alongside so it matches emails, texts and what Dan says live.
+  const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Los_Angeles';
+  const tzAbbr = d => { const a = fmt(d, { timeZoneName: 'short' }, localTz).split(' ').pop(); return /^(GMT|UTC)[+-]/.test(a) ? 'your time' : a; };
+  const tzLong = (new Intl.DateTimeFormat('en-US', { timeZone: localTz, timeZoneName: 'long' }).formatToParts(day1).find(x => x.type === 'timeZoneName') || {}).value || localTz;
+  const sameAsPacific = timeShort(day1, localTz) === timeShort(day1, 'America/Los_Angeles') && fmt(day1, { day: 'numeric' }, localTz) === fmt(day1, { day: 'numeric' }, 'America/Los_Angeles');
+  const smartTime = d => sameAsPacific ? `${timeShort(d, 'America/Los_Angeles')} PT` : `${timeShort(d, localTz)} ${tzAbbr(d)} (${timeShort(d, 'America/Los_Angeles')} PT)`;
+  const day = (d, o) => fmt(d, o, localTz);
+  const sameMonth = day(day1, { month: 'long' }) === day(day2, { month: 'long' });
 
   const fills = {
-    'day1-date': fmt(day1, { weekday: 'long', month: 'long', day: 'numeric' }, 'America/Los_Angeles'),
-    'day2-date': fmt(day2, { weekday: 'long', month: 'long', day: 'numeric' }, 'America/Los_Angeles'),
-    'day1-short': fmt(day1, { weekday: 'short', month: 'short', day: 'numeric' }, 'America/Los_Angeles'),
-    'day2-short': fmt(day2, { weekday: 'short', month: 'short', day: 'numeric' }, 'America/Los_Angeles'),
-    'dates-long': `${fmt(day1, { month: 'long', day: 'numeric' }, 'America/Los_Angeles')} & ${fmt(day2, { day: 'numeric' }, 'America/Los_Angeles')}`,
-    'dates-short': `Dec ${fmt(day1, { day: 'numeric' }, 'America/Los_Angeles')} & ${fmt(day2, { day: 'numeric' }, 'America/Los_Angeles')}`,
-    'session-time': ptEt(day1),
-    'vip-time': ptEt(addMin(day1, -C.vipMinutesBefore)),
-    'local-time': `${timeShort(day1, localTz)} ${tzAbbr} your time`,
+    'day1-date': day(day1, { weekday: 'long', month: 'long', day: 'numeric' }),
+    'day2-date': day(day2, { weekday: 'long', month: 'long', day: 'numeric' }),
+    'day1-short': day(day1, { weekday: 'short', month: 'short', day: 'numeric' }),
+    'day2-short': day(day2, { weekday: 'short', month: 'short', day: 'numeric' }),
+    'dates-long': sameMonth ? `${day(day1, { month: 'long', day: 'numeric' })} & ${day(day2, { day: 'numeric' })}` : `${day(day1, { month: 'long', day: 'numeric' })} & ${day(day2, { month: 'long', day: 'numeric' })}`,
+    'dates-short': sameMonth ? `${day(day1, { month: 'short', day: 'numeric' })} & ${day(day2, { day: 'numeric' })}` : `${day(day1, { month: 'short', day: 'numeric' })} & ${day(day2, { month: 'short', day: 'numeric' })}`,
+    'session-time': smartTime(day1),
+    'vip-time': smartTime(addMin(day1, -C.vipMinutesBefore)),
+    'pt-time': ptEt(day1),
+    'local-time': `${timeShort(day1, localTz)} ${tzAbbr(day1)}`,
+    'tz-name': sameAsPacific ? 'Pacific Time' : tzLong,
     'vip-price': `$${C.vipPrice}`,
     'support-email': C.supportEmail,
   };
@@ -160,6 +169,7 @@ window.EVENT_CONFIG = {
       const qs = new URLSearchParams(location.search);
       ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'].forEach(k => { if (qs.get(k)) data[k] = qs.get(k); });
       data.page = location.href;
+      data.timezone = localTz;
       data.registered_at = new Date().toISOString();
       try { data.ph_id = window.posthog && posthog.get_distinct_id ? posthog.get_distinct_id() : ''; } catch (e) {}
 

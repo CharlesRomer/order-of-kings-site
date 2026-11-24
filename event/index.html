@@ -45,9 +45,10 @@
           </div>
           <div class="facts">
             <div><small>When</small><span data-fill="dates-long">December 8 &amp; 9</span></div>
-            <div><small>Time</small><span data-fill="session-time">5 PM PT / 8 PM ET</span></div>
+            <div><small>Time</small><span data-fill="session-time">10 AM PT / 1 PM ET</span></div>
             <div><small>Format</small><span>Live online · Free</span></div>
           </div>
+          <p class="tz-note">Dates and times are shown in your time zone (<span data-fill="tz-name">Pacific Time</span>).</p>
         </div>
 
         <div class="form-col">
@@ -60,7 +61,7 @@
               <div class="field"><label for="f-first">First name</label><input id="f-first" name="first_name" autocomplete="given-name" required /></div>
               <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" name="email" autocomplete="email" required /></div>
               <div class="field"><label for="f-phone">Mobile number</label><input id="f-phone" type="tel" name="phone" autocomplete="tel" required /></div>
-              <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="fbclid" /><input type="hidden" name="page" /><input type="hidden" name="registered_at" /><input type="hidden" name="ph_id" />
+              <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="fbclid" /><input type="hidden" name="page" /><input type="hidden" name="registered_at" /><input type="hidden" name="ph_id" /><input type="hidden" name="timezone" />
               <button type="submit" class="btn btn-primary btn-block">Save my seat →</button>
               <div class="form-error" role="alert"></div>
               <p class="consent">We'll send your join link and reminders by email and text. Msg &amp; data rates may apply. Reply STOP to opt out.</p>
@@ -133,6 +134,7 @@
         <div class="card outcome"><div class="num">02</div><h3 class="h4">Where it got out of order</h3><p>Your faith, your family and your finances, measured with your own scorecard.</p></div>
         <div class="card outcome"><div class="num">03</div><h3 class="h4">What to change this week</h3><p>The first move in the area that's costing you the most, and the tools to make it.</p></div>
       </div>
+      <div class="center" style="margin-top:36px"><a href="#register" class="btn btn-primary" data-to-form="outcomes">Save my free seat →</a></div>
     </div>
   </section>
 
@@ -142,7 +144,7 @@
       <div class="section-head">
         <span class="label">The agenda</span>
         <h2 class="h2">Two days, live with Dan</h2>
-        <p class="lead"><span data-fill="session-time">5 PM PT / 8 PM ET</span> both days, about 90 minutes each.</p>
+        <p class="lead"><span data-fill="session-time">10 AM PT / 1 PM ET</span> both days, about 90 minutes each.</p>
       </div>
       <div class="grid-2">
         <div class="card day">
@@ -209,6 +211,7 @@
           </ul>
         </div>
       </div>
+      <div class="center" style="margin-top:36px"><a href="#register" class="btn btn-primary" data-to-form="who">Save my free seat →</a></div>
     </div>
   </section>
 
@@ -224,48 +227,50 @@
           <p>Dan has planted churches across two continents, built and advised multiple companies, raised seven children, and kept a marriage that is still on fire after decades.</p>
           <p>He's sat across the table from well over a hundred business owners telling him the same story: a ceiling, more hours than ever, and a business growing while everything else falls behind. His conclusion: it isn't a business problem, a marriage problem or a faith problem. It's one problem wearing three masks.</p>
         </div>
+        <a href="#register" class="btn btn-primary" data-to-form="host" style="margin-top:28px">Save my free seat →</a>
       </div>
     </div>
   </section>
 
-  <!-- TICKETS -->
+  <!-- OBJECTION CTA (after the speaker, per the training) -->
+  <section class="cta-band">
+    <div class="container">
+      <h2 class="h2">"I don't have time for this right now."</h2>
+      <p class="lead">That's the point. It's two 90-minute sessions, and the men who say this are usually the ones who need it most. You don't have to drop anything to come.</p>
+      <a href="#register" class="btn btn-primary" data-to-form="objection">Save my free seat →</a>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED (free seat only; VIP is offered after registration as the upsell) -->
   <section class="section alt">
     <div class="container">
       <div class="section-head">
-        <span class="label">Your seat</span>
-        <h2 class="h2">Free to attend. VIP if you want more time with Dan.</h2>
-      </div>
-      <div class="card score">
-        <div><h3 class="h4">Every seat includes the 3-minute scorecard</h3><p>About five questions each on faith, family and finance. Your wife can take the family part with you. Bring your score to Day 1.</p></div>
-        <a href="#register" class="btn btn-outline btn-sm" data-to-form="scorecard">Register to get it</a>
+        <span class="label">Your free seat</span>
+        <h2 class="h2">Everything included when you register</h2>
       </div>
       <div class="grid-2">
-        <div class="card ticket">
-          <span class="t-name">General admission</span>
-          <div class="t-price">Free</div>
-          <p class="t-note">Everything you need from the two days.</p>
+        <div class="card">
+          <h3 class="h4" style="margin-bottom:20px">The workshop</h3>
           <ul class="checks">
-            <li>Both live sessions with Dan</li>
-            <li>The faith, family &amp; finance scorecard</li>
+            <li>Both live sessions with Dan, about 90 minutes each</li>
+            <li>Live hot seats with business owners like you</li>
+            <li>3–4 tools you can use the same week</li>
             <li>Bring your wife on Day 2</li>
             <li>48-hour replay of each session</li>
           </ul>
-          <a href="#register" class="btn btn-primary btn-block" data-to-form="ticket-ga">Save my free seat</a>
         </div>
-        <div class="card ticket highlight">
-          <span class="t-name">VIP</span>
-          <div class="t-price">$47</div>
-          <p class="t-note">For the man who wants time with Dan on his own situation.</p>
+        <div class="card highlight">
+          <h3 class="h4" style="margin-bottom:8px">The Designed Backwards scorecard</h3>
+          <p class="muted" style="margin-bottom:20px">Find out where your life is out of order before Day 1.</p>
           <ul class="checks">
-            <li>Everything in general admission</li>
-            <li>A live VIP hour with Dan before each day</li>
-            <li>Open Q&amp;A on your business, marriage and faith</li>
-            <li>The Designed Backwards workbook</li>
+            <li>Takes about 3 minutes</li>
+            <li>About five questions each on faith, family and finance</li>
+            <li>Your wife can take the family part with you</li>
+            <li>Bring your score to Day 1; it's what Dan works from</li>
           </ul>
-          <a href="#register" class="btn btn-outline btn-block" data-to-form="ticket-vip">Register first</a>
-          <p class="t-how">VIP is offered right after you save your seat.</p>
         </div>
       </div>
+      <div class="center" style="margin-top:36px"><a href="#register" class="btn btn-primary" data-to-form="included">Save my free seat →</a></div>
     </div>
   </section>
 
@@ -279,10 +284,10 @@
       <div class="faq">
         <details><summary>Is this just another business seminar?</summary><p>No. We spend as much time on your marriage and your faith as on the business, because none of the three move on their own.</p></details>
         <details><summary>Is it going to be a sales pitch?</summary><p>Day 1, no pitch at all. On Day 2, Dan will show the next step for men who want to go further, and you decide. Either way, you keep everything from both days.</p></details>
-        <details><summary>What time is it?</summary><p>Both days start at <span data-fill="session-time">5 PM PT / 8 PM ET</span> (<span data-fill="local-time">your time</span>) and run about 90 minutes. It's live online. Your join link comes by email and text.</p></details>
+        <details><summary>What time is it where I am?</summary><p>Both days start at 10 AM Pacific (<span data-fill="pt-time">10 AM PT / 1 PM ET</span>). For you that's <strong><span data-fill="day1-short">Tue, Dec 8</span> and <span data-fill="day2-short">Wed, Dec 9</span> at <span data-fill="local-time">10 AM PT</span></strong> (<span data-fill="tz-name">Pacific Time</span>). The calendar invite on the next page adds it in your own time zone automatically.</p></details>
         <details><summary>What if my wife can't make Day 2?</summary><p>Bring her if you can. If she can't, you still walk away with your own scorecard and the full picture.</p></details>
         <details><summary>What if I can't make it live?</summary><p>Come live if you can; that's where the hot seats and Q&amp;A happen. If you miss a session, the replay stays up for 48 hours.</p></details>
-        <details><summary>Is it really free?</summary><p>Yes. After you register you'll see an optional $47 VIP upgrade: a live hour with Dan before each session and a workbook. You don't need it to get value from the two days.</p></details>
+        <details><summary>Is it really free?</summary><p>Yes. Both days, the scorecard and the replay are free.</p></details>
         <details><summary>I'm outside the US. Can I join?</summary><p>Yes. It's online. Times are set for the US and Canada, and this page shows the start time in your own time zone. If it doesn't work, use the 48-hour replay.</p></details>
       </div>
     </div>
