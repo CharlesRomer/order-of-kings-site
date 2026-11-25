@@ -13,9 +13,9 @@ window.EVENT_CONFIG = {
   sessionMinutes: 90,
   vipMinutesBefore: 60, // the VIP hour starts this many minutes before each main session
 
-  // $47 VIP checkout. Paste a Stripe Payment Link (or GHL order-form URL) here.
-  // In Stripe, set the "after payment" redirect to: https://event.orderofkings.org/confirmed?vip=1
-  vipCheckoutUrl: '',
+  // $47 VIP checkout (Whop). In Whop, set the plan's after-checkout redirect to:
+  // https://event.orderofkings.org/confirmed?vip=1
+  vipCheckoutUrl: 'https://whop.com/checkout/plan_5xcBNAqhnkyuj',
   vipPrice: 47,
 
   // Optional Wistia media IDs. Leave blank to show Dan's photo instead of a video.
@@ -107,7 +107,8 @@ window.EVENT_CONFIG = {
     }
     const s2 = document.createElement('script'); s2.src = `https://fast.wistia.com/embed/${id}.js`; s2.async = true; s2.type = 'module'; document.head.appendChild(s2);
     const wrap = $('.video-frame, .vsl-video-wrap', card);
-    wrap.innerHTML = `<wistia-player media-id="${id}" aspect="1.7777777777777777"></wistia-player>`;
+    const color = document.body.dataset.page === 'vip' ? ' player-color="b8945a"' : '';
+    wrap.innerHTML = `<wistia-player media-id="${id}" aspect="1.7777777777777777"${color}></wistia-player>`;
     if (!document.getElementById('wistia-swatch-' + id)) {
       const st = document.createElement('style'); st.id = 'wistia-swatch-' + id;
       st.textContent = `wistia-player[media-id='${id}']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${id}/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }`;
