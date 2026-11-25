@@ -277,3 +277,12 @@ strong { font-weight: 600; color: var(--white); }
   .host-media { padding-bottom: 80px; }
   .host-family { width: 74%; border-width: 4px; }
 }
+
+/* Bigger family photo (overrides the earlier host-media sizing) */
+.host-media { padding-bottom: 170px; }
+.host-media .host-photo { width: 70%; }
+.host-family { width: 92%; }
+@media (max-width: 640px) {
+  .host-media { padding-bottom: 130px; }
+  .host-family { width: 94%; }
+}

@@ -21,7 +21,6 @@ window.EVENT_CONFIG = {
   // Optional Wistia media IDs. Leave blank to show Dan's photo instead of a video.
   regVslWistiaId: 'poaqbg8ztn',      // 5–6 min registration-page VSL
   vipVslWistiaId: 'z1k9c9gqav',      // 4–5 min VIP upsell VSL
-  confirmWistiaId: '',     // short "you're in, here's what to do" video
 
   // Scorecard link (Typeform / GHL survey). Leave blank to show "arriving by email".
   scorecardUrl: '',
@@ -29,7 +28,7 @@ window.EVENT_CONFIG = {
   // Where the Zoom/webinar link will be sent from, shown on the confirmation page.
   supportEmail: 'support@orderofkings.org', // TODO(Charles): confirm
 
-  // Confirmation-page call funnel. Off by default: the webinar doc says no pitch until Day 2.
+  // Confirmation-page call funnel (link to the Order of Kings application). Off by default.
   showApplySection: false,
   applyUrl: 'https://orderofkings.org/#apply',
 };
