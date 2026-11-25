@@ -296,3 +296,56 @@ strong { font-weight: 600; color: var(--white); }
 .hero-grid { grid-template-columns: 2fr 1fr; gap: 32px; }
 @media (max-width: 1100px) { .hero-grid { grid-template-columns: 1.6fr 1fr; } }
 @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; } }
+
+/* =====================================================
+   VIP page: champagne-gold accents (scoped to /vip only)
+   Gold for VIP moments; blue stays for the funnel steps.
+   ===================================================== */
+[data-page="vip"] {
+  --gold: #d4b483; --gold-light: #ecd6a8; --gold-deep: #a8844c;
+  --gold-dim: rgba(212,180,131,0.10); --gold-line: rgba(212,180,131,0.38);
+}
+/* Warm glow at the top of the page, under the blue one */
+[data-page="vip"] .hero {
+  background:
+    radial-gradient(760px 420px at 50% -8%, rgba(212,180,131,0.16), transparent 70%),
+    radial-gradient(1100px 600px at 50% 0%, rgba(37,99,235,0.08), transparent 70%),
+    var(--black);
+}
+[data-page="vip"] .label { color: var(--gold); }
+[data-page="vip"] .accent {
+  background: linear-gradient(100deg, var(--gold-light) 0%, var(--gold) 45%, var(--gold-deep) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+[data-page="vip"] .steps .now { color: var(--gold); }
+
+/* Video: thin gold frame + soft halo */
+[data-page="vip"] .video { border-color: var(--gold-line); box-shadow: 0 0 0 1px rgba(212,180,131,0.06), 0 30px 80px -30px rgba(212,180,131,0.25); }
+
+/* Offer card: gold hairline, warm tint, top highlight */
+[data-page="vip"] .offer-box {
+  border-color: var(--gold-line);
+  background: linear-gradient(180deg, rgba(212,180,131,0.10), rgba(212,180,131,0) 55%), var(--surface);
+  box-shadow: 0 0 0 1px rgba(212,180,131,0.05), 0 30px 90px -30px rgba(212,180,131,0.30);
+  position: sticky; overflow: hidden;
+}
+[data-page="vip"] .offer-box::before { content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent); }
+[data-page="vip"] .offer-box .t-price {
+  background: linear-gradient(180deg, #fff 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+[data-page="vip"] .checks li::before { background: var(--gold-dim); border-color: rgba(212,180,131,0.55); }
+[data-page="vip"] .checks li::after { border-color: var(--gold); }
+
+/* VIP button: brushed gold, dark text */
+[data-page="vip"] .btn-primary {
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  color: #17130b;
+  box-shadow: 0 0 0 1px rgba(236,214,168,0.35), 0 10px 30px -8px rgba(212,180,131,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+[data-page="vip"] .btn-primary:hover { background: linear-gradient(180deg, #f3e2bd 0%, var(--gold-light) 55%, var(--gold) 100%); box-shadow: 0 0 0 1px rgba(236,214,168,0.5), 0 14px 38px -8px rgba(212,180,131,0.55), inset 0 1px 0 rgba(255,255,255,0.4); }
+
+/* FAQ + bottom CTA */
+[data-page="vip"] .faq details[open] { border-color: var(--gold-line); }
+[data-page="vip"] .faq summary::after { color: var(--gold); }
+[data-page="vip"] .cta-band { background: radial-gradient(700px 300px at 50% 0%, rgba(212,180,131,0.12), transparent 70%), var(--black); }
