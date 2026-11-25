@@ -277,3 +277,22 @@ strong { font-weight: 600; color: var(--white); }
   .host-media { padding-bottom: 80px; }
   .host-family { width: 74%; border-width: 4px; }
 }
+
+/* Bigger family photo (overrides the earlier host-media sizing) */
+.host-media { padding-bottom: 170px; }
+.host-media .host-photo { width: 70%; }
+.host-family { width: 92%; }
+@media (max-width: 640px) {
+  .host-media { padding-bottom: 130px; }
+  .host-family { width: 94%; }
+}
+
+/* Full four-sentence headline at one size */
+.hero-head { max-width: 1000px; }
+.hero-h1 { font-size: clamp(30px, 3.7vw, 48px); line-height: 1.12; }
+
+/* Bigger VSLs: wider hero container and a larger video column */
+.hero .container { max-width: 1280px; }
+.hero-grid { grid-template-columns: 2fr 1fr; gap: 32px; }
+@media (max-width: 1100px) { .hero-grid { grid-template-columns: 1.6fr 1fr; } }
+@media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; } }
