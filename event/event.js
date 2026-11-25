@@ -19,8 +19,8 @@ window.EVENT_CONFIG = {
   vipPrice: 47,
 
   // Optional Wistia media IDs. Leave blank to show Dan's photo instead of a video.
-  regVslWistiaId: '',      // 5–6 min registration-page VSL
-  vipVslWistiaId: '',      // 4–5 min VIP upsell VSL
+  regVslWistiaId: 'poaqbg8ztn',      // 5–6 min registration-page VSL
+  vipVslWistiaId: 'z1k9c9gqav',      // 4–5 min VIP upsell VSL
   confirmWistiaId: '',     // short "you're in, here's what to do" video
 
   // Scorecard link (Typeform / GHL survey). Leave blank to show "arriving by email".
@@ -109,6 +109,11 @@ window.EVENT_CONFIG = {
     const s2 = document.createElement('script'); s2.src = `https://fast.wistia.com/embed/${id}.js`; s2.async = true; s2.type = 'module'; document.head.appendChild(s2);
     const wrap = $('.video-frame, .vsl-video-wrap', card);
     wrap.innerHTML = `<wistia-player media-id="${id}" aspect="1.7777777777777777"></wistia-player>`;
+    if (!document.getElementById('wistia-swatch-' + id)) {
+      const st = document.createElement('style'); st.id = 'wistia-swatch-' + id;
+      st.textContent = `wistia-player[media-id='${id}']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${id}/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }`;
+      document.head.appendChild(st);
+    }
     wrap.classList.add('has-video');
     card.classList.add('has-video');
     card.removeAttribute('hidden');
