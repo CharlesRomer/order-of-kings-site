@@ -349,3 +349,19 @@ strong { font-weight: 600; color: var(--white); }
 [data-page="vip"] .faq details[open] { border-color: var(--gold-line); }
 [data-page="vip"] .faq summary::after { color: var(--gold); }
 [data-page="vip"] .cta-band { background: radial-gradient(700px 300px at 50% 0%, rgba(212,180,131,0.12), transparent 70%), var(--black); }
+
+/* Slimmer details strip under the video: label and value on one line */
+.facts { margin-top: 12px; }
+.facts div { display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 10px 14px; }
+.facts small { display: inline; margin: 0; font-size: 10px; }
+.facts span { font-size: 14px; }
+@media (max-width: 640px) {
+  .facts div { justify-content: space-between; padding: 10px 16px; }
+}
+
+/* Big idea: single reading column */
+.idea .prose p { font-size: 17.5px; }
+.idea .order-card { margin: 36px 0; }
+.idea-line { margin: 36px 0; text-align: center; font-family: var(--font-title); font-size: clamp(21px, 2.3vw, 26px); font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; color: var(--white); }
+.idea .prose .idea-strong { color: var(--white); font-weight: 600; font-size: 19px; }
+.idea + .verse { margin-top: 40px; }
