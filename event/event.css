@@ -365,3 +365,25 @@ strong { font-weight: 600; color: var(--white); }
 .idea-line { margin: 36px 0; text-align: center; font-family: var(--font-title); font-size: clamp(21px, 2.3vw, 26px); font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; color: var(--white); }
 .idea .prose .idea-strong { color: var(--white); font-weight: 600; font-size: 19px; }
 .idea + .verse { margin-top: 40px; }
+
+/* Big idea v2: two columns (story | before → after) */
+.idea-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: start; }
+.idea-story .h2 { margin-bottom: 20px; }
+.idea-story .prose p { font-size: 16px; margin-bottom: 12px; }
+.idea-story .idea-line { margin: 20px 0; padding-left: 16px; border-left: 2px solid var(--blue); text-align: left; font-size: 19px; }
+.idea-story .prose .idea-strong { font-size: 17px; }
+.idea-boxes { position: sticky; top: 92px; }
+.idea-boxes .order-card { margin: 0; padding: 24px 26px; }
+.idea-boxes .order-card .label { margin-bottom: 8px; }
+.idea-boxes .order-row { grid-template-columns: 92px 1fr; padding: 10px 0; font-size: 15.5px; }
+.idea-arrow { text-align: center; color: var(--blue-light); font-size: 20px; line-height: 1; margin: 10px 0; }
+.idea-close { margin-top: 20px; text-align: center; font-family: var(--font-title); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--white); }
+.idea-verse { margin-top: 16px; font-size: 15px; }
+@media (max-width: 960px) {
+  .idea-grid { grid-template-columns: 1fr; gap: 32px; }
+  .idea-boxes { position: static; }
+}
+.idea-story .prose .idea-strong { color: var(--white); font-weight: 600; }
+.idea-boxes .order-row { grid-template-columns: 104px 1fr; }
+.idea-boxes .order-row small { white-space: nowrap; }
+@media (max-width: 640px) { .idea-boxes .order-row { grid-template-columns: 1fr; gap: 4px; } }
