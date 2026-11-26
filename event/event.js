@@ -23,7 +23,7 @@ window.EVENT_CONFIG = {
   vipVslWistiaId: 'z1k9c9gqav',      // 4–5 min VIP upsell VSL
 
   // Scorecard link (Typeform / GHL survey). Leave blank to show "arriving by email".
-  scorecardUrl: '',
+  scorecardUrl: 'https://form.typeform.com/to/V52bbKdg', // Typeform: "Designed Backwards: Scorecard"
 
   // Where the Zoom/webinar link will be sent from, shown on the confirmation page.
   supportEmail: 'support@orderofkings.org', // TODO(Charles): confirm
@@ -285,7 +285,16 @@ window.EVENT_CONFIG = {
 
     const sc = $('[data-scorecard]');
     if (sc) {
-      if (C.scorecardUrl) { sc.href = C.scorecardUrl; sc.addEventListener('click', () => track('scorecard_clicked')); }
+      if (C.scorecardUrl) {
+        // Pass who they are into the Typeform's hidden fields so answers line up with their registration
+        let phId = ''; try { phId = (window.posthog && posthog.get_distinct_id && posthog.get_distinct_id()) || ''; } catch (e) {}
+        const hidden = new URLSearchParams();
+        if (reg.email) hidden.set('email', reg.email);
+        if (reg.first_name) hidden.set('first_name', reg.first_name);
+        if (phId) hidden.set('ph_id', phId);
+        sc.href = C.scorecardUrl + (hidden.toString() ? '#' + hidden.toString() : '');
+        sc.addEventListener('click', () => track('scorecard_clicked'));
+      }
       else { const n = Object.assign(document.createElement('p'), { textContent: 'Your scorecard link is on its way to your inbox.' }); n.style.cssText = 'font-size:14px;color:var(--white-60);margin-top:12px'; sc.replaceWith(n); }
     }
 

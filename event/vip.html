@@ -16,6 +16,7 @@
     </script>
 </head>
 <body data-page="vip">
+  <div class="load-bar" role="progressbar" aria-label="Confirming your registration"><span></span></div>
 
   <nav class="nav">
     <div class="container">
@@ -27,11 +28,9 @@
 
   <header class="hero">
     <div class="container">
-      <div class="steps"><span class="done">Seat saved</span><i></i><span class="now">Optional upgrade</span><i></i><span>Confirmation</span></div>
       <div class="hero-head">
-        <span class="label">You're registered<span data-hide-if-no-name>, <span data-fill="first-name"></span></span></span>
-        <h1 class="h1">Want an hour with Dan on <span class="accent">your own situation?</span></h1>
-        <p class="lead">An hour before each session goes live, Dan is opening a smaller room. Bring your business, your marriage and your walk with God, and get real time with him on it.</p>
+        <h1 class="h1">Almost done&hellip; what <span class="accent">level of access</span> do you want?</h1>
+        <p class="lead">We're confirming your general admission registration now. An hour before each session goes live, Dan is opening a smaller room. Bring your business, your marriage and your walk with God, and get real time with him on it.</p>
       </div>
 
       <div class="hero-grid">
@@ -53,7 +52,8 @@
               <li>The Designed Backwards workbook</li>
             </ul>
             <a href="#" class="btn btn-primary btn-block" data-vip-buy="box">Yes, add VIP →</a>
-            <a href="confirmed" class="no-thanks" data-vip-decline>No thanks, just the main sessions</a>
+            <a href="confirmed" class="btn btn-decline btn-block" data-vip-decline>No thanks, continue with free general admission</a>
+            <p class="decline-note">Your free seat is saved either way.</p>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
       <h2 class="h2">Add the VIP hours for <span data-fill="vip-price">$47</span></h2>
       <p class="lead">Two live hours with Dan and the workbook.</p>
       <a href="#" class="btn btn-primary" data-vip-buy="bottom">Yes, add VIP →</a>
-      <a href="confirmed" class="no-thanks" data-vip-decline>No thanks, take me to my confirmation</a>
+      <a href="confirmed" class="btn btn-decline" data-vip-decline>No thanks, continue with free general admission</a>
     </div>
   </section>
 
