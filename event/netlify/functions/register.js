@@ -20,7 +20,12 @@ exports.handler = async function (event) {
     first_name: String(d.first_name).slice(0, 80),
     email: String(d.email).slice(0, 200),
     phone: String(d.phone || '').slice(0, 40),
-    tags: ['designed-backwards', 'designed-backwards-ga'],
+    // SMS consent (checkbox on the form, unchecked by default). Boolean for GHL; texts go only to sms_consent === true.
+    sms_consent: d.sms_consent === true || d.sms_consent === 'true',
+    sms_consent_at: d.sms_consent === true || d.sms_consent === 'true' ? String(d.sms_consent_at || new Date().toISOString()) : '',
+    sms_consent_text: String(d.sms_consent_text || '').slice(0, 600),
+    sms_consent_source: d.page || 'event.orderofkings.org',
+    tags: ['designed-backwards', 'designed-backwards-ga'].concat(d.sms_consent === true || d.sms_consent === 'true' ? ['sms-opt-in'] : []),
     event: 'Designed Backwards',
     source: 'event.orderofkings.org',
     utm_source: d.utm_source || '', utm_medium: d.utm_medium || '', utm_campaign: d.utm_campaign || '',

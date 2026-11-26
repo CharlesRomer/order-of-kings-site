@@ -518,3 +518,11 @@ strong { font-weight: 600; color: var(--white); }
 .hero-h1 .os-mark .pencil .p3 { stroke-width: 3.5px; }
 .hero-h1 .os-mark .pencil g { filter: url(#pencilTex) drop-shadow(0 0 5px rgba(239,191,4,0.55)) drop-shadow(0 0 14px rgba(239,191,4,0.25)); }
 @media (max-width: 640px) { .hero-h1 .os-mark .pencil .p1 { stroke-width: 7px; } .hero-h1 .os-mark .pencil .p2 { stroke-width: 4px; } .hero-h1 .os-mark .pencil .p3 { stroke-width: 3px; } }
+
+/* SMS opt-in checkbox (separate from registration, unchecked by default) */
+.sms-optin { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; margin: 2px 0 16px; cursor: pointer; }
+.sms-optin input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--blue); cursor: pointer; }
+.sms-optin span { font-size: 12px; line-height: 1.5; color: var(--white-40); }
+.sms-optin strong { color: var(--white-80); font-weight: 600; }
+.sms-optin a, .legal-links a { color: var(--white-60); text-decoration: underline; text-underline-offset: 2px; }
+.legal-links { margin-top: 8px; font-size: 12.5px; }

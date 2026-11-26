@@ -181,6 +181,12 @@ window.EVENT_CONFIG = {
       data.first_name = (data.first_name || '').trim();
       data.email = (data.email || '').trim().toLowerCase();
       data.phone = (data.phone || '').trim();
+      // SMS consent: separate, optional, unchecked by default. Sent as true/false; GHL blocks texts when false.
+      const smsBox = $('#f-sms', form);
+      const smsYes = !!(smsBox && smsBox.checked);
+      data.sms_consent = smsYes ? 'true' : 'false';
+      data.sms_consent_at = smsYes ? new Date().toISOString() : '';
+      data.sms_consent_text = smsYes ? (smsBox.closest('label').innerText || '').replace(/\s+/g, ' ').trim() : '';
       if (!data.first_name || !/^\S+@\S+\.\S+$/.test(data.email) || data.phone.replace(/\D/g, '').length < 7) {
         err.textContent = 'Please add your first name, a valid email and a mobile number.';
         return;
@@ -216,7 +222,7 @@ window.EVENT_CONFIG = {
       } catch (e) {}
       // If GHL didn't take it (after the function's retries), the lead is still in Netlify Forms. Flag it so it can be re-sent.
       if (!sentToGhl) track('ghl_forward_failed', { email: data.email });
-      track('event_registered', { ghl: sentToGhl, utm_source: data.utm_source || null, utm_campaign: data.utm_campaign || null });
+      track('event_registered', { sms_consent: data.sms_consent === 'true', ghl: sentToGhl, utm_source: data.utm_source || null, utm_campaign: data.utm_campaign || null });
       try { window.fbq && fbq('track', 'CompleteRegistration'); } catch (e) {}
 
       sessionStorage.setItem('eb_reg', JSON.stringify({ first_name: data.first_name, email: data.email }));
