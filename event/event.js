@@ -122,8 +122,24 @@ window.EVENT_CONFIG = {
       const fired = {};
       p.addEventListener('play', () => { if (!fired.play) { fired.play = 1; track('video_play', { video: card.dataset.media }); } });
       p.addEventListener('ended', () => track('video_ended', { video: card.dataset.media }));
+      // Watch-depth milestones (25/50/75/95%)
+      const marks = [25, 50, 75, 95], hit = {};
+      p.addEventListener('timeupdate', () => {
+        const d = p.duration, t = p.currentTime; if (!d) return;
+        marks.forEach(m => { if (!hit[m] && t / d * 100 >= m) { hit[m] = 1; track('video_progress', { video: card.dataset.media, percent: m }); } });
+      });
     });
   });
+
+  // ── Scroll depth (25/50/75/100%) ──
+  (() => {
+    const hit = {};
+    addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - innerHeight; if (max <= 0) return;
+      const pct = scrollY / max * 100;
+      [25, 50, 75, 100].forEach(m => { if (!hit[m] && pct >= m - 1) { hit[m] = 1; track('scroll_depth', { percent: m, page: document.body.dataset.page }); } });
+    }, { passive: true });
+  })();
 
   // ── FAQ (native <details>) ──
   $$('.faq details').forEach(d => d.addEventListener('toggle', () => { if (d.open) track('faq_opened', { question: $('summary', d).textContent.trim() }); }));
