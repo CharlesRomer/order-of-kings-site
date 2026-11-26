@@ -249,8 +249,11 @@ window.EVENT_CONFIG = {
 
   // ── Confirmation page ──
   if (document.body.dataset.page === 'confirmed') {
-    const isVip = new URLSearchParams(location.search).get('vip') === '1' || sessionStorage.getItem('eb_vip') === '1';
-    if (isVip) { sessionStorage.setItem('eb_vip', '1'); document.body.classList.add('is-vip'); }
+    // VIP view ONLY when this exact URL says so (the Whop redirect adds ?vip=1).
+    // Nothing is remembered between visits, so "No thanks" always shows the free confirmation.
+    const isVip = new URLSearchParams(location.search).get('vip') === '1';
+    try { sessionStorage.removeItem('eb_vip'); } catch (e) {} // clear the flag older versions of this page stored
+    if (isVip) document.body.classList.add('is-vip');
     track('confirmation_viewed', { vip: isVip });
     if (isVip) { try { posthog.capture('vip_purchased', { event_name: 'designed_backwards', value: C.vipPrice }); window.fbq && fbq('track', 'Purchase', { value: C.vipPrice, currency: 'USD' }); } catch (e) {} }
 
