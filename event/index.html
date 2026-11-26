@@ -61,10 +61,14 @@
               <div class="field"><label for="f-first">First name</label><input id="f-first" name="first_name" autocomplete="given-name" required /></div>
               <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" name="email" autocomplete="email" required /></div>
               <div class="field"><label for="f-phone">Mobile number</label><input id="f-phone" type="tel" name="phone" autocomplete="tel" required /></div>
-              <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="fbclid" /><input type="hidden" name="page" /><input type="hidden" name="registered_at" /><input type="hidden" name="ph_id" /><input type="hidden" name="timezone" />
+              <label class="sms-optin" for="f-sms">
+                <input id="f-sms" type="checkbox" name="sms_consent" value="true" />
+                <span><strong>Yes, text me about Designed Backwards.</strong> I agree to receive event reminders and updates by text from Order of Kings (Goshen Tribe) at the number above. Message frequency varies. Consent is not required to register. Msg &amp; data rates may apply. Reply STOP to cancel, HELP for help. <a href="https://www.goshenites.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> · <a href="https://www.goshenites.com/sms-terms" target="_blank" rel="noopener">SMS Terms</a></span>
+              </label>
+              <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="fbclid" /><input type="hidden" name="page" /><input type="hidden" name="registered_at" /><input type="hidden" name="ph_id" /><input type="hidden" name="timezone" /><input type="hidden" name="sms_consent_at" /><input type="hidden" name="sms_consent_text" />
               <button type="submit" class="btn btn-primary btn-block">Save my seat →</button>
               <div class="form-error" role="alert"></div>
-              <p class="consent">We'll send your join link and reminders by email and text. Msg &amp; data rates may apply. Reply STOP to opt out.</p>
+              <p class="consent">We'll send your join link and reminders by email.</p>
             </form>
             <div class="countdown" data-countdown><span data-cd-label>Day 1 starts in</span><b data-cd-text>—</b></div>
           </div>
@@ -340,6 +344,7 @@
     <div class="container">
       <img src="img/logo.png" alt="Order of Kings" />
       <p>© 2026 Order of Kings · Questions? <a data-support-link href="mailto:support@orderofkings.org" data-fill="support-email">support@orderofkings.org</a></p>
+      <p class="legal-links"><a href="https://www.goshenites.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> · <a href="https://www.goshenites.com/sms-terms" target="_blank" rel="noopener">SMS Terms</a></p>
       <div class="disc">
         <p><strong>Earnings and results disclaimer.</strong> Order of Kings and Dan Romer make no promise or guarantee of income, earnings, business growth, savings, or any other financial, personal, marriage, family or spiritual result from this workshop, the VIP hours, the scorecard, or any program offered. Any examples, stories, member experiences or results mentioned are illustrations only. They are not typical, are not a promise of what you will achieve, and should not be relied on as such. Your results depend on many factors, including your background, experience, effort, business, industry, market conditions and personal circumstances, and you may see no results at all. Every business carries risk, and any decision you make based on what you learn is your own responsibility.</p>
         <p>Nothing on this site or in the workshop is financial, investment, tax, legal, medical, psychological or counseling advice. Please speak with a qualified professional about your situation. Scripture and spiritual teaching are shared as encouragement and teaching, not as a promise of any particular financial or business outcome.</p>
