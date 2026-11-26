@@ -349,11 +349,3 @@ strong { font-weight: 600; color: var(--white); }
 [data-page="vip"] .faq details[open] { border-color: var(--gold-line); }
 [data-page="vip"] .faq summary::after { color: var(--gold); }
 [data-page="vip"] .cta-band { background: radial-gradient(700px 300px at 50% 0%, rgba(212,180,131,0.12), transparent 70%), var(--black); }
-
-/* Event details at the top of the registration form */
-.form-facts { margin: 0 0 6px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.form-facts div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 0; }
-.form-facts div + div { border-top: 1px solid var(--border-2); }
-.form-facts dt { font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-40); }
-.form-facts dd { margin: 0; font-size: 15px; font-weight: 500; color: var(--white); text-align: right; }
-.form-card .tz-note { margin: 0 0 20px; font-size: 12px; }
