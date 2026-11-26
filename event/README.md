@@ -23,3 +23,7 @@ PostHog (same project as orderofkings.org; every custom event carries `event_nam
 ## Deploy
 This folder is deployed as a **separate Netlify site** from the same repo, with Base directory = `event`.
 The main orderofkings.org site is untouched.
+
+## Calendar files
+`designed-backwards.ics` (both days) and `designed-backwards-vip.ics` (both days + VIP hours) are static files with fixed UTC times
+(10:00 AM PT = 18:00 UTC; VIP 17:00 UTC). If the start time changes, update `day1Start`/`day2Start` in `event.js` **and** regenerate these two files.

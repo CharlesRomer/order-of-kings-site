@@ -16,3 +16,10 @@
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Calendar files: serve as calendar data so phones/Safari open them in the Calendar app
+[[headers]]
+  for = "/*.ics"
+  [headers.values]
+    Content-Type = "text/calendar; charset=utf-8"
+    Content-Disposition = "inline; filename=designed-backwards.ics"
