@@ -487,3 +487,18 @@ strong { font-weight: 600; color: var(--white); }
 .session-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .session-top .live-badge { position: static; padding: 3px 8px; font-size: 10px; border-radius: 5px; letter-spacing: 0.1em; }
 .session-top .live-badge { white-space: nowrap; flex-shrink: 0; }
+
+/* "operating system." — thick gold pencil underline, rising slightly left→right, drawn in on load */
+.hero-h1 .os-mark { position: relative; display: inline-block; white-space: nowrap; }
+.hero-h1 .os-mark .pencil { position: absolute; left: -2%; width: 104%; bottom: -0.30em; height: 0.36em; overflow: visible; pointer-events: none; }
+.hero-h1 .os-mark .pencil path { fill: none; stroke: #d4b483; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: pencilDraw 0.9s cubic-bezier(.65,.05,.36,1) 0.5s forwards; }
+.hero-h1 .os-mark .pencil .p1 { stroke-width: 11px; opacity: 0.95; }
+.hero-h1 .os-mark .pencil .p2 { stroke-width: 6px; opacity: 0.55; animation-delay: 0.75s; }
+@keyframes pencilDraw { to { stroke-dashoffset: 0; } }
+@media (max-width: 640px) { .hero-h1 .os-mark .pencil .p1 { stroke-width: 8px; } .hero-h1 .os-mark .pencil .p2 { stroke-width: 4px; } }
+@media (prefers-reduced-motion: reduce) { .hero-h1 .os-mark .pencil path { animation: none; stroke-dashoffset: 0; } }
+.hero-h1 .os-mark .pencil { bottom: -0.36em; height: 0.42em; }
+.hero-h1 .os-mark .pencil .p1 { stroke-width: 15px; }
+.hero-h1 .os-mark .pencil .p2 { stroke-width: 7px; }
+.hero-head .hero-h1 + .lead { margin-top: 30px; }
+@media (max-width: 640px) { .hero-h1 .os-mark .pencil .p1 { stroke-width: 10px; } .hero-h1 .os-mark .pencil .p2 { stroke-width: 5px; } }
