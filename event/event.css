@@ -409,3 +409,13 @@ strong { font-weight: 600; color: var(--white); }
 /* "Designed backwards" box: slight red glow */
 .idea-boxes .order-card.wrong { border-color: rgba(239,68,68,0.35); box-shadow: 0 0 0 1px rgba(239,68,68,0.08), 0 0 40px -6px rgba(239,68,68,0.28); }
 .idea-boxes .order-card.wrong .label { color: #f87171; }
+
+/* Headline keywords: blue with a very soft glow (replaces the underlines) */
+.hero-h1 .hl { text-decoration: none; }
+.hero-h1 .kw { color: var(--blue-light); text-shadow: 0 0 14px rgba(59,130,246,0.22); }
+
+/* VIP button: flat solid gold, no gradient, no bevel, no big glow */
+[data-page="vip"] .btn-primary,
+[data-page="vip"] .btn-primary:hover { background: #d4b483; color: #121008; box-shadow: none; transform: none; font-weight: 700; letter-spacing: 0.02em; }
+[data-page="vip"] .btn-primary:hover { background: #e2c69a; }
+[data-page="vip"] .btn-primary:active { background: #c4a26f; }
