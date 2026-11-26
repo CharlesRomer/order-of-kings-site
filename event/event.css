@@ -510,3 +510,11 @@ strong { font-weight: 600; color: var(--white); }
 .hero-h1 .os-mark .pencil .p3 { stroke-width: 5px; opacity: 0.6; animation-delay: 0.85s; stroke-dasharray: 1200; stroke-dashoffset: 1200; }
 .hero-h1 .os-mark .pencil g { filter: url(#pencilTex) drop-shadow(0 0 6px rgba(239,191,4,0.25)); }
 @media (max-width: 640px) { .hero-h1 .os-mark .pencil .p1 { stroke-width: 9px; } .hero-h1 .os-mark .pencil .p2 { stroke-width: 5px; } .hero-h1 .os-mark .pencil .p3 { stroke-width: 4px; } }
+
+/* Pencil v3: a bit thinner + subtle gold glow */
+.hero-h1 .os-mark .pencil { bottom: -0.32em; height: 0.36em; }
+.hero-h1 .os-mark .pencil .p1 { stroke-width: 9px; }
+.hero-h1 .os-mark .pencil .p2 { stroke-width: 5px; }
+.hero-h1 .os-mark .pencil .p3 { stroke-width: 3.5px; }
+.hero-h1 .os-mark .pencil g { filter: url(#pencilTex) drop-shadow(0 0 5px rgba(239,191,4,0.55)) drop-shadow(0 0 14px rgba(239,191,4,0.25)); }
+@media (max-width: 640px) { .hero-h1 .os-mark .pencil .p1 { stroke-width: 7px; } .hero-h1 .os-mark .pencil .p2 { stroke-width: 4px; } .hero-h1 .os-mark .pencil .p3 { stroke-width: 3px; } }
