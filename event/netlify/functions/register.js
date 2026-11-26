@@ -18,6 +18,9 @@ exports.handler = async function (event) {
 
   const payload = {
     first_name: String(d.first_name).slice(0, 80),
+    last_name: String(d.last_name || '').slice(0, 120),
+    full_name: String(d.full_name || d.first_name).slice(0, 200),
+    phone_country: String(d.phone_country || '').slice(0, 2),
     email: String(d.email).slice(0, 200),
     phone: String(d.phone || '').slice(0, 40),
     // SMS consent (checkbox on the form, unchecked by default). Boolean for GHL; texts go only to sms_consent === true.

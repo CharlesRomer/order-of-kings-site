@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@29.5.12/dist/css/intlTelInput.min.css" />
   <link rel="stylesheet" href="event.css" />
   <title>Designed Backwards · Free 2-Day Live Workshop with Dan Romer</title>
   <meta name="description" content="A free 2-day live workshop for Christian business owners who feel stuck, worn out, or unsure what they're building anymore. December 8 &amp; 9, live with Dan Romer." />
@@ -58,14 +59,14 @@
             <form id="register-form" name="registration" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
               <input type="hidden" name="form-name" value="registration" />
               <div class="hp" aria-hidden="true"><input name="company" tabindex="-1" autocomplete="off" aria-label="company" /></div>
-              <div class="field"><label for="f-first">First name</label><input id="f-first" name="first_name" autocomplete="given-name" required /></div>
+              <div class="field"><label for="f-first">Full name</label><input id="f-first" name="full_name" autocomplete="name" required /></div>
               <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" name="email" autocomplete="email" required /></div>
               <div class="field"><label for="f-phone">Mobile number</label><input id="f-phone" type="tel" name="phone" autocomplete="tel" required /></div>
               <label class="sms-optin" for="f-sms">
                 <input id="f-sms" type="checkbox" name="sms_consent" value="true" />
                 <span><strong>Yes, text me about Designed Backwards.</strong> I agree to receive event reminders and updates by text from Order of Kings (Goshen Tribe) at the number above. Message frequency varies. Consent is not required to register. Msg &amp; data rates may apply. Reply STOP to cancel, HELP for help. <a href="https://www.goshenites.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> · <a href="https://www.goshenites.com/sms-terms" target="_blank" rel="noopener">SMS Terms</a></span>
               </label>
-              <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="fbclid" /><input type="hidden" name="page" /><input type="hidden" name="registered_at" /><input type="hidden" name="ph_id" /><input type="hidden" name="timezone" /><input type="hidden" name="sms_consent_at" /><input type="hidden" name="sms_consent_text" />
+              <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="fbclid" /><input type="hidden" name="page" /><input type="hidden" name="registered_at" /><input type="hidden" name="ph_id" /><input type="hidden" name="timezone" /><input type="hidden" name="first_name" /><input type="hidden" name="last_name" /><input type="hidden" name="phone_country" /><input type="hidden" name="sms_consent_at" /><input type="hidden" name="sms_consent_text" />
               <button type="submit" class="btn btn-primary btn-block">Save my seat →</button>
               <div class="form-error" role="alert"></div>
               <p class="consent">We'll send your join link and reminders by email.</p>
@@ -356,6 +357,7 @@
 
   <div class="m-cta" id="mCta"><a href="#register" class="btn btn-primary" data-to-form="mobile-sticky">Save my free seat →</a></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@29.5.12/dist/js/intlTelInputWithUtils.min.js"></script>
   <script src="event.js"></script>
 </body>
 </html>

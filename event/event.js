@@ -170,6 +170,34 @@ window.EVENT_CONFIG = {
   const form = $('#register-form');
   if (form) {
     let started = false;
+
+    // Phone: country picker built into the field. Country guessed from the visitor's IP (our own
+    // Netlify function), falling back to their device time zone, then the US.
+    const phoneEl = $('#f-phone', form);
+    const tzCountry = (() => {
+      const tz = localTz || '';
+      const map = { 'America/Toronto': 'ca', 'America/Vancouver': 'ca', 'America/Edmonton': 'ca', 'America/Winnipeg': 'ca', 'America/Halifax': 'ca', 'America/St_Johns': 'ca', 'America/Regina': 'ca',
+        'America/Mexico_City': 'mx', 'America/Sao_Paulo': 'br', 'America/Bogota': 'co', 'America/Lima': 'pe', 'America/Santiago': 'cl', 'America/Argentina/Buenos_Aires': 'ar',
+        'Europe/London': 'gb', 'Europe/Dublin': 'ie', 'Europe/Riga': 'lv', 'Europe/Berlin': 'de', 'Europe/Paris': 'fr', 'Europe/Amsterdam': 'nl', 'Europe/Madrid': 'es', 'Europe/Rome': 'it', 'Europe/Zurich': 'ch', 'Europe/Stockholm': 'se', 'Europe/Oslo': 'no', 'Europe/Warsaw': 'pl', 'Europe/Kiev': 'ua', 'Europe/Kyiv': 'ua',
+        'Africa/Johannesburg': 'za', 'Africa/Lagos': 'ng', 'Africa/Nairobi': 'ke', 'Africa/Accra': 'gh', 'Africa/Kampala': 'ug', 'Africa/Harare': 'zw', 'Africa/Lusaka': 'zm', 'Africa/Gaborone': 'bw', 'Africa/Windhoek': 'na', 'Africa/Cairo': 'eg',
+        'Pacific/Auckland': 'nz', 'Asia/Singapore': 'sg', 'Asia/Manila': 'ph', 'Asia/Kolkata': 'in', 'Asia/Dubai': 'ae', 'Asia/Jerusalem': 'il', 'Asia/Hong_Kong': 'hk', 'Asia/Tokyo': 'jp', 'Asia/Seoul': 'kr' };
+      if (map[tz]) return map[tz];
+      if (tz.startsWith('Australia/')) return 'au';
+      if (tz.startsWith('America/') || tz.startsWith('US/')) return 'us';
+      return 'us';
+    })();
+    let iti = null;
+    if (phoneEl && window.intlTelInput) {
+      iti = window.intlTelInput(phoneEl, {
+        initialCountryLookup: () => fetch('/.netlify/functions/geo', { cache: 'no-store' })
+          .then(r => r.ok ? r.json() : {}).then(j => j.country || tzCountry).catch(() => tzCountry),
+        countryOrder: ['us', 'ca', 'gb', 'au', 'nz', 'za'],
+        separateDialCode: true,
+        countrySearch: true,
+        formatAsYouType: true,
+        strictMode: true,
+      });
+    }
     form.addEventListener('input', () => { if (!started) { started = true; track('reg_form_started'); } });
 
     form.addEventListener('submit', async e => {
@@ -178,17 +206,31 @@ window.EVENT_CONFIG = {
       const err = $('.form-error', form);
       err.textContent = '';
       const data = Object.fromEntries(new FormData(form).entries());
-      data.first_name = (data.first_name || '').trim();
+      data.full_name = (data.full_name || '').trim().replace(/\s+/g, ' ');
+      const nameParts = data.full_name.split(' ');
+      data.first_name = nameParts.shift() || '';
+      data.last_name = nameParts.join(' ');
       data.email = (data.email || '').trim().toLowerCase();
       data.phone = (data.phone || '').trim();
+      // Full international number (E.164, e.g. +15551234567) + the chosen country
+      let phoneOk = data.phone.replace(/\D/g, '').length >= 7;
+      if (iti) {
+        phoneOk = iti.isValidNumber();
+        if (phoneOk) data.phone = iti.getNumber();
+        data.phone_country = (iti.getSelectedCountry() || {}).iso2 || '';
+      }
       // SMS consent: separate, optional, unchecked by default. Sent as true/false; GHL blocks texts when false.
       const smsBox = $('#f-sms', form);
       const smsYes = !!(smsBox && smsBox.checked);
       data.sms_consent = smsYes ? 'true' : 'false';
       data.sms_consent_at = smsYes ? new Date().toISOString() : '';
       data.sms_consent_text = smsYes ? (smsBox.closest('label').innerText || '').replace(/\s+/g, ' ').trim() : '';
-      if (!data.first_name || !/^\S+@\S+\.\S+$/.test(data.email) || data.phone.replace(/\D/g, '').length < 7) {
-        err.textContent = 'Please add your first name, a valid email and a mobile number.';
+      if (!data.full_name || !/^\S+@\S+\.\S+$/.test(data.email)) {
+        err.textContent = 'Please add your full name and a valid email.';
+        return;
+      }
+      if (!phoneOk) {
+        err.textContent = "That mobile number doesn't look right for the selected country. Check the number and the flag.";
         return;
       }
 
