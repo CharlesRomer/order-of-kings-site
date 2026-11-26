@@ -387,3 +387,35 @@ strong { font-weight: 600; color: var(--white); }
 .idea-boxes .order-row { grid-template-columns: 104px 1fr; }
 .idea-boxes .order-row small { white-space: nowrap; }
 @media (max-width: 640px) { .idea-boxes .order-row { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ── VIP page: "confirming" loading bar across the very top ── */
+.load-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 200; background: rgba(255,255,255,0.06); overflow: hidden; }
+.load-bar span { position: absolute; top: 0; left: 0; bottom: 0; width: 0; background: linear-gradient(90deg, var(--blue), var(--blue-light) 45%, #ecd6a8 100%); box-shadow: 0 0 12px rgba(59,130,246,0.7); animation: loadFill 3.2s cubic-bezier(.2,.7,.2,1) forwards; }
+.load-bar span::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent); transform: translateX(-100%); animation: loadShine 1.4s ease-in-out infinite; }
+@keyframes loadFill { 0% { width: 0; } 60% { width: 72%; } 100% { width: 88%; } }
+@keyframes loadShine { to { transform: translateX(100%); } }
+[data-page="vip"] .nav { top: 4px; }
+@media (prefers-reduced-motion: reduce) { .load-bar span { animation: none; width: 88%; } .load-bar span::after { display: none; } }
+
+/* ── Clear "No thanks" option ── */
+.btn-decline { margin-top: 12px; background: transparent; color: var(--white-80); border: 1px solid var(--white-20); font-size: 14px; padding: 14px 22px; white-space: normal; text-align: center; line-height: 1.3; }
+.btn-decline:hover { border-color: var(--white-60); color: #fff; }
+.decline-note { margin-top: 8px; text-align: center; font-size: 12.5px; color: var(--white-40); }
+.cta-band .btn-decline { display: flex; width: fit-content; margin: 12px auto 0; }
+
+/* Headline keywords: blue underline to break up the read */
+.hero-h1 .hl { text-decoration: underline; text-decoration-color: var(--blue-light); text-decoration-thickness: 0.09em; text-underline-offset: 0.14em; text-decoration-skip-ink: none; }
+
+/* "Designed backwards" box: slight red glow */
+.idea-boxes .order-card.wrong { border-color: rgba(239,68,68,0.35); box-shadow: 0 0 0 1px rgba(239,68,68,0.08), 0 0 40px -6px rgba(239,68,68,0.28); }
+.idea-boxes .order-card.wrong .label { color: #f87171; }
+
+/* Headline keywords: blue with a very soft glow (replaces the underlines) */
+.hero-h1 .hl { text-decoration: none; }
+.hero-h1 .kw { color: var(--blue-light); text-shadow: 0 0 14px rgba(59,130,246,0.22); }
+
+/* VIP button: flat solid gold, no gradient, no bevel, no big glow */
+[data-page="vip"] .btn-primary,
+[data-page="vip"] .btn-primary:hover { background: #d4b483; color: #121008; box-shadow: none; transform: none; font-weight: 700; letter-spacing: 0.02em; }
+[data-page="vip"] .btn-primary:hover { background: #e2c69a; }
+[data-page="vip"] .btn-primary:active { background: #c4a26f; }
