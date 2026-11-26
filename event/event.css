@@ -419,3 +419,9 @@ strong { font-weight: 600; color: var(--white); }
 [data-page="vip"] .btn-primary:hover { background: #d4b483; color: #121008; box-shadow: none; transform: none; font-weight: 700; letter-spacing: 0.02em; }
 [data-page="vip"] .btn-primary:hover { background: #e2c69a; }
 [data-page="vip"] .btn-primary:active { background: #c4a26f; }
+
+/* VIP page: no header; a thick loading bar takes its place (4px -> 16px) */
+.load-bar { height: 16px; }
+.load-bar span { box-shadow: 0 0 18px rgba(59,130,246,0.55); }
+[data-page="vip"] .hero { padding-top: 84px; }
+@media (max-width: 640px) { [data-page="vip"] .hero { padding-top: 56px; } }

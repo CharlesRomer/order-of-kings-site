@@ -20,7 +20,7 @@ window.EVENT_CONFIG = {
 
   // Optional Wistia media IDs. Leave blank to show Dan's photo instead of a video.
   regVslWistiaId: 'poaqbg8ztn',      // 5–6 min registration-page VSL
-  vipVslWistiaId: 'z1k9c9gqav',      // 4–5 min VIP upsell VSL
+  vipVslWistiaId: 'fn9m5ehp42',      // 4–5 min VIP upsell VSL
 
   // Scorecard link (Typeform / GHL survey). Leave blank to show "arriving by email".
   scorecardUrl: 'https://form.typeform.com/to/V52bbKdg', // Typeform: "Designed Backwards: Scorecard"
