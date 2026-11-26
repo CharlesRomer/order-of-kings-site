@@ -1,0 +1,35 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Order of Kings//Designed Backwards//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Designed Backwards
+BEGIN:VEVENT
+UID:db-day1@event.orderofkings.org
+DTSTAMP:20261126T043219Z
+DTSTART:20261208T180000Z
+DTEND:20261208T193000Z
+SUMMARY:Designed Backwards: Day 1 (live with Dan Romer)
+DESCRIPTION:Live workshop with Dan Romer. Your join link comes by email and text before we go live.\n\nTake the scorecard before Day 1. Bring your wife on Day 2.\n\nhttps://event.orderofkings.org
+URL:https://event.orderofkings.org
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Designed Backwards starts in 30 minutes
+TRIGGER:-PT30M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:db-day2@event.orderofkings.org
+DTSTAMP:20261126T043219Z
+DTSTART:20261209T180000Z
+DTEND:20261209T193000Z
+SUMMARY:Designed Backwards: Day 2 (bring your wife)
+DESCRIPTION:Live workshop with Dan Romer. Your join link comes by email and text before we go live.\n\nTake the scorecard before Day 1. Bring your wife on Day 2.\n\nhttps://event.orderofkings.org
+URL:https://event.orderofkings.org
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Designed Backwards starts in 30 minutes
+TRIGGER:-PT30M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -258,32 +258,21 @@ window.EVENT_CONFIG = {
     if (isVip) { try { posthog.capture('vip_purchased', { event_name: 'designed_backwards', value: C.vipPrice }); window.fbq && fbq('track', 'Purchase', { value: C.vipPrice, currency: 'USD' }); } catch (e) {} }
 
     // Calendar links
-    const gcal = (title, start, mins, details) => {
-      const f = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-      return 'https://calendar.google.com/calendar/render?' + new URLSearchParams({ action: 'TEMPLATE', text: title, dates: `${f(start)}/${f(addMin(start, mins))}`, details }).toString();
-    };
-    const details = 'Live workshop with Dan Romer. Your join link comes by email and text before we go live.\n\nTake the scorecard before Day 1. Bring your wife on Day 2.';
-    const events = [
-      { key: 'day1', title: 'Designed Backwards: Day 1 (live with Dan Romer)', start: day1, mins: C.sessionMinutes },
-      { key: 'day2', title: 'Designed Backwards: Day 2 (bring your wife)', start: day2, mins: C.sessionMinutes },
-    ];
-    if (isVip) {
-      events.push({ key: 'vip1', title: 'Designed Backwards: VIP hour with Dan (Day 1)', start: addMin(day1, -C.vipMinutesBefore), mins: C.vipMinutesBefore });
-      events.push({ key: 'vip2', title: 'Designed Backwards: VIP hour with Dan (Day 2)', start: addMin(day2, -C.vipMinutesBefore), mins: C.vipMinutesBefore });
-    }
-    events.forEach(ev => {
-      const a = $(`[data-gcal="${ev.key}"]`);
-      if (a) { a.href = gcal(ev.title, ev.start, ev.mins, details); a.addEventListener('click', () => track('calendar_added', { which: ev.key, kind: 'google' })); }
-    });
+    // Google: ONE link that adds both days (a 2-day daily repeat). VIP buyers get a second link for the VIP hours.
+    const f = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const details = 'Live workshop with Dan Romer. Your join link comes by email and text before we go live.\n\nTake the scorecard before Day 1. Bring your wife on Day 2.\n\nhttps://event.orderofkings.org';
+    const gcal = (title, start, mins) => 'https://calendar.google.com/calendar/render?' + new URLSearchParams({
+      action: 'TEMPLATE', text: title, dates: `${f(start)}/${f(addMin(start, mins))}`, details, recur: 'RRULE:FREQ=DAILY;COUNT=2',
+    }).toString();
+    const g = $('[data-gcal="both"]');
+    if (g) { g.href = gcal('Designed Backwards (live with Dan Romer)', day1, C.sessionMinutes); g.addEventListener('click', () => track('calendar_added', { kind: 'google', vip: false })); }
+    const gv = $('[data-gcal="vip"]');
+    if (gv) { gv.href = gcal('Designed Backwards: VIP hour with Dan', addMin(day1, -C.vipMinutesBefore), C.vipMinutesBefore); gv.addEventListener('click', () => track('calendar_added', { kind: 'google', vip: true })); }
+    // Apple / Outlook: hosted .ics files (served as text/calendar). VIP file also has the two VIP hours.
     const ics = $('[data-ics]');
     if (ics) {
-      const f = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-      const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Order of Kings//Designed Backwards//EN']
-        .concat(...events.map((ev, i) => ['BEGIN:VEVENT', `UID:designed-backwards-${ev.key}@orderofkings.org`, `DTSTAMP:${f(new Date())}`, `DTSTART:${f(ev.start)}`, `DTEND:${f(addMin(ev.start, ev.mins))}`, `SUMMARY:${ev.title}`, `DESCRIPTION:${details.replace(/\n/g, '\\n')}`, 'END:VEVENT']))
-        .concat('END:VCALENDAR').join('\r\n');
-      ics.href = URL.createObjectURL(new Blob([body], { type: 'text/calendar' }));
-      ics.download = 'designed-backwards.ics';
-      ics.addEventListener('click', () => track('calendar_added', { kind: 'ics' }));
+      ics.href = isVip ? 'designed-backwards-vip.ics' : 'designed-backwards.ics';
+      ics.addEventListener('click', () => track('calendar_added', { kind: 'ics', vip: isVip }));
     }
 
     const sc = $('[data-scorecard]');

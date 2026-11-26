@@ -35,11 +35,42 @@
         <div class="vip-badge">VIP confirmed · receipt sent to your email</div>
       </div>
 
-      <div class="narrow when-list">
-        <div class="card when-row"><h3 class="h4">Day 1 · Designed Backwards</h3><span class="t"><span data-fill="day1-date">Tuesday, December 8</span> · <span data-fill="session-time">10 AM PT / 1 PM ET</span></span></div>
-        <div class="card when-row"><h3 class="h4">Day 2 · Installing the Operating System</h3><span class="t"><span data-fill="day2-date">Wednesday, December 9</span> · <span data-fill="session-time">10 AM PT / 1 PM ET</span></span></div>
-        <div class="card when-row highlight vip-only"><h3 class="h4">VIP hour with Dan</h3><span class="t">Both days · <span data-fill="vip-time">9 AM PT / 12 PM ET</span></span></div>
+      <div class="sessions">
+        <article class="session">
+          <div class="session-thumb">
+            <img src="img/day1-thumb.jpg" alt="Day 1: Designed Backwards, live with Dan Romer" />
+            <span class="live-badge"><i></i>Live</span>
+            <span class="len-badge">~90 min</span>
+          </div>
+          <div class="session-body">
+            <span class="session-day">Day 1</span>
+            <h3 class="h3">Designed Backwards</h3>
+            <div class="session-host"><img src="img/dan-headshot.jpg" alt="" /><span>Dan Romer</span></div>
+            <div class="session-when">
+              <strong data-fill="day1-date">Tuesday, December 8</strong>
+              <span data-fill="session-time">10 AM PT</span>
+            </div>
+          </div>
+        </article>
+        <article class="session">
+          <div class="session-thumb">
+            <img src="img/day2-thumb.jpg" alt="Day 2: Installing the Operating System, live with Dan Romer" />
+            <span class="live-badge"><i></i>Live</span>
+            <span class="len-badge">~90 min</span>
+          </div>
+          <div class="session-body">
+            <span class="session-day">Day 2 · Bring your wife</span>
+            <h3 class="h3">Installing the Operating System</h3>
+            <div class="session-host"><img src="img/dan-headshot.jpg" alt="" /><span>Dan Romer</span></div>
+            <div class="session-when">
+              <strong data-fill="day2-date">Wednesday, December 9</strong>
+              <span data-fill="session-time">10 AM PT</span>
+            </div>
+          </div>
+        </article>
       </div>
+      <div class="card when-row highlight vip-only vip-row"><h3 class="h4">VIP hour with Dan</h3><span class="t">Both days · <span data-fill="vip-time">9 AM PT</span></span></div>
+      <p class="tz-line">Dates and times above are shown in your time zone (<span data-fill="tz-name">Pacific Time</span>). Fixed time: <strong>10 AM Pacific / 1 PM Eastern</strong><span class="vip-only"> (VIP hour 9 AM Pacific / 12 PM Eastern)</span>.</p>
     </div>
   </header>
 
@@ -54,19 +85,20 @@
           <div class="n">1</div>
           <div>
             <h3 class="h4">Put both days on your calendar</h3>
-            <p>Block it like a meeting you can't move.<span class="vip-only"> Your VIP hours are in the calendar file too.</span></p>
+            <p>Block it like a meeting you can't move.<span class="vip-only"> Your VIP hours are included too.</span></p>
             <div class="actions">
-              <a class="btn btn-primary btn-sm" data-gcal="day1" href="#" target="_blank" rel="noopener">Day 1 · Google</a>
-              <a class="btn btn-primary btn-sm" data-gcal="day2" href="#" target="_blank" rel="noopener">Day 2 · Google</a>
-              <a class="btn btn-outline btn-sm" data-ics href="#">Apple / Outlook</a>
+              <a class="btn btn-cal btn-sm" data-gcal="both" href="#" target="_blank" rel="noopener"><img src="img/gcal.png" alt="" />Add both days to Google Calendar</a>
+              <a class="btn btn-cal btn-sm vip-only-inline" data-gcal="vip" href="#" target="_blank" rel="noopener"><img src="img/gcal.png" alt="" />Add VIP hours to Google Calendar</a>
+              <a class="btn btn-outline btn-sm" data-ics href="designed-backwards.ics"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Apple / Outlook</a>
             </div>
+            <p class="cal-help">Apple / Outlook: on a phone it opens your calendar app; on a computer it downloads a file. Open that file and both days are added.</p>
           </div>
         </div>
         <div class="card step-card">
           <div class="n">2</div>
           <div>
             <h3 class="h4">Take your 3-minute scorecard</h3>
-            <p>About five questions each on faith, family and finance. Your wife can take the family part with you. Bring your score to Day 1.</p>
+            <p>Just a few short minutes on your faith, your family and your finances. Your wife can take the family part with you. Bring your score to Day 1.</p>
             <div class="actions"><a class="btn btn-primary btn-sm" data-scorecard href="#" target="_blank" rel="noopener">Take the scorecard →</a></div>
           </div>
         </div>

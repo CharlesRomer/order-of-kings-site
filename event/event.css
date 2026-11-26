@@ -425,3 +425,41 @@ strong { font-weight: 600; color: var(--white); }
 .load-bar span { box-shadow: 0 0 18px rgba(59,130,246,0.55); }
 [data-page="vip"] .hero { padding-top: 84px; }
 @media (max-width: 640px) { [data-page="vip"] .hero { padding-top: 56px; } }
+
+/* ── Confirmation: the two live sessions as video-style cards ── */
+.sessions { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 980px; margin: 0 auto; }
+.session { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color .25s, transform .25s; }
+.session:hover { border-color: rgba(59,130,246,0.45); transform: translateY(-2px); }
+.session-thumb { position: relative; aspect-ratio: 16 / 9; background: var(--deep); }
+.session-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.live-badge { position: absolute; top: 12px; left: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 6px; background: #dc2626; color: #fff; font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.live-badge i { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: livePulse 1.6s ease-in-out infinite; }
+@keyframes livePulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+.len-badge { position: absolute; right: 12px; bottom: 12px; padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,0.75); color: #fff; font-size: 12px; font-weight: 600; }
+.session-body { padding: 18px 20px 20px; text-align: left; }
+.session-day { font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-light); }
+.session-body .h3 { margin: 4px 0 12px; font-size: 21px; }
+.session-host { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; color: var(--white-80); }
+.session-host img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; object-position: center 15%; border: 1px solid var(--border); }
+.session-when { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-2); display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 14.5px; color: var(--white-60); }
+.session-when strong { color: var(--white); font-weight: 600; }
+.vip-row { max-width: 980px; margin: 16px auto 0; }
+.tz-line { max-width: 980px; margin: 18px auto 0; text-align: center; font-size: 13.5px; color: var(--white-40); }
+.tz-line strong { color: var(--white-80); font-weight: 600; }
+.is-vip .tz-line span.vip-only { display: inline !important; }
+
+/* Calendar buttons */
+.btn-cal { background: #fff; color: #1f2937; box-shadow: none; border: 1px solid #fff; }
+.btn-cal:hover { background: #f1f5f9; }
+.btn-cal img, .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.vip-only-inline { display: none !important; }
+.is-vip .vip-only-inline { display: inline-flex !important; }
+.cal-help { margin-top: 12px !important; font-size: 13px !important; color: var(--white-40) !important; }
+
+@media (max-width: 760px) {
+  .sessions { grid-template-columns: 1fr; max-width: 480px; }
+}
+@media (max-width: 640px) {
+  .step-card .actions .btn { width: 100%; white-space: normal; text-align: center; }
+}
+.live-badge { top: auto; bottom: 12px; left: 12px; }
