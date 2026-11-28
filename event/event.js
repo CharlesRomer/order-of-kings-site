@@ -273,7 +273,15 @@ window.EVENT_CONFIG = {
       }
 
       try {
-        posthog.identify(data.email, { email: data.email, first_name: data.first_name, phone: data.phone });
+        // Link this browser's activity to the person (email = the same key as the GHL contact)
+        posthog.identify(data.email, {
+          email: data.email, name: data.full_name, first_name: data.first_name, last_name: data.last_name,
+          phone: data.phone, phone_country: data.phone_country || '', sms_consent: data.sms_consent === 'true',
+          timezone: data.timezone, db_registered: true, db_registered_at: data.registered_at,
+        }, {
+          db_first_utm_source: data.utm_source || '', db_first_utm_medium: data.utm_medium || '', db_first_utm_campaign: data.utm_campaign || '',
+          db_first_utm_content: data.utm_content || '', db_first_page: data.page,
+        });
       } catch (e) {}
       // If GHL didn't take it (after the function's retries), the lead is still in Netlify Forms. Flag it so it can be re-sent.
       if (!sentToGhl) track('ghl_forward_failed', { email: data.email });
@@ -307,6 +315,10 @@ window.EVENT_CONFIG = {
     }
     return r;
   })();
+  // Keep PostHog tied to the same person on /vip and /confirmed (in case its cookie was cleared between pages)
+  if (reg.email && document.body.dataset.page !== 'register') {
+    try { posthog.identify(reg.email, { email: reg.email, first_name: reg.first_name, last_name: reg.last_name, phone: reg.phone }); } catch (e) {}
+  }
   $$('[data-fill="first-name"]').forEach(el => { if (reg.first_name) el.textContent = reg.first_name; else el.closest('[data-hide-if-no-name]')?.remove(); });
 
   // Tell GHL the VIP checkout started (so it isn't treated as a second GA registration).
@@ -328,7 +340,7 @@ window.EVENT_CONFIG = {
   $$('[data-vip-buy]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
-      track('vip_checkout_clicked', { location: a.dataset.vipBuy });
+      track('vip_checkout_clicked', { location: a.dataset.vipBuy, $set: { db_vip_checkout_started: true, db_vip_checkout_started_at: new Date().toISOString() } });
       if (!C.vipCheckoutUrl) { alert('VIP checkout link not set yet (EVENT_CONFIG.vipCheckoutUrl).'); return; }
       sendVipCheckoutStarted();
       const u = new URL(C.vipCheckoutUrl);
@@ -350,7 +362,7 @@ window.EVENT_CONFIG = {
     try { sessionStorage.removeItem('eb_vip'); } catch (e) {} // clear the flag older versions of this page stored
     if (isVip) document.body.classList.add('is-vip');
     track('confirmation_viewed', { vip: isVip });
-    if (isVip) { try { posthog.capture('vip_purchased', { event_name: 'designed_backwards', value: C.vipPrice }); window.fbq && fbq('track', 'Purchase', { value: C.vipPrice, currency: 'USD' }); } catch (e) {} }
+    if (isVip) { try { posthog.capture('vip_purchased', { event_name: 'designed_backwards', value: C.vipPrice, $set: { db_is_vip: true, db_vip_purchased_at: new Date().toISOString() } }); window.fbq && fbq('track', 'Purchase', { value: C.vipPrice, currency: 'USD' }); } catch (e) {} }
 
     // Calendar links
     // Google: ONE link that adds both days (a 2-day daily repeat). VIP buyers get a second link for the VIP hours.
