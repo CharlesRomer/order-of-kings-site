@@ -1,6 +1,14 @@
 // Forwards a Designed Backwards registration to a GoHighLevel inbound webhook.
 // Set GHL_EVENT_WEBHOOK_URL in this Netlify site's environment variables.
 // (Netlify Forms also keeps a copy of every registration, so nothing is lost if this isn't set yet.)
+//
+// Registrations are also sent to Meta's Conversions API (server side) when META_CAPI_TOKEN is set,
+// with the same event_id as the browser pixel so Meta deduplicates the pair. Meta errors never block
+// or fail a registration. Optional: META_TEST_EVENT_CODE (Events Manager -> Test events) while testing.
+
+const crypto = require('crypto');
+const META_DATASET_ID = '1624105552195579';
+const sha256 = v => crypto.createHash('sha256').update(v).digest('hex');
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
@@ -16,12 +24,6 @@ exports.handler = async function (event) {
   if (isEvent && !ALLOWED_EVENTS.includes(d.event)) return { statusCode: 400, body: 'Unknown event' };
   if (isEvent && !/^\S+@\S+\.\S+$/.test(String(d.email || ''))) return { statusCode: 400, body: 'Missing email' };
   if (!isEvent && (!d.email || !d.first_name)) return { statusCode: 400, body: 'Missing fields' };
-
-  const url = process.env.GHL_EVENT_WEBHOOK_URL;
-  if (!url) {
-    console.warn('register: GHL_EVENT_WEBHOOK_URL not set, skipping forward for', d.email);
-    return { statusCode: 202, body: 'stored (no webhook configured)' };
-  }
 
   const payload = isEvent ? {
     event: d.event,
@@ -49,20 +51,78 @@ exports.handler = async function (event) {
     page: d.page || '', timezone: String(d.timezone || '').slice(0, 60), registered_at: d.registered_at || new Date().toISOString(), ph_id: d.ph_id || '',
   };
 
-  // Up to 3 attempts (0s, 0.7s, 2s back-off), each capped at 4s, so a GHL blip doesn't drop the lead.
-  const delays = [0, 700, 2000];
+  // Registrations go to GHL and Meta CAPI at the same time; the response reflects GHL only.
+  const [ghlStatus] = await Promise.all([
+    forwardToGhl(payload),
+    isEvent ? Promise.resolve() : sendMetaRegistration(d, event.headers || {}),
+  ]);
+  if (ghlStatus === 'ok') return { statusCode: 200, body: 'ok' };
+  if (ghlStatus === 'no-webhook') return { statusCode: 202, body: 'stored (no webhook configured)' };
+  // Lead is still safe in Netlify Forms; the page logs ghl_forward_failed to PostHog.
+  return { statusCode: 502, body: 'upstream error' };
+};
+
+async function forwardToGhl(payload) {
+  const url = process.env.GHL_EVENT_WEBHOOK_URL;
+  if (!url) { console.warn('register: GHL_EVENT_WEBHOOK_URL not set, skipping forward for', payload.email); return 'no-webhook'; }
+  // Up to 3 attempts (0s, 0.5s, 1.2s back-off), each capped at 2.5s, so a GHL blip doesn't drop the lead
+  // and the whole function stays inside Netlify's ~10s limit.
+  const delays = [0, 500, 1200];
   for (let i = 0; i < delays.length; i++) {
     if (delays[i]) await new Promise(r => setTimeout(r, delays[i]));
     try {
-      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: AbortSignal.timeout(4000) });
-      if (r.ok) return { statusCode: 200, body: 'ok' };
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: AbortSignal.timeout(2500) });
+      if (r.ok) return 'ok';
       console.error(`register: GHL responded ${r.status} (attempt ${i + 1})`, (await r.text()).slice(0, 300));
       if (r.status >= 400 && r.status < 500 && r.status !== 429) break; // bad request: retrying won't help
     } catch (e) {
       console.error(`register: forward failed (attempt ${i + 1})`, e.message);
     }
   }
-  // Lead is still safe in Netlify Forms; the page logs ghl_forward_failed to PostHog.
   console.error('register: GIVING UP forwarding to GHL for', payload.email);
-  return { statusCode: 502, body: 'upstream error' };
-};
+  return 'failed';
+}
+
+async function sendMetaRegistration(d, headers) {
+  const token = process.env.META_CAPI_TOKEN;
+  if (!token) return;                                                   // not configured yet
+  if (d.internal === true || d.internal === 'true') return;            // team/test browser (?internal=1)
+  if (!d.meta_event_id) return;                                         // no shared ID -> can't deduplicate
+  try {
+    const h = k => headers[k] || headers[k.toLowerCase()] || '';
+    const email = String(d.email || '').trim().toLowerCase();
+    const phone = String(d.phone || '').replace(/\D/g, '');            // digits only, incl. country code, no +
+    const fn = String(d.first_name || '').trim().toLowerCase();
+    const ln = String(d.last_name || '').trim().toLowerCase();
+    const user_data = {
+      client_ip_address: h('x-nf-client-connection-ip') || String(h('x-forwarded-for')).split(',')[0].trim() || undefined,
+      client_user_agent: h('user-agent') || undefined,
+    };
+    if (email) user_data.em = [sha256(email)];
+    if (phone) user_data.ph = [sha256(phone)];
+    if (fn) user_data.fn = [sha256(fn)];
+    if (ln) user_data.ln = [sha256(ln)];
+    if (d.fbp) user_data.fbp = String(d.fbp);
+    if (d.fbc) user_data.fbc = String(d.fbc);
+    const body = {
+      data: [{
+        event_name: 'CompleteRegistration',
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: String(d.meta_event_id).slice(0, 100),
+        action_source: 'website',
+        event_source_url: String(d.page || 'https://event.orderofkings.org/').slice(0, 1000),
+        user_data,
+        custom_data: { content_name: 'designed_backwards' },
+      }],
+    };
+    if (process.env.META_TEST_EVENT_CODE) body.test_event_code = process.env.META_TEST_EVENT_CODE;
+    const r = await fetch(`https://graph.facebook.com/v21.0/${META_DATASET_ID}/events?access_token=${encodeURIComponent(token)}`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(4000),
+    });
+    const text = await r.text();
+    if (r.ok) console.log('register: Meta CAPI', r.status, text.slice(0, 200));     // expect {"events_received":1,...}
+    else console.error('register: Meta CAPI error', r.status, text.slice(0, 400));
+  } catch (e) {
+    console.error('register: Meta CAPI failed', e.message);
+  }
+}
