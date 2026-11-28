@@ -254,6 +254,12 @@ window.EVENT_CONFIG = {
       data.timezone = localTz;
       data.registered_at = new Date().toISOString();
       try { data.ph_id = window.posthog && posthog.get_distinct_id ? posthog.get_distinct_id() : ''; } catch (e) {}
+      // Meta: one shared event ID for the browser pixel + server (Conversions API) event, so Meta counts it once
+      data.meta_event_id = 'reg_' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now() + '_' + Math.random().toString(36).slice(2));
+      const ck = n => (document.cookie.match('(?:^|; )' + n + '=([^;]*)') || [])[1] || '';
+      data.fbp = ck('_fbp');
+      data.fbc = ck('_fbc') || (qs.get('fbclid') ? 'fb.1.' + Date.now() + '.' + qs.get('fbclid') : '');
+      try { data.internal = localStorage.getItem('ook_internal') === '1' || qs.get('internal') === '1'; } catch (e) { data.internal = false; }
 
       btn.disabled = true; btn.classList.add('loading');
 
@@ -286,10 +292,11 @@ window.EVENT_CONFIG = {
       // If GHL didn't take it (after the function's retries), the lead is still in Netlify Forms. Flag it so it can be re-sent.
       if (!sentToGhl) track('ghl_forward_failed', { email: data.email });
       track('event_registered', { sms_consent: data.sms_consent === 'true', ghl: sentToGhl, utm_source: data.utm_source || null, utm_campaign: data.utm_campaign || null });
-      try { window.fbq && fbq('track', 'CompleteRegistration'); } catch (e) {}
+      try { window.fbq && fbq('track', 'CompleteRegistration', { content_name: 'designed_backwards' }, { eventID: data.meta_event_id }); } catch (e) {}
 
       const regInfo = { first_name: data.first_name, last_name: data.last_name, email: data.email, phone: data.phone, at: Date.now() };
       saveReg(regInfo);
+      if (window.fbq) await new Promise(r => setTimeout(r, 350)); // let the pixel request leave before redirecting
       location.href = 'vip#r=' + b64url(JSON.stringify(regInfo));
     });
   }
@@ -362,7 +369,20 @@ window.EVENT_CONFIG = {
     try { sessionStorage.removeItem('eb_vip'); } catch (e) {} // clear the flag older versions of this page stored
     if (isVip) document.body.classList.add('is-vip');
     track('confirmation_viewed', { vip: isVip });
-    if (isVip) { try { posthog.capture('vip_purchased', { event_name: 'designed_backwards', value: C.vipPrice, $set: { db_is_vip: true, db_vip_purchased_at: new Date().toISOString() } }); window.fbq && fbq('track', 'Purchase', { value: C.vipPrice, currency: 'USD' }); } catch (e) {} }
+    if (isVip) {
+      // One Purchase per buyer: ID = Whop receipt/payment ID from the redirect if present, else 'vip_' + email.
+      // A localStorage flag stops reloads of /confirmed?vip=1 from counting the sale again (Meta + PostHog).
+      const vq = new URLSearchParams(location.search);
+      const whopId = vq.get('receipt_id') || vq.get('payment_id') || vq.get('membership_id') || vq.get('checkout_id') || '';
+      const vipEventId = whopId ? 'vip_' + whopId : (reg.email ? 'vip_' + reg.email : '');
+      let already = false;
+      try { already = !!vipEventId && localStorage.getItem('ook_vip_purchase_' + vipEventId) === '1'; } catch (e) {}
+      if (!already) {
+        try { posthog.capture('vip_purchased', { event_name: 'designed_backwards', value: C.vipPrice, $set: { db_is_vip: true, db_vip_purchased_at: new Date().toISOString() } }); } catch (e) {}
+        try { window.fbq && fbq('track', 'Purchase', { value: C.vipPrice, currency: 'USD', content_name: 'designed_backwards_vip' }, vipEventId ? { eventID: vipEventId } : undefined); } catch (e) {}
+        try { if (vipEventId) localStorage.setItem('ook_vip_purchase_' + vipEventId, '1'); } catch (e) {}
+      }
+    }
 
     // Calendar links
     // Google: ONE link that adds both days (a 2-day daily repeat). VIP buyers get a second link for the VIP hours.

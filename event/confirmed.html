@@ -24,8 +24,24 @@
         return ev;
       }});
     // Exclude your own visits: open any event page once with ?internal=1 in each browser/device (?internal=0 to undo)
-    (function(){ var q = new URLSearchParams(location.search).get('internal'); if (q === '1') { posthog.opt_out_capturing(); } else if (q === '0') { posthog.opt_in_capturing(); } })();
+    (function(){ var q = new URLSearchParams(location.search).get('internal'); if (q === '1') { posthog.opt_out_capturing(); try { localStorage.setItem('ook_internal', '1'); } catch (e) {} } else if (q === '0') { posthog.opt_in_capturing(); try { localStorage.removeItem('ook_internal'); } catch (e) {} } })();
     </script>
+  <!-- Meta Pixel: dataset "Dan Romer Event Data". Skipped for internal/team browsers (?internal=1). -->
+  <script>
+  (function(){
+    var internal = false;
+    try { internal = new URLSearchParams(location.search).get('internal') === '1' || localStorage.getItem('ook_internal') === '1'; } catch(e){}
+    if (internal) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1624105552195579');
+    fbq('track', 'PageView');
+  })();
+  </script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1624105552195579&ev=PageView&noscript=1"/></noscript>
 </head>
 <body data-page="confirmed">
 
