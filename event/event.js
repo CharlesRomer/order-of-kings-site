@@ -186,6 +186,8 @@ window.EVENT_CONFIG = {
       if (tz.startsWith('America/') || tz.startsWith('US/')) return 'us';
       return 'us';
     })();
+    const smsBoxEl = $('#f-sms', form);
+    if (smsBoxEl) smsBoxEl.addEventListener('change', () => { if (smsBoxEl.checked) { smsBoxEl.closest('label').classList.remove('needs-check'); const e = $('.form-error', form); if (e && /tick the box/.test(e.textContent)) e.textContent = ''; } });
     let iti = null;
     if (phoneEl && window.intlTelInput) {
       iti = window.intlTelInput(phoneEl, {
@@ -227,6 +229,11 @@ window.EVENT_CONFIG = {
       data.sms_consent_text = smsYes ? (smsBox.closest('label').innerText || '').replace(/\s+/g, ' ').trim() : '';
       if (!data.full_name || !/^\S+@\S+\.\S+$/.test(data.email)) {
         err.textContent = 'Please add your full name and a valid email.';
+        return;
+      }
+      if (!smsYes) {
+        err.textContent = 'Please tick the box to get event reminders by text. It\'s required to register.';
+        smsBox && smsBox.closest('label').classList.add('needs-check');
         return;
       }
       if (!phoneOk) {
