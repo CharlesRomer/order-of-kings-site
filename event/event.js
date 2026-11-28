@@ -42,6 +42,12 @@ window.EVENT_CONFIG = {
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const track = (name, props) => { try { window.posthog && posthog.capture(name, Object.assign({ event_name: 'designed_backwards' }, props || {})); } catch (e) {} };
   window.ebTrack = track;
+  function saveReg(r) {
+    const v = JSON.stringify(r);
+    try { sessionStorage.setItem('eb_reg', v); } catch (e) {}
+    try { localStorage.setItem('eb_reg', v); } catch (e) {}
+  }
+  const b64url = str => btoa(unescape(encodeURIComponent(str))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
   const day1 = new Date(C.day1Start);
   const day2 = new Date(C.day2Start);
@@ -274,25 +280,59 @@ window.EVENT_CONFIG = {
       track('event_registered', { sms_consent: data.sms_consent === 'true', ghl: sentToGhl, utm_source: data.utm_source || null, utm_campaign: data.utm_campaign || null });
       try { window.fbq && fbq('track', 'CompleteRegistration'); } catch (e) {}
 
-      sessionStorage.setItem('eb_reg', JSON.stringify({ first_name: data.first_name, email: data.email }));
-      location.href = 'vip?' + new URLSearchParams({ name: data.first_name, email: data.email }).toString();
+      const regInfo = { first_name: data.first_name, last_name: data.last_name, email: data.email, phone: data.phone, at: Date.now() };
+      saveReg(regInfo);
+      location.href = 'vip#r=' + b64url(JSON.stringify(regInfo));
     });
   }
 
   // ── VIP upsell ──
+  // Registrant details reach /vip three ways, so one blocked/cleared store doesn't lose them:
+  //   1) the URL #fragment (never sent to servers or as a referrer; stripped from the address bar right away)
+  //   2) sessionStorage   3) localStorage (expires after 3 days so a shared computer doesn't reuse old details)
   const reg = (() => {
-    const qs = new URLSearchParams(location.search);
-    let s = {}; try { s = JSON.parse(sessionStorage.getItem('eb_reg') || '{}'); } catch (e) {}
-    return { first_name: qs.get('name') || s.first_name || '', email: qs.get('email') || s.email || '' };
+    let r = {};
+    const m = location.hash.match(/(?:^#|&)r=([A-Za-z0-9_-]+)/);
+    if (m) { try { r = JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g, '+').replace(/_/g, '/'))))); } catch (e) { r = {}; } }
+    if (!r.email) { try { r = JSON.parse(sessionStorage.getItem('eb_reg') || '{}'); } catch (e) { r = {}; } }
+    if (!r.email) { try { const l = JSON.parse(localStorage.getItem('eb_reg') || '{}'); if (l.at && Date.now() - l.at < 3 * 864e5) r = l; } catch (e) {} }
+    const qs = new URLSearchParams(location.search); // legacy links (?name=&email=)
+    if (!r.email && qs.get('email')) r = { first_name: qs.get('name') || '', email: qs.get('email') };
+    r = { first_name: r.first_name || '', last_name: r.last_name || '', email: (r.email || '').trim().toLowerCase(), phone: r.phone || '', at: r.at || Date.now() };
+    if (r.email) saveReg(r);
+    // Clean the address bar: drop the #fragment and any legacy personal query params
+    if (m || qs.has('email') || qs.has('name')) {
+      ['email', 'name'].forEach(k => qs.delete(k));
+      try { history.replaceState(null, '', location.pathname + (qs.toString() ? '?' + qs : '')); } catch (e) {}
+    }
+    return r;
   })();
   $$('[data-fill="first-name"]').forEach(el => { if (reg.first_name) el.textContent = reg.first_name; else el.closest('[data-hide-if-no-name]')?.remove(); });
 
+  // Tell GHL the VIP checkout started (so it isn't treated as a second GA registration).
+  // fetch keepalive survives the redirect and isn't blocked like sendBeacon (uBlock blocks "ping"/beacon
+  // requests by default). sendBeacon is only the fallback for browsers without keepalive. Sent once per page.
+  let vipEventSent = false;
+  function sendVipCheckoutStarted() {
+    if (vipEventSent || !reg.email) return;
+    vipEventSent = true;
+    const body = JSON.stringify({ event: 'vip_checkout_started', email: reg.email, first_name: reg.first_name, last_name: reg.last_name, phone: reg.phone });
+    const url = '/.netlify/functions/register';
+    const keepaliveOk = typeof Request !== 'undefined' && 'keepalive' in Request.prototype;
+    try {
+      if (keepaliveOk) { fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true, credentials: 'same-origin' }).catch(() => {}); return; }
+      if (navigator.sendBeacon && navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))) return;
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body }).catch(() => {});
+    } catch (e) {}
+  }
   $$('[data-vip-buy]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
       track('vip_checkout_clicked', { location: a.dataset.vipBuy });
       if (!C.vipCheckoutUrl) { alert('VIP checkout link not set yet (EVENT_CONFIG.vipCheckoutUrl).'); return; }
+      sendVipCheckoutStarted();
       const u = new URL(C.vipCheckoutUrl);
+      if (reg.email && /whop\.com/.test(u.host)) u.searchParams.set('email', reg.email);
       if (reg.email && /stripe\.com/.test(u.host)) u.searchParams.set('prefilled_email', reg.email);
       let phId = ''; try { phId = (window.posthog && posthog.get_distinct_id && posthog.get_distinct_id()) || ''; } catch (e) {}
       if (phId && /stripe\.com/.test(u.host)) u.searchParams.set('client_reference_id', String(phId).replace(/[^\w-]/g, '').slice(0, 200));

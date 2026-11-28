@@ -8,7 +8,14 @@ exports.handler = async function (event) {
   let d;
   try { d = JSON.parse(event.body || '{}'); } catch { return { statusCode: 400, body: 'Invalid JSON' }; }
   if (d.company) return { statusCode: 200, body: 'ok' }; // honeypot
-  if (!d.email || !d.first_name) return { statusCode: 400, body: 'Missing fields' };
+
+  // Non-registration events (VIP click). Forwarded to GHL with the event field unchanged so GHL
+  // doesn't treat them as a second GA registration. Only known event names are accepted.
+  const ALLOWED_EVENTS = ['vip_checkout_started'];
+  const isEvent = typeof d.event === 'string' && d.event !== '' && d.event !== 'Designed Backwards';
+  if (isEvent && !ALLOWED_EVENTS.includes(d.event)) return { statusCode: 400, body: 'Unknown event' };
+  if (isEvent && !/^\S+@\S+\.\S+$/.test(String(d.email || ''))) return { statusCode: 400, body: 'Missing email' };
+  if (!isEvent && (!d.email || !d.first_name)) return { statusCode: 400, body: 'Missing fields' };
 
   const url = process.env.GHL_EVENT_WEBHOOK_URL;
   if (!url) {
@@ -16,7 +23,13 @@ exports.handler = async function (event) {
     return { statusCode: 202, body: 'stored (no webhook configured)' };
   }
 
-  const payload = {
+  const payload = isEvent ? {
+    event: d.event,
+    email: String(d.email).trim().toLowerCase().slice(0, 200),
+    first_name: String(d.first_name || '').slice(0, 80),
+    last_name: String(d.last_name || '').slice(0, 120),
+    phone: String(d.phone || '').slice(0, 40),
+  } : {
     first_name: String(d.first_name).slice(0, 80),
     last_name: String(d.last_name || '').slice(0, 120),
     full_name: String(d.full_name || d.first_name).slice(0, 200),
